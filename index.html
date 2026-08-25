@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
   <meta charset="UTF-8">
@@ -9,12 +10,12 @@
     content="width=device-width, initial-scale=1.0"
   >
 
+  <title>TUPS Technologies</title>
+
   <meta
     name="description"
-    content="TUPS Technologies - Smart digital solutions for modern schools, businesses and organisations."
+    content="TUPS Technologies - Smart technology solutions for modern schools."
   >
-
-  <title>TUPS Technologies</title>
 
   <!-- Font Awesome -->
   <link
@@ -22,7 +23,6 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   >
 
-  <!-- TUPS CSS -->
   <link
     rel="stylesheet"
     href="style.css"
@@ -34,346 +34,495 @@
 <body>
 
 
-<!-- =========================================================
-     PAGE WRAPPER
-========================================================= -->
+  <!-- =====================================================
+       TOP CONTACT BAR
+  ====================================================== -->
 
-<div class="site-wrapper">
+  <div class="top-contact-bar">
+
+    <div class="top-contact-inner">
+
+      <div class="top-contact-item">
+
+        <i class="fa-solid fa-phone"></i>
+
+        <a href="tel:+2348160678608">
+          +234 8160678608
+        </a>
+
+      </div>
 
 
-  <!-- =======================================================
-       HEADER
-  ======================================================== -->
+      <div class="top-contact-item">
+
+        <i class="fa-solid fa-phone"></i>
+
+        <a href="tel:+2348101342638">
+          +234 8101342638
+        </a>
+
+      </div>
+
+
+      <div class="top-contact-item">
+
+        <i class="fa-solid fa-envelope"></i>
+
+        <a href="mailto:tupstechnologies@gmail.com">
+          tupstechnologies@gmail.com
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+
+  <!-- =====================================================
+       MAIN HEADER
+  ====================================================== -->
 
   <header class="site-header">
 
 
-    <div class="header-inner">
+    <!-- BRAND -->
 
+    <div class="header-brand">
 
-      <!-- LOGO -->
+      <div class="logo-placeholder">
+        TUPS
+      </div>
 
-      <a
-        href="#"
-        class="brand"
-        data-page-link="home"
-      >
+      <div class="brand-text">
 
-        <div class="brand-mark">
-          T
-        </div>
+        <h1>TUPS</h1>
 
-        <div class="brand-text">
+        <span>
+          TECHNOLOGIES
+        </span>
 
-          <strong>
-            TUPS
-          </strong>
+      </div>
 
-          <span>
-            TECHNOLOGIES
-          </span>
-
-        </div>
-
-      </a>
+    </div>
 
 
 
-      <!-- MOBILE MENU BUTTON -->
+    <!-- =================================================
+         MAIN NAVIGATION
+    ================================================== -->
+
+    <nav class="main-navigation">
+
+
+      <!-- HOME -->
 
       <button
-        class="mobile-menu-button"
-        id="mobile-menu-button"
-        aria-label="Open navigation menu"
-        type="button"
+        class="nav-button active"
+        data-page="home"
       >
 
-        <i class="fa-solid fa-bars"></i>
+        <i class="fa-solid fa-house"></i>
+
+        Home
 
       </button>
 
 
 
-      <!-- MAIN NAVIGATION -->
+      <!-- ABOUT -->
 
-      <nav
-        class="main-navigation"
-        id="main-navigation"
+      <button
+        class="nav-button"
+        data-page="about"
       >
 
+        About Us
+
+      </button>
+
+
+
+      <!-- =================================================
+           OUR SERVICES
+      ================================================== -->
+
+      <div class="nav-dropdown">
 
         <button
-          class="nav-button active"
-          data-page="home"
-          type="button"
+          class="nav-button dropdown-trigger"
         >
-          Home
+
+          Our Services
+
+          <i class="fa-solid fa-chevron-down"></i>
+
         </button>
 
 
+        <div class="dropdown-menu service-menu">
 
-        <button
-          class="nav-button"
-          data-page="about"
-          type="button"
-        >
-          About
-        </button>
-
-
-
-        <button
-          class="nav-button"
-          data-page="school-management"
-          type="button"
-        >
-          School Management
-        </button>
-
-
-
-        <button
-          class="nav-button"
-          data-page="cbt"
-          type="button"
-        >
-          TUP CBT
-        </button>
-
-
-
-        <button
-          class="nav-button"
-          data-page="advertisements"
-          type="button"
-        >
-          Advertisements
-        </button>
-
-
-
-        <!-- SERVICES DROPDOWN -->
-
-        <div class="nav-dropdown">
 
           <button
-            class="nav-dropdown-button"
-            type="button"
+            data-page="school-management"
           >
 
-            Services
+            <i class="fa-solid fa-school"></i>
 
-            <i class="fa-solid fa-chevron-down"></i>
+            TUPS School Management App
 
           </button>
 
 
-          <div class="nav-dropdown-menu">
-
-            <button
-              class="nav-dropdown-item"
-              data-page="web-design"
-              type="button"
-            >
-
-              <i class="fa-solid fa-globe"></i>
-
-              Web Design
-
-            </button>
-
-
-            <button
-              class="nav-dropdown-item"
-              data-page="graphics-design"
-              type="button"
-            >
-
-              <i class="fa-solid fa-pen-nib"></i>
-
-              Graphics Design
-
-            </button>
-
-
-            <button
-              class="nav-dropdown-item"
-              data-page="content-creation"
-              type="button"
-            >
-
-              <i class="fa-solid fa-camera"></i>
-
-              Content Creation
-
-            </button>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- MORE DROPDOWN
-             Combines Watch Demo + Contact + FAQs
-        -->
-
-        <div class="nav-dropdown">
 
           <button
-            class="nav-dropdown-button"
-            type="button"
+            data-page="cbt"
           >
 
-            More
+            <i class="fa-solid fa-laptop-code"></i>
 
-            <i class="fa-solid fa-chevron-down"></i>
+            TUPS CBT
 
           </button>
 
 
-          <div class="nav-dropdown-menu nav-more-menu">
 
+          <button
+            data-page="advertisements"
+          >
 
-            <button
-              class="nav-dropdown-item"
-              id="watch-demo-button"
-              type="button"
-            >
+            <i class="fa-solid fa-bullhorn"></i>
 
-              <i class="fa-solid fa-play"></i>
+            Client Schools Advertisements
 
-              Watch Demo
-
-            </button>
+          </button>
 
 
 
-            <button
-              class="nav-dropdown-item"
-              data-page="contact"
-              type="button"
-            >
+          <button
+            data-page="web-design"
+          >
 
-              <i class="fa-solid fa-envelope"></i>
+            <i class="fa-solid fa-globe"></i>
 
-              Contact Us
+            Web Design
 
-            </button>
+          </button>
 
 
 
-            <button
-              class="nav-dropdown-item"
-              data-page="faqs"
-              type="button"
-            >
+          <button
+            data-page="graphics-design"
+          >
 
-              <i class="fa-solid fa-circle-question"></i>
+            <i class="fa-solid fa-pen-nib"></i>
 
-              FAQs
+            Graphics Design
 
-            </button>
+          </button>
 
-          </div>
+
+
+          <button
+            data-page="content-creation"
+          >
+
+            <i class="fa-solid fa-photo-film"></i>
+
+            Content Creation
+
+          </button>
+
 
         </div>
-
-
-      </nav>
-
-
-
-      <!-- HEADER ACTION -->
-
-      <div class="header-actions">
-
-
-        <button
-          class="header-application-button application-trigger"
-          data-app="School Management App"
-          type="button"
-        >
-
-          <i class="fa-solid fa-paper-plane"></i>
-
-          <span>
-            Subscribe
-          </span>
-
-        </button>
-
 
       </div>
 
 
+
+      <!-- =================================================
+           MORE
+           FAQs + WATCH DEMO + CONTACT
+      ================================================== -->
+
+      <div class="nav-dropdown">
+
+        <button
+          class="nav-button dropdown-trigger"
+        >
+
+          More
+
+          <i class="fa-solid fa-chevron-down"></i>
+
+        </button>
+
+
+        <div class="dropdown-menu more-menu">
+
+
+          <!-- WATCH DEMO -->
+
+          <button
+            data-page="demo"
+          >
+
+            <i class="fa-solid fa-circle-play"></i>
+
+            Watch Demo
+
+          </button>
+
+
+
+          <!-- FAQS -->
+
+          <button
+            data-page="faqs"
+          >
+
+            <i class="fa-solid fa-circle-question"></i>
+
+            FAQs
+
+          </button>
+
+
+
+          <!-- CONTACT -->
+
+          <button
+            data-page="contact"
+          >
+
+            <i class="fa-solid fa-envelope"></i>
+
+            Contact Us
+
+          </button>
+
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =================================================
+           SUBSCRIBE TO OUR APPS
+      ================================================== -->
+
+      <div class="nav-dropdown">
+
+        <button
+          class="nav-button dropdown-trigger"
+        >
+
+          Subscribe to Our Apps
+
+          <i class="fa-solid fa-chevron-down"></i>
+
+        </button>
+
+
+        <div class="dropdown-menu subscribe-menu">
+
+
+          <button
+            class="application-trigger"
+            data-app="School Management App"
+          >
+
+            <i class="fa-solid fa-school"></i>
+
+            School Management App
+
+          </button>
+
+
+
+          <button
+            class="application-trigger"
+            data-app="TUPS CBT"
+          >
+
+            <i class="fa-solid fa-laptop-code"></i>
+
+            CBT App
+
+          </button>
+
+
+        </div>
+
+      </div>
+
+
+    </nav>
+
+
+
+    <!-- =================================================
+         PORTAL BUTTONS
+    ================================================== -->
+
+    <div class="portal-buttons">
+
+
+      <button
+        class="portal-button cbt-button"
+        type="button"
+      >
+
+        <i class="fa-solid fa-laptop-code"></i>
+
+        TUP CBT Portal
+
+      </button>
+
+
+
+      <a
+        href="https://www.tupstechnologies.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="portal-button school-portal-button"
+      >
+
+        <i class="fa-solid fa-school"></i>
+
+        TUPS School Portal
+
+      </a>
+
+
     </div>
+
 
   </header>
 
 
 
 
-  <!-- =======================================================
-       MAIN BODY
-  ======================================================== -->
+  <!-- =====================================================
+       NEWS / ANNOUNCEMENT TICKER
+  ====================================================== -->
 
-  <div class="main-layout">
+  <div class="news-ticker">
 
 
-    <!-- =====================================================
-         SCHOOL SIDEBAR
-    ====================================================== -->
+    <div class="news-label">
 
-    <aside class="school-sidebar">
+      <i class="fa-solid fa-bullhorn"></i>
+
+      LATEST NEWS
+
+    </div>
+
+
+    <div class="ticker-window">
+
+      <div
+        class="ticker-content"
+        id="ticker-content"
+      >
+
+        Welcome to TUPS Technologies —
+        empowering schools through smart technology.
+
+        &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp;
+
+        More TUPS updates and announcements
+        will appear here.
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+
+
+  <!-- =====================================================
+       PAGE LAYOUT
+  ====================================================== -->
+
+  <div class="page-layout">
+
+
+    <!-- ===================================================
+         LEFT SIDEBAR
+    ==================================================== -->
+
+    <aside class="sidebar">
 
 
       <div class="sidebar-heading">
 
-        <span>
-          TUPS NETWORK
+
+        <span class="sidebar-icon">
+
+          <i class="fa-solid fa-school"></i>
+
         </span>
 
-        <h3>
-          Partner Schools
-        </h3>
+
+        <h2>
+          Our Partner Schools
+        </h2>
+
 
       </div>
 
 
 
-      <div class="school-list">
 
+      <div class="partner-schools">
+
+
+        <!-- TENDER LILIES -->
 
         <button
           class="school-item"
           data-school="tender-lilies"
-          type="button"
         >
 
-          <span class="school-logo">
+          <div class="school-logo-placeholder">
             TL
-          </span>
+          </div>
 
-          <span class="school-name">
+
+          <span>
+
             Tender Lilies
+            <br>
+
+            Royal Academy
+
           </span>
 
         </button>
 
 
 
+
+        <!-- TREE HILL -->
+
         <button
           class="school-item"
           data-school="tree-hill"
-          type="button"
         >
 
-          <span class="school-logo">
+          <div class="school-logo-placeholder">
             TH
-          </span>
+          </div>
 
-          <span class="school-name">
+
+          <span>
             Tree Hill Academy
           </span>
 
@@ -381,67 +530,52 @@
 
 
 
+
+        <!-- LEAD BRITISH -->
+
         <button
           class="school-item"
           data-school="lead-british"
-          type="button"
         >
 
-          <span class="school-logo">
+          <div class="school-logo-placeholder">
             LB
-          </span>
+          </div>
 
-          <span class="school-name">
+
+          <span>
+
             Lead British
+            <br>
+
+            International School
+
           </span>
 
         </button>
 
 
+
+
+        <!-- MORE SCHOOLS -->
 
         <button
           class="school-item"
           data-school="more-schools"
-          type="button"
         >
 
-          <span class="school-logo more">
-            +
-          </span>
+          <div class="school-logo-placeholder">
 
-          <span class="school-name">
-            More Schools
-          </span>
-
-        </button>
-
-
-      </div>
-
-
-
-      <!-- SIDEBAR BOTTOM -->
-
-      <div class="sidebar-bottom">
-
-
-        <div class="sidebar-mini-card">
-
-          <i class="fa-solid fa-school"></i>
-
-          <div>
-
-            <strong>
-              TUPS Partner Network
-            </strong>
-
-            <span>
-              Connecting schools through technology.
-            </span>
+            <i class="fa-solid fa-plus"></i>
 
           </div>
 
-        </div>
+
+          <span>
+            More Partner Schools
+          </span>
+
+        </button>
 
 
       </div>
@@ -452,16 +586,69 @@
 
 
 
-    <!-- =====================================================
-         CONTENT AREA
-    ====================================================== -->
+    <!-- ===================================================
+         MAIN WINDOW
+    ==================================================== -->
 
-    <main
-      id="content-area"
-      class="content-area"
-    >
+    <main class="main-content">
 
-      <!-- JavaScript loads the page here -->
+
+      <div
+        id="content-area"
+        class="content-area"
+      >
+      </div>
+
+
+
+
+      <!-- =================================================
+           FLOATING SOCIAL BUTTONS
+      ================================================== -->
+
+      <div class="floating-socials">
+
+
+        <a
+          href="#"
+          class="social-button whatsapp"
+          aria-label="WhatsApp"
+          title="WhatsApp"
+        >
+
+          <i class="fa-brands fa-whatsapp"></i>
+
+        </a>
+
+
+
+        <a
+          href="#"
+          class="social-button facebook"
+          aria-label="Facebook"
+          title="Facebook"
+        >
+
+          <i class="fa-brands fa-facebook-f"></i>
+
+        </a>
+
+
+
+        <a
+          href="#"
+          class="social-button instagram"
+          aria-label="Instagram"
+          title="Instagram"
+        >
+
+          <i class="fa-brands fa-instagram"></i>
+
+        </a>
+
+
+      </div>
+
 
     </main>
 
@@ -471,32 +658,50 @@
 
 
 
-  <!-- =======================================================
-       FOOTER
-  ======================================================== -->
+  <!-- =====================================================
+       APPLICATION MODAL
+  ====================================================== -->
 
-  <footer class="site-footer">
-
-
-    <div class="footer-inner">
-
-
-      <div class="footer-brand">
+  <div
+    class="modal-overlay"
+    id="application-modal"
+  >
 
 
-        <div class="footer-logo">
-          T
+    <div class="application-modal">
+
+
+      <button
+        class="modal-close"
+        id="modal-close"
+        aria-label="Close"
+      >
+
+        <i class="fa-solid fa-xmark"></i>
+
+      </button>
+
+
+
+
+      <div class="modal-header">
+
+
+        <div class="modal-icon">
+
+          <i class="fa-solid fa-file-signature"></i>
+
         </div>
 
 
         <div>
 
-          <strong>
-            TUPS TECHNOLOGIES
-          </strong>
+          <h2>
+            Subscribe to TUPS
+          </h2>
 
-          <p>
-            Smart technology for modern schools.
+          <p id="application-title">
+            Application
           </p>
 
         </div>
@@ -506,50 +711,207 @@
 
 
 
-      <div class="footer-links">
+
+      <form
+        id="application-form"
+        class="application-form"
+      >
 
 
-        <button
-          data-page="about"
-          type="button"
+        <input
+          type="hidden"
+          id="selected-app"
+          name="selectedApp"
         >
-          About
-        </button>
 
 
-        <button
-          data-page="school-management"
-          type="button"
-        >
-          School Management
-        </button>
+
+        <div class="form-group">
+
+          <label for="visitor-name">
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            id="visitor-name"
+            name="name"
+            placeholder="Enter your name"
+            required
+          >
+
+        </div>
 
 
-        <button
-          data-page="cbt"
-          type="button"
-        >
-          TUP CBT
-        </button>
 
 
-        <button
-          data-page="contact"
-          type="button"
-        >
-          Contact
-        </button>
+        <div class="form-row">
+
+
+          <div class="form-group">
+
+            <label for="visitor-phone">
+              Phone Number
+            </label>
+
+            <input
+              type="tel"
+              id="visitor-phone"
+              name="phone"
+              placeholder="Enter phone number"
+              required
+            >
+
+          </div>
+
+
+
+
+          <div class="form-group">
+
+            <label for="visitor-email">
+              Email Address
+            </label>
+
+            <input
+              type="email"
+              id="visitor-email"
+              name="email"
+              placeholder="Enter email address"
+              required
+            >
+
+          </div>
+
+
+        </div>
+
+
+
+
+        <div class="form-group">
+
+          <label for="visitor-message">
+            Message
+          </label>
+
+          <textarea
+            id="visitor-message"
+            name="message"
+            rows="5"
+            placeholder="Tell us about your interest..."
+            required
+          ></textarea>
+
+        </div>
+
+
+
+
+        <div class="form-actions">
+
+
+          <button
+            type="submit"
+            class="apply-button"
+          >
+
+            <i class="fa-solid fa-paper-plane"></i>
+
+            Apply for App
+
+          </button>
+
+
+
+
+          <button
+            type="button"
+            class="cancel-button"
+            id="modal-cancel"
+          >
+
+            Cancel
+
+          </button>
+
+
+        </div>
+
+
+      </form>
+
+
+    </div>
+
+
+  </div>
+
+
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="site-footer">
+
+
+    <div class="footer-content">
+
+
+      <div class="footer-brand">
+
+
+        <strong>
+          TUPS Technologies
+        </strong>
+
+
+        <p>
+          Smart technology solutions for modern schools.
+        </p>
 
 
       </div>
 
 
 
+
+      <div class="footer-links">
+
+
+        <span>
+          School Management
+        </span>
+
+
+        <span>
+          CBT
+        </span>
+
+
+        <span>
+          Web Design
+        </span>
+
+
+        <span>
+          Graphics Design
+        </span>
+
+
+      </div>
+
+
+
+
       <div class="footer-copy">
 
-        © <span id="current-year"></span>
+        ©
+        <span id="current-year"></span>
         TUPS Technologies.
-        All rights reserved.
+        All Rights Reserved.
 
       </div>
 
@@ -560,522 +922,15 @@
   </footer>
 
 
-</div>
 
 
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
 
-
-<!-- =========================================================
-     APPLICATION MODAL
-========================================================= -->
-
-<div
-  class="application-modal"
-  id="application-modal"
->
-
-
-  <div class="application-modal-box">
-
-
-    <button
-      class="modal-close"
-      id="modal-close"
-      type="button"
-      aria-label="Close"
-    >
-
-      <i class="fa-solid fa-xmark"></i>
-
-    </button>
-
-
-
-    <div class="modal-icon">
-
-      <i class="fa-solid fa-paper-plane"></i>
-
-    </div>
-
-
-
-    <h2>
-      Get Started
-    </h2>
-
-
-
-    <p class="modal-intro">
-
-      Complete the form below and let us know
-      which TUPS service you are interested in.
-
-    </p>
-
-
-
-    <form
-      id="application-form"
-    >
-
-
-      <input
-        type="hidden"
-        id="selected-app"
-      >
-
-
-
-      <div class="selected-service-box">
-
-        <span>
-          Selected Service
-        </span>
-
-        <strong
-          id="application-title"
-        >
-          TUPS Service
-        </strong>
-
-      </div>
-
-
-
-      <div class="form-group">
-
-        <label for="visitor-name">
-          Full Name
-        </label>
-
-        <input
-          type="text"
-          id="visitor-name"
-          placeholder="Enter your full name"
-          required
-        >
-
-      </div>
-
-
-
-      <div class="form-group">
-
-        <label for="visitor-phone">
-          Phone Number
-        </label>
-
-        <input
-          type="tel"
-          id="visitor-phone"
-          placeholder="Enter your phone number"
-          required
-        >
-
-      </div>
-
-
-
-      <div class="form-group">
-
-        <label for="visitor-email">
-          Email Address
-        </label>
-
-        <input
-          type="email"
-          id="visitor-email"
-          placeholder="Enter your email address"
-          required
-        >
-
-      </div>
-
-
-
-      <div class="form-group">
-
-        <label for="visitor-message">
-          Message
-        </label>
-
-        <textarea
-          id="visitor-message"
-          rows="4"
-          placeholder="Tell us what you need..."
-          required
-        ></textarea>
-
-      </div>
-
-
-
-      <div class="modal-actions">
-
-
-        <button
-          type="button"
-          class="modal-cancel"
-          id="modal-cancel"
-        >
-          Cancel
-        </button>
-
-
-        <button
-          type="submit"
-          class="modal-submit"
-        >
-
-          <i class="fa-solid fa-paper-plane"></i>
-
-          Submit Enquiry
-
-        </button>
-
-
-      </div>
-
-
-    </form>
-
-
-  </div>
-
-</div>
-
-
-
-
-<!-- =========================================================
-     DEMO MODAL
-========================================================= -->
-
-<div
-  class="demo-modal"
-  id="demo-modal"
->
-
-
-  <div class="demo-modal-box">
-
-
-    <button
-      class="demo-close"
-      id="demo-close"
-      type="button"
-      aria-label="Close demo"
-    >
-
-      <i class="fa-solid fa-xmark"></i>
-
-    </button>
-
-
-
-    <div class="demo-icon">
-
-      <i class="fa-solid fa-play"></i>
-
-    </div>
-
-
-
-    <h2>
-      TUPS Technologies Demo
-    </h2>
-
-
-    <p>
-      A demonstration video of the TUPS
-      School Management ecosystem will
-      be available here.
-    </p>
-
-
-
-    <div class="demo-placeholder">
-
-      <i class="fa-solid fa-circle-play"></i>
-
-      <span>
-        Demo Video
-      </span>
-
-      <small>
-        Video will be connected later.
-      </small>
-
-    </div>
-
-
-  </div>
-
-</div>
-
-
-
-
-<!-- =========================================================
-     MOBILE MENU SCRIPT
-========================================================= -->
-
-<script>
-
-  const mobileMenuButton =
-    document.getElementById(
-      "mobile-menu-button"
-    );
-
-  const mainNavigation =
-    document.getElementById(
-      "main-navigation"
-    );
-
-
-  if (
-    mobileMenuButton &&
-    mainNavigation
-  ) {
-
-    mobileMenuButton.addEventListener(
-      "click",
-      function () {
-
-        mainNavigation.classList.toggle(
-          "mobile-open"
-        );
-
-        this.classList.toggle(
-          "open"
-        );
-
-      }
-    );
-
-  }
-
-
-  /*
-    Close mobile navigation after
-    selecting a page.
-  */
-
-  document.addEventListener(
-    "click",
-    function (event) {
-
-      if (
-        event.target.closest(
-          ".nav-button"
-        ) ||
-        event.target.closest(
-          ".nav-dropdown-item"
-        )
-      ) {
-
-        mainNavigation.classList.remove(
-          "mobile-open"
-        );
-
-        mobileMenuButton.classList.remove(
-          "open"
-        );
-
-      }
-
-    }
-  );
-
-
-  /*
-    Footer page buttons
-  */
-
-  document
-    .querySelectorAll(
-      ".footer-links button"
-    )
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        function () {
-
-          if (
-            typeof loadPage ===
-            "function"
-          ) {
-
-            loadPage(
-              this.dataset.page
-            );
-
-          }
-
-        }
-      );
-
-    });
-
-
-  /*
-    Logo → Home
-  */
-
-  document
-    .querySelectorAll(
-      "[data-page-link='home']"
-    )
-    .forEach(link => {
-
-      link.addEventListener(
-        "click",
-        function (event) {
-
-          event.preventDefault();
-
-          if (
-            typeof loadPage ===
-            "function"
-          ) {
-
-            loadPage("home");
-
-          }
-
-        }
-      );
-
-    });
-
-
-  /*
-    Services dropdown buttons
-  */
-
-  document
-    .querySelectorAll(
-      ".nav-dropdown-item[data-page]"
-    )
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        function () {
-
-          if (
-            typeof loadPage ===
-            "function"
-          ) {
-
-            loadPage(
-              this.dataset.page
-            );
-
-          }
-
-        }
-      );
-
-    });
-
-
-  /*
-    Watch Demo
-  */
-
-  const watchDemoButton =
-    document.getElementById(
-      "watch-demo-button"
-    );
-
-  const demoModal =
-    document.getElementById(
-      "demo-modal"
-    );
-
-  const demoClose =
-    document.getElementById(
-      "demo-close"
-    );
-
-
-  if (
-    watchDemoButton &&
-    demoModal
-  ) {
-
-    watchDemoButton.addEventListener(
-      "click",
-      function () {
-
-        demoModal.classList.add(
-          "show"
-        );
-
-        document.body.style.overflow =
-          "hidden";
-
-      }
-    );
-
-  }
-
-
-  if (demoClose) {
-
-    demoClose.addEventListener(
-      "click",
-      function () {
-
-        demoModal.classList.remove(
-          "show"
-        );
-
-        document.body.style.overflow =
-          "";
-
-      }
-    );
-
-  }
-
-
-  if (demoModal) {
-
-    demoModal.addEventListener(
-      "click",
-      function (event) {
-
-        if (
-          event.target ===
-          demoModal
-        ) {
-
-          demoModal.classList.remove(
-            "show"
-          );
-
-          document.body.style.overflow =
-            "";
-
-        }
-
-      }
-    );
-
-  }
-
-</script>
-
-
-<!-- =========================================================
-     TUPS JAVASCRIPT
-========================================================= -->
-
-<script src="script.js"></script>
+  <script src="app.js"></script>
 
 
 </body>
+
 </html>
