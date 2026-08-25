@@ -14,16 +14,19 @@
 
   <meta
     name="description"
-    content="TUPS Technologies - Technology solutions for modern schools."
+    content="TUPS Technologies - Smart technology solutions for modern schools."
   >
 
-  <!-- Font Awesome -->
+  <!-- Font Awesome Icons -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   >
 
-  <link rel="stylesheet" href="style.css">
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 
 </head>
 
@@ -69,8 +72,10 @@
         class="nav-button active"
         data-page="home"
       >
+        <i class="fa-solid fa-house"></i>
         Home
       </button>
+
 
 
       <button
@@ -81,12 +86,77 @@
       </button>
 
 
-      <button
-        class="nav-button"
-        data-page="services"
-      >
-        Our Services
-      </button>
+
+      <!-- SERVICES DROPDOWN -->
+
+      <div class="nav-dropdown">
+
+        <button
+          class="nav-button dropdown-trigger"
+        >
+
+          Our Services
+
+          <i class="fa-solid fa-chevron-down"></i>
+
+        </button>
+
+
+        <div class="dropdown-menu service-menu">
+
+
+          <button
+            data-page="school-management"
+          >
+            <i class="fa-solid fa-school"></i>
+            TUPS School Management App
+          </button>
+
+
+          <button
+            data-page="cbt"
+          >
+            <i class="fa-solid fa-laptop-code"></i>
+            TUPS CBT
+          </button>
+
+
+          <button
+            data-page="advertisements"
+          >
+            <i class="fa-solid fa-bullhorn"></i>
+            Client Schools Advertisements
+          </button>
+
+
+          <button
+            data-page="web-design"
+          >
+            <i class="fa-solid fa-globe"></i>
+            Web Design
+          </button>
+
+
+          <button
+            data-page="graphics-design"
+          >
+            <i class="fa-solid fa-pen-nib"></i>
+            Graphics Design
+          </button>
+
+
+          <button
+            data-page="content-creation"
+          >
+            <i class="fa-solid fa-photo-film"></i>
+            Content Creation
+          </button>
+
+
+        </div>
+
+      </div>
+
 
 
       <button
@@ -97,11 +167,69 @@
       </button>
 
 
+
       <button
         class="nav-button"
         data-page="faqs"
       >
         FAQs
+      </button>
+
+
+
+      <!-- SUBSCRIBE DROPDOWN -->
+
+      <div class="nav-dropdown">
+
+        <button
+          class="nav-button dropdown-trigger"
+        >
+
+          Subscribe to Our Apps
+
+          <i class="fa-solid fa-chevron-down"></i>
+
+        </button>
+
+
+        <div class="dropdown-menu subscribe-menu">
+
+
+          <button
+            class="application-trigger"
+            data-app="School Management App"
+          >
+
+            <i class="fa-solid fa-school"></i>
+
+            School Management App
+
+          </button>
+
+
+          <button
+            class="application-trigger"
+            data-app="TUPS CBT"
+          >
+
+            <i class="fa-solid fa-laptop-code"></i>
+
+            CBT App
+
+          </button>
+
+
+        </div>
+
+      </div>
+
+
+
+      <button
+        class="nav-button"
+        data-page="contact"
+      >
+        Contact Us
       </button>
 
 
@@ -118,8 +246,13 @@
         class="portal-button cbt-button"
         type="button"
       >
+
+        <i class="fa-solid fa-laptop-code"></i>
+
         TUP CBT Portal
+
       </button>
+
 
 
       <a
@@ -128,7 +261,11 @@
         rel="noopener noreferrer"
         class="portal-button school-portal-button"
       >
+
+        <i class="fa-solid fa-school"></i>
+
         TUPS School Portal
+
       </a>
 
 
@@ -136,6 +273,47 @@
 
 
   </header>
+
+
+
+
+  <!-- =====================================================
+       NEWS / ANNOUNCEMENT TICKER
+  ====================================================== -->
+
+  <div class="news-ticker">
+
+
+    <div class="news-label">
+
+      <i class="fa-solid fa-bullhorn"></i>
+
+      LATEST NEWS
+
+    </div>
+
+
+    <div class="ticker-window">
+
+      <div
+        class="ticker-content"
+        id="ticker-content"
+      >
+
+        Welcome to TUPS Technologies — empowering
+        schools through smart technology.
+
+        &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp;
+
+        More TUPS updates and announcements will
+        appear here.
+
+      </div>
+
+    </div>
+
+
+  </div>
 
 
 
@@ -157,19 +335,25 @@
 
       <div class="sidebar-heading">
 
+
         <span class="sidebar-icon">
+
           <i class="fa-solid fa-school"></i>
+
         </span>
+
 
         <h2>
           Our Partner Schools
         </h2>
+
 
       </div>
 
 
 
       <div class="partner-schools">
+
 
 
         <!-- TENDER LILIES -->
@@ -183,12 +367,18 @@
             TL
           </div>
 
+
           <span>
-            Tender Lilies<br>
+
+            Tender Lilies
+            <br>
+
             Royal Academy
+
           </span>
 
         </button>
+
 
 
 
@@ -203,11 +393,13 @@
             TH
           </div>
 
+
           <span>
             Tree Hill Academy
           </span>
 
         </button>
+
 
 
 
@@ -222,25 +414,34 @@
             LB
           </div>
 
+
           <span>
-            Lead British<br>
+
+            Lead British
+            <br>
+
             International School
+
           </span>
 
         </button>
 
 
 
-        <!-- MORE SCHOOLS -->
+
+        <!-- FUTURE SCHOOL PLACEHOLDER -->
 
         <button
           class="school-item"
-          data-school="future-school"
+          data-school="more-schools"
         >
 
           <div class="school-logo-placeholder">
+
             <i class="fa-solid fa-plus"></i>
+
           </div>
+
 
           <span>
             More Partner Schools
@@ -258,7 +459,7 @@
 
 
     <!-- ===================================================
-         MAIN CONTENT
+         MAIN WINDOW
     ==================================================== -->
 
     <main class="main-content">
@@ -273,8 +474,9 @@
 
 
 
+
       <!-- =================================================
-           FLOATING SOCIALS
+           FLOATING SOCIAL BUTTONS
       ================================================== -->
 
       <div class="floating-socials">
@@ -286,8 +488,11 @@
           aria-label="WhatsApp"
           title="WhatsApp"
         >
+
           <i class="fa-brands fa-whatsapp"></i>
+
         </a>
+
 
 
         <a
@@ -296,8 +501,11 @@
           aria-label="Facebook"
           title="Facebook"
         >
+
           <i class="fa-brands fa-facebook-f"></i>
+
         </a>
+
 
 
         <a
@@ -306,7 +514,9 @@
           aria-label="Instagram"
           title="Instagram"
         >
+
           <i class="fa-brands fa-instagram"></i>
+
         </a>
 
 
@@ -314,6 +524,191 @@
 
 
     </main>
+
+
+  </div>
+
+
+
+
+  <!-- =====================================================
+       APPLICATION MODAL
+  ====================================================== -->
+
+  <div
+    class="modal-overlay"
+    id="application-modal"
+  >
+
+
+    <div class="application-modal">
+
+
+      <button
+        class="modal-close"
+        id="modal-close"
+        aria-label="Close"
+      >
+
+        <i class="fa-solid fa-xmark"></i>
+
+      </button>
+
+
+
+      <div class="modal-header">
+
+
+        <div class="modal-icon">
+
+          <i class="fa-solid fa-file-signature"></i>
+
+        </div>
+
+
+        <div>
+
+          <h2>
+            Subscribe to TUPS
+          </h2>
+
+          <p id="application-title">
+            Application
+          </p>
+
+        </div>
+
+
+      </div>
+
+
+
+      <form
+        id="application-form"
+        class="application-form"
+      >
+
+
+        <input
+          type="hidden"
+          id="selected-app"
+          name="selectedApp"
+        >
+
+
+
+        <div class="form-group">
+
+          <label for="visitor-name">
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            id="visitor-name"
+            name="name"
+            placeholder="Enter your name"
+            required
+          >
+
+        </div>
+
+
+
+        <div class="form-row">
+
+
+          <div class="form-group">
+
+            <label for="visitor-phone">
+              Phone Number
+            </label>
+
+            <input
+              type="tel"
+              id="visitor-phone"
+              name="phone"
+              placeholder="Enter phone number"
+              required
+            >
+
+          </div>
+
+
+
+          <div class="form-group">
+
+            <label for="visitor-email">
+              Email Address
+            </label>
+
+            <input
+              type="email"
+              id="visitor-email"
+              name="email"
+              placeholder="Enter email address"
+              required
+            >
+
+          </div>
+
+
+        </div>
+
+
+
+        <div class="form-group">
+
+          <label for="visitor-message">
+            Message
+          </label>
+
+          <textarea
+            id="visitor-message"
+            name="message"
+            rows="5"
+            placeholder="Tell us about your interest..."
+            required
+          ></textarea>
+
+        </div>
+
+
+
+        <div class="form-actions">
+
+
+          <button
+            type="submit"
+            class="apply-button"
+          >
+
+            <i class="fa-solid fa-paper-plane"></i>
+
+            Apply for App
+
+          </button>
+
+
+
+          <button
+            type="button"
+            class="cancel-button"
+            id="modal-cancel"
+          >
+
+            Cancel
+
+          </button>
+
+
+        </div>
+
+
+      </form>
+
+
+    </div>
 
 
   </div>
@@ -331,17 +726,48 @@
     <div class="footer-content">
 
 
-      <div>
+      <div class="footer-brand">
+
 
         <strong>
           TUPS Technologies
         </strong>
 
+
         <p>
-          Technology solutions for modern schools.
+          Smart technology solutions for modern schools.
         </p>
 
+
       </div>
+
+
+
+      <div class="footer-links">
+
+
+        <span>
+          School Management
+        </span>
+
+
+        <span>
+          CBT
+        </span>
+
+
+        <span>
+          Web Design
+        </span>
+
+
+        <span>
+          Graphics Design
+        </span>
+
+
+      </div>
+
 
 
       <div class="footer-copy">
@@ -360,6 +786,10 @@
   </footer>
 
 
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
 
   <script src="app.js"></script>
 
