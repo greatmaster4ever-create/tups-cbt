@@ -5,195 +5,387 @@
 
 
 /* =========================================================
-   CONTENT
+   PAGE CONTENT
 ========================================================= */
 
 const pages = {
 
-  about: `
+
+  /* =====================================================
+     HOME
+  ====================================================== */
+
+  home: `
+
     <section class="content-page">
 
-      <h2>About Us</h2>
+      <h2>
+        Welcome to TUPS Technologies
+      </h2>
+
+      <p>
+        Empowering schools through smart,
+        practical and reliable technology.
+      </p>
+
+      <p>
+        TUPS Technologies provides digital solutions
+        designed to help schools operate more efficiently,
+        communicate better and deliver improved digital
+        experiences to students, parents, teachers and
+        administrators.
+      </p>
+
+      <div class="content-grid">
+
+        <div class="content-card">
+
+          <h3>
+            <i class="fa-solid fa-laptop-code"></i>
+            Technology
+          </h3>
+
+          <p>
+            Practical technology designed around
+            real educational needs.
+          </p>
+
+        </div>
+
+
+        <div class="content-card">
+
+          <h3>
+            <i class="fa-solid fa-school"></i>
+            Schools
+          </h3>
+
+          <p>
+            Supporting schools with reliable
+            digital solutions.
+          </p>
+
+        </div>
+
+
+        <div class="content-card">
+
+          <h3>
+            <i class="fa-solid fa-lightbulb"></i>
+            Innovation
+          </h3>
+
+          <p>
+            Continuously developing better ways
+            to use technology in education.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  `,
+
+
+
+  /* =====================================================
+     ABOUT
+  ====================================================== */
+
+  about: `
+
+    <section class="content-page">
+
+      <h2>
+        About Us
+      </h2>
 
       <p>
         Welcome to TUPS Technologies.
       </p>
 
       <p>
-        TUPS Technologies provides technology-driven solutions
-        designed to help schools operate more efficiently,
-        communicate better and provide improved digital
-        experiences for students, parents, teachers and
-        school administrators.
+        TUPS Technologies provides technology-driven
+        solutions designed to help schools operate more
+        efficiently, communicate better and provide
+        improved digital experiences for students,
+        parents, teachers and school administrators.
       </p>
 
       <p>
-        Our goal is to make technology practical, accessible
-        and useful for modern educational institutions.
+        Our goal is to make technology practical,
+        accessible and useful for modern educational
+        institutions.
       </p>
 
       <div class="content-grid">
 
         <div class="content-card">
-          <h3>Innovation</h3>
+
+          <h3>
+            Innovation
+          </h3>
+
           <p>
             We develop practical technology solutions
             around real educational needs.
           </p>
+
         </div>
 
+
         <div class="content-card">
-          <h3>Reliability</h3>
+
+          <h3>
+            Reliability
+          </h3>
+
           <p>
-            We build systems designed to support the
-            day-to-day operations of schools.
+            We build systems designed to support
+            the day-to-day operations of schools.
           </p>
+
         </div>
 
+
         <div class="content-card">
-          <h3>Partnership</h3>
+
+          <h3>
+            Partnership
+          </h3>
+
           <p>
             We work closely with schools to continually
             improve their digital experience.
           </p>
+
         </div>
 
       </div>
 
     </section>
+
   `,
 
 
+
+  /* =====================================================
+     SERVICES
+  ====================================================== */
+
   services: `
+
     <section class="content-page">
 
-      <h2>Our Services</h2>
+      <h2>
+        Our Services
+      </h2>
 
       <p>
         TUPS Technologies provides digital solutions
-        for educational institutions and other organizations.
+        for educational institutions and other
+        organizations.
       </p>
 
       <div class="content-grid">
 
         <div class="content-card">
-          <h3>School Management</h3>
+
+          <h3>
+            School Management
+          </h3>
+
           <p>
             Digital tools that help schools manage
-            their daily academic and administrative activities.
+            their daily academic and administrative
+            activities.
           </p>
+
         </div>
 
+
         <div class="content-card">
-          <h3>CBT Solutions</h3>
+
+          <h3>
+            CBT Solutions
+          </h3>
+
           <p>
             Computer-based testing solutions for
             modern educational institutions.
           </p>
+
         </div>
 
+
         <div class="content-card">
-          <h3>Web Development</h3>
+
+          <h3>
+            Web Development
+          </h3>
+
           <p>
             Professional websites and web applications
             designed around your organization's needs.
           </p>
+
         </div>
 
+
         <div class="content-card">
-          <h3>ICT Solutions</h3>
+
+          <h3>
+            ICT Solutions
+          </h3>
+
           <p>
             Technology solutions that help organizations
             improve their digital operations.
           </p>
+
         </div>
 
       </div>
 
     </section>
+
   `,
 
 
+
+  /* =====================================================
+     CLIENTS & PRODUCTS
+  ====================================================== */
+
   clients: `
+
     <section class="content-page">
 
-      <h2>Clients &amp; Products</h2>
+      <h2>
+        Clients &amp; Products
+      </h2>
 
       <p>
-        We are proud to work with schools and organizations
-        that trust TUPS Technologies to support their
-        technology needs.
+        We are proud to work with schools and
+        organizations that trust TUPS Technologies
+        to support their technology needs.
       </p>
 
       <div class="content-grid">
 
         <div class="content-card">
-          <h3>School Technology</h3>
+
+          <h3>
+            School Technology
+          </h3>
+
           <p>
             Digital platforms and tools designed
             specifically for schools.
           </p>
+
         </div>
 
+
         <div class="content-card">
-          <h3>TUPS School Portal</h3>
+
+          <h3>
+            TUPS School Portal
+          </h3>
+
           <p>
             Our school technology platform connecting
             school administration, teachers, students
             and parents.
           </p>
+
         </div>
 
+
         <div class="content-card">
-          <h3>TUP CBT</h3>
+
+          <h3>
+            TUP CBT
+          </h3>
+
           <p>
-            Our computer-based testing platform for
-            educational institutions.
+            Our computer-based testing platform
+            for educational institutions.
           </p>
+
         </div>
 
       </div>
 
     </section>
+
   `,
 
 
+
+  /* =====================================================
+     FAQ
+  ====================================================== */
+
   faqs: `
+
     <section class="content-page">
 
-      <h2>Frequently Asked Questions</h2>
+      <h2>
+        Frequently Asked Questions
+      </h2>
 
       <div class="content-grid">
 
         <div class="content-card">
-          <h3>What is TUPS Technologies?</h3>
+
+          <h3>
+            What is TUPS Technologies?
+          </h3>
+
           <p>
             TUPS Technologies is a technology company
             providing digital solutions for schools
             and organizations.
           </p>
+
         </div>
 
+
         <div class="content-card">
-          <h3>Who can use TUPS solutions?</h3>
+
+          <h3>
+            Who can use TUPS solutions?
+          </h3>
+
           <p>
-            Our solutions are primarily designed for
-            schools and educational institutions.
+            Our solutions are primarily designed
+            for schools and educational institutions.
           </p>
+
         </div>
 
+
         <div class="content-card">
-          <h3>How can my school become a partner?</h3>
+
+          <h3>
+            How can my school become a partner?
+          </h3>
+
           <p>
             Contact TUPS Technologies and our team
             will discuss the appropriate solution
             for your school.
           </p>
+
         </div>
 
       </div>
 
     </section>
+
   `
 
 };
@@ -201,16 +393,16 @@ const pages = {
 
 
 /* =========================================================
-   PARTNER SCHOOL CONTENT
+   PARTNER SCHOOLS
 ========================================================= */
 
 const schools = {
 
+
   "tender-lilies": {
-    initials: "TL",
-    name: "Tender Lilies Royal Academy",
 
     content: `
+
       <section class="content-page">
 
         <div class="school-page-header">
@@ -220,7 +412,11 @@ const schools = {
           </div>
 
           <div>
-            <h2>Tender Lilies Royal Academy</h2>
+
+            <h2>
+              Tender Lilies Royal Academy
+            </h2>
+
           </div>
 
         </div>
@@ -237,15 +433,16 @@ const schools = {
         </p>
 
       </section>
+
     `
+
   },
 
 
   "tree-hill": {
-    initials: "TH",
-    name: "Tree Hill Academy",
 
     content: `
+
       <section class="content-page">
 
         <div class="school-page-header">
@@ -255,7 +452,11 @@ const schools = {
           </div>
 
           <div>
-            <h2>Tree Hill Academy</h2>
+
+            <h2>
+              Tree Hill Academy
+            </h2>
+
           </div>
 
         </div>
@@ -272,15 +473,16 @@ const schools = {
         </p>
 
       </section>
+
     `
+
   },
 
 
   "lead-british": {
-    initials: "LB",
-    name: "Lead British International School",
 
     content: `
+
       <section class="content-page">
 
         <div class="school-page-header">
@@ -290,7 +492,11 @@ const schools = {
           </div>
 
           <div>
-            <h2>Lead British International School</h2>
+
+            <h2>
+              Lead British International School
+            </h2>
+
           </div>
 
         </div>
@@ -307,18 +513,21 @@ const schools = {
         </p>
 
       </section>
+
     `
+
   },
 
 
   "future-school": {
-    initials: "+",
-    name: "More Partner Schools",
 
     content: `
+
       <section class="content-page">
 
-        <h2>Our Partner Schools</h2>
+        <h2>
+          Our Partner Schools
+        </h2>
 
         <p>
           More TUPS partner schools will be featured
@@ -326,7 +535,9 @@ const schools = {
         </p>
 
       </section>
+
     `
+
   }
 
 };
@@ -338,16 +549,27 @@ const schools = {
 ========================================================= */
 
 const contentArea =
-  document.getElementById("content-area");
+  document.getElementById(
+    "content-area"
+  );
+
 
 const navButtons =
-  document.querySelectorAll(".nav-button");
+  document.querySelectorAll(
+    ".nav-button"
+  );
+
 
 const schoolItems =
-  document.querySelectorAll(".school-item");
+  document.querySelectorAll(
+    ".school-item"
+  );
+
 
 const currentYear =
-  document.getElementById("current-year");
+  document.getElementById(
+    "current-year"
+  );
 
 
 
@@ -366,23 +588,25 @@ function loadPage(pageName) {
     pages[pageName];
 
 
-  /* Remove school selection */
+  schoolItems.forEach(
+    item => {
+      item.classList.remove(
+        "active"
+      );
+    }
+  );
 
-  schoolItems.forEach(item => {
-    item.classList.remove("active");
-  });
 
+  navButtons.forEach(
+    button => {
 
-  /* Activate correct header button */
+      button.classList.toggle(
+        "active",
+        button.dataset.page === pageName
+      );
 
-  navButtons.forEach(button => {
-
-    button.classList.toggle(
-      "active",
-      button.dataset.page === pageName
-    );
-
-  });
+    }
+  );
 
 }
 
@@ -407,23 +631,25 @@ function loadSchool(schoolId) {
     school.content;
 
 
-  /* Remove header selection */
+  navButtons.forEach(
+    button => {
+      button.classList.remove(
+        "active"
+      );
+    }
+  );
 
-  navButtons.forEach(button => {
-    button.classList.remove("active");
-  });
 
+  schoolItems.forEach(
+    item => {
 
-  /* Activate school */
+      item.classList.toggle(
+        "active",
+        item.dataset.school === schoolId
+      );
 
-  schoolItems.forEach(item => {
-
-    item.classList.toggle(
-      "active",
-      item.dataset.school === schoolId
-    );
-
-  });
+    }
+  );
 
 }
 
@@ -433,21 +659,22 @@ function loadSchool(schoolId) {
    HEADER NAVIGATION
 ========================================================= */
 
-navButtons.forEach(button => {
+navButtons.forEach(
+  button => {
 
-  button.addEventListener(
-    "click",
-    () => {
+    button.addEventListener(
+      "click",
+      () => {
 
-      const page =
-        button.dataset.page;
+        loadPage(
+          button.dataset.page
+        );
 
-      loadPage(page);
+      }
+    );
 
-    }
-  );
-
-});
+  }
+);
 
 
 
@@ -455,21 +682,22 @@ navButtons.forEach(button => {
    SCHOOL NAVIGATION
 ========================================================= */
 
-schoolItems.forEach(item => {
+schoolItems.forEach(
+  item => {
 
-  item.addEventListener(
-    "click",
-    () => {
+    item.addEventListener(
+      "click",
+      () => {
 
-      const school =
-        item.dataset.school;
+        loadSchool(
+          item.dataset.school
+        );
 
-      loadSchool(school);
+      }
+    );
 
-    }
-  );
-
-});
+  }
+);
 
 
 
@@ -478,7 +706,9 @@ schoolItems.forEach(item => {
 ========================================================= */
 
 const cbtButton =
-  document.querySelector(".cbt-button");
+  document.querySelector(
+    ".cbt-button"
+  );
 
 
 cbtButton.addEventListener(
@@ -507,4 +737,4 @@ currentYear.textContent =
    INITIAL PAGE
 ========================================================= */
 
-loadPage("about");
+loadPage("home");
