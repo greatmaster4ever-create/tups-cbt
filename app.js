@@ -2486,7 +2486,844 @@ if (cbtPortalButton) {
 
 }
 
+/* =========================================================
+   DEMO SYSTEM
+   TUPS TECHNOLOGIES
+========================================================= */
 
+
+/*
+   NEW DEMO APPS SCRIPT WEB APP URL
+
+   We will put the URL here after creating
+   the NEW Apps Script for this website.
+*/
+
+const DEMO_API_URL =
+  "PASTE_DEMO_APPS_SCRIPT_URL_HERE";
+
+
+
+/* =========================================================
+   DEMO CATEGORY INFORMATION
+========================================================= */
+
+const DEMO_CATEGORIES = {
+
+  school: {
+
+    title:
+      "TUPS School Management App",
+
+    subtitle:
+      "Explore our School Management App through these demonstration videos."
+
+  },
+
+
+  cbt: {
+
+    title:
+      "TUPS CBT",
+
+    subtitle:
+      "Explore TUPS CBT through our demonstration videos."
+
+  }
+
+};
+
+
+
+/* =========================================================
+   DEMO NAVIGATION
+========================================================= */
+
+function initializeDemoNavigation() {
+
+
+  const demoButtons =
+    document.querySelectorAll(
+      ".demo-category-button"
+    );
+
+
+  demoButtons.forEach(button => {
+
+
+    button.addEventListener(
+      "click",
+      function () {
+
+
+        const category =
+          this.dataset.demoCategory;
+
+
+        loadDemoCategory(category);
+
+
+      }
+    );
+
+
+  });
+
+}
+
+
+/* =========================================================
+   LOAD DEMO CATEGORY
+========================================================= */
+
+function loadDemoCategory(category) {
+
+
+  const categoryInfo =
+    DEMO_CATEGORIES[category];
+
+
+  if (!categoryInfo) return;
+
+
+  /*
+    Mark Watch Demo as active
+  */
+
+  document
+    .querySelectorAll(".nav-button")
+    .forEach(button => {
+
+      button.classList.remove("active");
+
+    });
+
+
+  const demoTrigger =
+    document.querySelector(
+      ".demo-nav-button"
+    );
+
+
+  if (demoTrigger) {
+
+    demoTrigger.classList.add("active");
+
+  }
+document
+  .querySelectorAll(
+    ".demo-category-button"
+  )
+  .forEach(button => {
+
+    button.classList.remove("active");
+
+  });
+
+
+const selectedDemoButton =
+  document.querySelector(
+    `.demo-category-button[data-demo-category="${category}"]`
+  );
+
+
+if (selectedDemoButton) {
+
+  selectedDemoButton.classList.add("active");
+
+}
+
+  /*
+    Display loading page
+  */
+
+  contentArea.innerHTML = `
+
+    <section class="content-page demo-page">
+
+
+      <div class="demo-page-header">
+
+        <div class="demo-page-icon">
+
+          <i class="fa-solid fa-circle-play"></i>
+
+        </div>
+
+
+        <div>
+
+          <h2>
+            ${categoryInfo.title}
+          </h2>
+
+          <p>
+            ${categoryInfo.subtitle}
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <div
+        id="demo-gallery"
+        class="demo-gallery"
+      >
+
+        <div class="demo-loading">
+
+          <i class="fa-solid fa-spinner fa-spin"></i>
+
+          <span>
+            Loading demonstration videos...
+          </span>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+  `;
+
+
+  window.scrollTo({
+
+    top: 0,
+
+    behavior: "smooth"
+
+  });
+
+
+  fetchDemoVideos(category);
+
+}
+
+
+
+/* =========================================================
+   FETCH DEMO VIDEOS
+========================================================= */
+
+function fetchDemoVideos(category) {
+
+
+  const gallery =
+    document.getElementById(
+      "demo-gallery"
+    );
+
+
+  if (!gallery) return;
+
+
+  /*
+    Make sure Apps Script URL has been
+    configured.
+  */
+
+  if (
+    !DEMO_API_URL ||
+    DEMO_API_URL ===
+    "https://script.google.com/macros/s/AKfycbxTYxzMNezqeAUF03_YvhEx5jHWvRtU9vsQQwkbWCFZActZwY-AMPQAaKluepyPo3svSw/exec"
+  ) {
+
+
+    gallery.innerHTML = `
+
+      <div class="demo-message">
+
+        <i class="fa-solid fa-circle-info"></i>
+
+        <h3>
+          Demo Videos
+        </h3>
+
+        <p>
+          The demonstration video service
+          is being connected.
+        </p>
+
+      </div>
+
+    `;
+
+
+    return;
+
+  }
+
+
+
+  /*
+    JSONP callback name
+  */
+
+  const callbackName =
+    "tupsDemoCallback_" +
+    Date.now();
+
+
+
+  window[callbackName] =
+    function (response) {
+
+
+      /*
+        Remove callback
+      */
+
+      delete window[callbackName];
+
+
+      /*
+        Remove script element
+      */
+
+      const script =
+        document.getElementById(
+          callbackName
+        );
+
+
+      if (script) {
+
+        script.remove();
+
+      }
+
+
+      /*
+        Handle server error
+      */
+
+      if (
+        !response ||
+        response.success !== true
+      ) {
+
+
+        renderDemoError(
+          gallery,
+          response &&
+          response.message
+            ? response.message
+            : "Unable to load demonstration videos."
+        );
+
+
+        return;
+
+      }
+
+
+      /*
+        Render returned videos
+      */
+
+      renderDemoGallery(
+        gallery,
+        response.videos || []
+      );
+
+
+    };
+
+
+
+  /*
+    Create JSONP request
+  */
+
+  const script =
+    document.createElement("script");
+
+
+  script.id =
+    callbackName;
+
+
+  script.src =
+    DEMO_API_URL +
+    "?category=" +
+    encodeURIComponent(category) +
+    "&callback=" +
+    encodeURIComponent(callbackName);
+
+
+
+  script.onerror =
+    function () {
+
+
+      delete window[callbackName];
+
+
+      script.remove();
+
+
+      renderDemoError(
+        gallery,
+        "The demonstration video service could not be reached."
+      );
+
+
+    };
+
+
+  document
+    .body
+    .appendChild(script);
+
+}
+
+
+
+/* =========================================================
+   RENDER DEMO GALLERY
+========================================================= */
+
+function renderDemoGallery(
+  gallery,
+  videos
+) {
+
+
+  if (!videos.length) {
+
+
+    gallery.innerHTML = `
+
+      <div class="demo-message">
+
+        <i class="fa-solid fa-video-slash"></i>
+
+        <h3>
+          No Demo Videos Yet
+        </h3>
+
+        <p>
+          Demonstration videos for this
+          section will be available soon.
+        </p>
+
+      </div>
+
+    `;
+
+
+    return;
+
+  }
+
+
+
+  gallery.innerHTML =
+    videos
+      .map(video => `
+
+        <article
+          class="demo-card"
+          data-video-id="${escapeDemoHTML(video.id)}"
+          data-video-title="${escapeDemoHTML(video.name)}"
+        >
+
+
+          <div class="demo-thumbnail">
+
+
+            <img
+              src="${escapeDemoHTML(video.thumbnailUrl)}"
+              alt="${escapeDemoHTML(video.name)}"
+              loading="lazy"
+            >
+
+
+            <div class="demo-play-overlay">
+
+              <span>
+
+                <i class="fa-solid fa-play"></i>
+
+              </span>
+
+            </div>
+
+
+          </div>
+
+
+
+          <div class="demo-card-content">
+
+
+            <h3>
+              ${escapeDemoHTML(video.name)}
+            </h3>
+
+
+            <button
+              type="button"
+              class="demo-watch-button"
+              data-video-id="${escapeDemoHTML(video.id)}"
+              data-video-title="${escapeDemoHTML(video.name)}"
+            >
+
+              <i class="fa-solid fa-circle-play"></i>
+
+              Watch Demo
+
+            </button>
+
+
+          </div>
+
+
+        </article>
+
+      `)
+      .join("");
+
+
+  /*
+    Attach video click events
+  */
+
+  gallery
+    .querySelectorAll(
+      ".demo-card, .demo-watch-button"
+    )
+    .forEach(element => {
+
+
+      element.addEventListener(
+        "click",
+        function (event) {
+
+
+          /*
+            Prevent card click from firing twice
+          */
+
+          if (
+            event.target.closest(
+              ".demo-watch-button"
+            )
+          ) {
+
+            event.stopPropagation();
+
+          }
+
+
+          const videoId =
+            this.dataset.videoId;
+
+
+          const videoTitle =
+            this.dataset.videoTitle;
+
+
+          if (
+            videoId &&
+            videoTitle
+          ) {
+
+            openDemoVideo(
+              videoId,
+              videoTitle
+            );
+
+          }
+
+        }
+      );
+
+
+    });
+
+}
+
+
+
+/* =========================================================
+   DEMO ERROR
+========================================================= */
+
+function renderDemoError(
+  gallery,
+  message
+) {
+
+
+  gallery.innerHTML = `
+
+    <div class="demo-message demo-error">
+
+      <i class="fa-solid fa-triangle-exclamation"></i>
+
+      <h3>
+        Demo Videos Unavailable
+      </h3>
+
+      <p>
+        ${escapeDemoHTML(message)}
+      </p>
+
+      <button
+        type="button"
+        class="demo-retry-button"
+        onclick="loadDemoCategory(
+          document.querySelector('.demo-category-button.active')?.dataset.demoCategory || 'school'
+        )"
+      >
+
+        <i class="fa-solid fa-rotate-right"></i>
+
+        Try Again
+
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+
+/* =========================================================
+   OPEN DEMO VIDEO
+========================================================= */
+
+function openDemoVideo(
+  videoId,
+  videoTitle
+) {
+
+
+  /*
+    Remove any existing demo modal
+  */
+
+  closeDemoVideo();
+
+
+
+  const overlay =
+    document.createElement("div");
+
+
+  overlay.id =
+    "demo-video-modal";
+
+
+  overlay.className =
+    "demo-video-modal";
+
+
+  overlay.innerHTML = `
+
+    <div
+      class="demo-video-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-label="${escapeDemoHTML(videoTitle)}"
+    >
+
+
+      <button
+        type="button"
+        class="demo-video-close"
+        aria-label="Close video"
+      >
+
+        <i class="fa-solid fa-xmark"></i>
+
+      </button>
+
+
+
+      <div class="demo-video-header">
+
+        <h3>
+          ${escapeDemoHTML(videoTitle)}
+        </h3>
+
+      </div>
+
+
+
+      <div class="demo-video-frame">
+
+        <iframe
+          src="https://drive.google.com/file/d/${encodeURIComponent(videoId)}/preview"
+          title="${escapeDemoHTML(videoTitle)}"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+        ></iframe>
+
+      </div>
+
+
+    </div>
+
+  `;
+
+
+  document.body.appendChild(
+    overlay
+  );
+
+
+  document.body.style.overflow =
+    "hidden";
+
+
+  /*
+    Close button
+  */
+
+  const closeButton =
+    overlay.querySelector(
+      ".demo-video-close"
+    );
+
+
+  closeButton.addEventListener(
+    "click",
+    closeDemoVideo
+  );
+
+
+  /*
+    Close when clicking outside
+  */
+
+  overlay.addEventListener(
+    "click",
+    function (event) {
+
+
+      if (
+        event.target === overlay
+      ) {
+
+        closeDemoVideo();
+
+      }
+
+    }
+  );
+
+
+  /*
+    ESC key
+  */
+
+  document.addEventListener(
+    "keydown",
+    demoEscapeHandler
+  );
+
+}
+
+
+
+/* =========================================================
+   CLOSE DEMO VIDEO
+========================================================= */
+
+function closeDemoVideo() {
+
+
+  const modal =
+    document.getElementById(
+      "demo-video-modal"
+    );
+
+
+  if (modal) {
+
+    modal.remove();
+
+  }
+
+
+  document.body.style.overflow =
+    "";
+
+
+  document.removeEventListener(
+    "keydown",
+    demoEscapeHandler
+  );
+
+}
+
+
+
+/* =========================================================
+   ESC KEY
+========================================================= */
+
+function demoEscapeHandler(event) {
+
+
+  if (
+    event.key === "Escape"
+  ) {
+
+    closeDemoVideo();
+
+  }
+
+}
+
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeDemoHTML(value) {
+
+
+  return String(value || "")
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+
+/* =========================================================
+   INITIALIZE DEMO NAVIGATION
+========================================================= */
+
+initializeDemoNavigation();
 
 /* =========================================================
    INITIAL PAGE
