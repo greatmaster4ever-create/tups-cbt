@@ -2727,36 +2727,33 @@ function fetchDemoVideos(category) {
   */
 
   if (
-    !DEMO_API_URL ||
-    DEMO_API_URL ===
-    "https://script.google.com/macros/s/AKfycbxTYxzMNezqeAUF03_YvhEx5jHWvRtU9vsQQwkbWCFZActZwY-AMPQAaKluepyPo3svSw/exec"
-  ) {
+  !DEMO_API_URL ||
+  DEMO_API_URL ===
+  "PASTE_DEMO_APPS_SCRIPT_URL_HERE"
+) {
 
+  gallery.innerHTML = `
 
-    gallery.innerHTML = `
+    <div class="demo-message">
 
-      <div class="demo-message">
+      <i class="fa-solid fa-circle-info"></i>
 
-        <i class="fa-solid fa-circle-info"></i>
+      <h3>
+        Demo Videos
+      </h3>
 
-        <h3>
-          Demo Videos
-        </h3>
+      <p>
+        The demonstration video service
+        is being connected.
+      </p>
 
-        <p>
-          The demonstration video service
-          is being connected.
-        </p>
+    </div>
 
-      </div>
+  `;
 
-    `;
+  return;
 
-
-    return;
-
-  }
-
+}
 
 
   /*
