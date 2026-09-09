@@ -713,14 +713,44 @@ const pages = {
         <div class="tups-app-gallery">
 
 
-          <!-- 1. SCHOOL DASHBOARD -->
+          <!-- 1. SCHOOL LOGIN DASHBOARD -->
 
           <article class="tups-app-card">
 
             <div class="tups-app-image">
 
               <img
-                src="images/tups-dashboard.jpg"
+                src="images/Login.jpg"
+                alt="TUPS School Login Dashboard"
+                loading="lazy"
+                decoding="async"
+              >
+
+            </div>
+
+            <div class="tups-app-info">
+
+              <h3>
+                School Login Dashboard
+              </h3>
+
+              <p>
+                A central dashboard that gives schools and Parents
+                access to the secured TUPS login Portal.
+              </p>
+
+            </div>
+
+          </article>
+
+          <!-- 2. SCHOOL MANAGEMENT DASHBOARD-->
+
+          <article class="tups-app-card">
+
+            <div class="tups-app-image">
+
+              <img
+                src="images/Dashboard.jpg"
                 alt="TUPS School Management Dashboard"
                 loading="lazy"
                 decoding="async"
@@ -731,13 +761,11 @@ const pages = {
             <div class="tups-app-info">
 
               <h3>
-                School Administration Dashboard
+                School Management Dashboard
               </h3>
 
               <p>
-                A central dashboard that gives school
-                administrators an overview of important
-                school activities and management information.
+                A seperated and organized Dashboard that isolates Teacher's Portal from Admin's Portal with well loaded require features.
               </p>
 
             </div>
@@ -745,7 +773,7 @@ const pages = {
           </article>
 
 
-          <!-- 2. STUDENT MANAGEMENT -->
+ <!-- 3. STUDENT MANAGEMENT -->
 
           <article class="tups-app-card">
 
@@ -775,39 +803,6 @@ const pages = {
             </div>
 
           </article>
-
-
-          <!-- 3. DEPARTMENT & CLASS MANAGEMENT -->
-
-          <article class="tups-app-card">
-
-            <div class="tups-app-image">
-
-              <img
-                src="images/tups-department-class.jpg"
-                alt="TUPS Department and Class Management"
-                loading="lazy"
-                decoding="async"
-              >
-
-            </div>
-
-            <div class="tups-app-info">
-
-              <h3>
-                Department & Class Management
-              </h3>
-
-              <p>
-                Organise departments, classes, academic
-                levels, and the overall academic structure
-                of the school.
-              </p>
-
-            </div>
-
-          </article>
-
 
           <!-- 4. SUBJECT MANAGEMENT -->
 
