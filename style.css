@@ -3363,3 +3363,296 @@ a {
 
 
 }
+
+/* =========================================================
+   TUPS SCHOOL MANAGEMENT APP — SCREENSHOT GALLERY
+========================================================= */
+
+.tups-app-gallery-section {
+  margin: 40px 0 45px;
+}
+
+.tups-app-gallery-heading {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.tups-app-gallery-heading h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  color: var(--tups-black);
+}
+
+.tups-app-gallery-heading p {
+  margin: 0 auto;
+  max-width: 650px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #5f6870;
+}
+
+
+/* =========================================================
+   GALLERY GRID
+========================================================= */
+
+.tups-app-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+
+/* =========================================================
+   SCREENSHOT CARD
+========================================================= */
+
+.tups-app-card {
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(0, 245, 255, 0.45);
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 4px 12px rgba(0, 245, 255, 0.14),
+    0 3px 8px rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+
+  animation:
+    tupsGalleryAppear 0.55s ease both;
+}
+
+.tups-app-card:hover {
+  transform: translateY(-5px);
+
+  border-color:
+    rgba(0, 245, 255, 0.75);
+
+  box-shadow:
+    0 6px 16px rgba(0, 245, 255, 0.22),
+    0 5px 12px rgba(0, 0, 0, 0.10);
+}
+
+
+/* =========================================================
+   SCREENSHOT AREA
+========================================================= */
+
+.tups-app-image {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  aspect-ratio: 16 / 10;
+
+  background: #f5f7f8;
+
+  border-bottom:
+    1px solid rgba(0, 245, 255, 0.30);
+}
+
+.tups-app-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: contain;
+
+  transition:
+    transform 0.4s ease;
+}
+
+.tups-app-card:hover .tups-app-image img {
+  transform: scale(1.035);
+}
+
+
+/* =========================================================
+   CARD INFORMATION
+========================================================= */
+
+.tups-app-info {
+  padding: 18px;
+}
+
+.tups-app-info h3 {
+  margin: 0 0 8px;
+
+  font-size: 18px;
+
+  line-height: 1.35;
+
+  color: var(--tups-black);
+}
+
+.tups-app-info p {
+  margin: 0;
+
+  font-size: 13px;
+
+  line-height: 1.65;
+
+  color: #5f6870;
+}
+
+
+/* =========================================================
+   ENTRANCE ANIMATION
+========================================================= */
+
+@keyframes tupsGalleryAppear {
+
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   STAGGERED CARD ANIMATION
+========================================================= */
+
+.tups-app-card:nth-child(2) {
+  animation-delay: 0.05s;
+}
+
+.tups-app-card:nth-child(3) {
+  animation-delay: 0.10s;
+}
+
+.tups-app-card:nth-child(4) {
+  animation-delay: 0.15s;
+}
+
+.tups-app-card:nth-child(5) {
+  animation-delay: 0.20s;
+}
+
+.tups-app-card:nth-child(6) {
+  animation-delay: 0.25s;
+}
+
+.tups-app-card:nth-child(7) {
+  animation-delay: 0.30s;
+}
+
+.tups-app-card:nth-child(8) {
+  animation-delay: 0.35s;
+}
+
+.tups-app-card:nth-child(9) {
+  animation-delay: 0.40s;
+}
+
+.tups-app-card:nth-child(10) {
+  animation-delay: 0.45s;
+}
+
+.tups-app-card:nth-child(11) {
+  animation-delay: 0.50s;
+}
+
+.tups-app-card:nth-child(12) {
+  animation-delay: 0.55s;
+}
+
+.tups-app-card:nth-child(13) {
+  animation-delay: 0.60s;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .tups-app-gallery {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .tups-app-gallery-section {
+    margin: 30px 0 35px;
+  }
+
+  .tups-app-gallery-heading h2 {
+    font-size: 21px;
+  }
+
+  .tups-app-gallery-heading p {
+    font-size: 13px;
+  }
+
+  .tups-app-gallery {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+
+  .tups-app-card {
+    border-radius: 10px;
+  }
+
+  .tups-app-info {
+    padding: 16px;
+  }
+
+  .tups-app-info h3 {
+    font-size: 17px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCE MOTION FOR ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .tups-app-card,
+  .tups-app-image img {
+    animation: none;
+    transition: none;
+  }
+
+  .tups-app-card:hover {
+    transform: none;
+  }
+
+  .tups-app-card:hover .tups-app-image img {
+    transform: none;
+  }
+
+}

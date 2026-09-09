@@ -680,7 +680,6 @@ const pages = {
   `,
 
 
-
   /* =======================================================
      SCHOOL MANAGEMENT
   ======================================================== */
@@ -797,6 +796,452 @@ const pages = {
       </div>
 
 
+      <!-- =================================================
+           TUPS SCHOOL MANAGEMENT APP
+           SCREENSHOT GALLERY
+      ================================================== -->
+
+      <section class="tups-app-gallery-section">
+
+        <div class="tups-app-gallery-heading">
+
+          <h2>
+            Explore the TUPS School Management App
+          </h2>
+
+          <p>
+            Take a closer look at the powerful tools
+            and modules available to schools through
+            the TUPS School Management platform.
+          </p>
+
+        </div>
+
+
+        <div class="tups-app-gallery">
+
+
+          <!-- 1. SCHOOL DASHBOARD -->
+
+          <article class="tups-app-card">
+
+            <div class="tups-app-image">
+
+              <img
+                src="images/tups-dashboard.jpg"
+                alt="TUPS School Management Dashboard"
+                loading="lazy"
+                decoding="async"
+              >
+
+            </div>
+
+            <div class="tups-app-info">
+
+              <h3>
+                School Administration Dashboard
+              </h3>
+
+              <p>
+                A central dashboard that gives school
+                administrators an overview of important
+                school activities and management information.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- 2. STUDENT MANAGEMENT -->
+
+          <article class="tups-app-card">
+
+            <div class="tups-app-image">
+
+              <img
+                src="images/tups-student-management.jpg"
+                alt="TUPS Student Management"
+                loading="lazy"
+                decoding="async"
+              >
+
+            </div>
+
+            <div class="tups-app-info">
+
+              <h3>
+                Student Management
+              </h3>
+
+              <p>
+                Organise student records and essential
+                academic information in a structured
+                and easily accessible environment.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- 3. DEPARTMENT & CLASS MANAGEMENT -->
+
+          <article class="tups-app-card">
+
+            <div class="tups-app-image">
+
+              <img
+                src="images/tups-department-class.jpg"
+                alt="TUPS Department and Class Management"
+                loading="lazy"
+                decoding="async"
+              >
+
+            </div>
+
+            <div class="tups-app-info">
+
+              <h3>
+                Department & Class Management
+              </h3>
+
+              <p>
+                Organise departments, classes, academic
+                levels, and the overall academic structure
+                of the school.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- 4. SUBJECT MANAGEMENT -->
+
+          <article class="tups-app-card">
+
+            <div class="tups-app-image">
+
+              <img
+                src="images/tups-subject-management.jpg"
+                alt="TUPS Subject Management"
+                loading="lazy"
+                decoding="async"
+              >
+
+            </div>
+
+            <div class="tups-app-info">
+
+              <h3>
+                Subject Management
+              </h3>
+
+              <p>
+                Manage school subjects and associate them
+                with the appropriate departments, classes,
+                and academic levels.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- 5. TEACHER & ADMINISTRATIVE ACCESS -->
+
+          <article class="tups-app-card">
+
+            <div class="tups-app-image">
+
+              <img
+                src="images/tups-teacher-access.jpg"
+                alt="TUPS Teacher and Administrative Access"
+                loading="lazy"
+                decoding="async"
+              >
+
+            </div>
+
+            <div class="tups-app-info">
+
+              <h3>
+                Teacher & Administrative Access
+              </h3>
+
+              <p>
+                Provide authorised teachers and
+                administrators with access to functions
+                relevant to their responsibilities.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- 6. SCHOOL FEES -->
+
+          <article class="tups-app-card">
+
+            <div class="tups-app-image">
+
+              <img
+                src="images/tups-school-fees.jpg"
+                alt="TUPS School Fees Management"
+                loading="lazy"
+                decoding="async"
+              >
+
+            </div>
+
+            <div class="tups-app-info">
+
+              <h3>
+                School Fees Management
+              </h3>
+
+              <p>
+                Organise payment records, monitor
+                outstanding balances, and keep school
+                fee information properly structured.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- 7. FINANCIAL ANALYTICS -->
+
+          <article class="tups-app-card">
+
+            <div class="tups-app-image">
+
+              <img
+                src="images/tups-financial-analytics.jpg"
+                alt="TUPS Financial Analytics and Monitoring"
+                loading="lazy"
+                decoding="async"
+              >
+
+            </div>
+
+            <div class="tups-app-info">
+
+              <h3>
+                Financial Analytics & Monitoring
+              </h3>
+
+              <p>
+                View organised financial information
+                to support monitoring, analysis, and
+                better school management decisions.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- 8. RESULTS & BROADSHEET -->
+
+          <article class="tups-app-card">
+
+            <div class="tups-app-image">
+
+              <img
+                src="images/tups-results-broadsheet.jpg"
+                alt="TUPS Academic Results and Broadsheet Management"
+                loading="lazy"
+                decoding="async"
+              >
+
+            </div>
+
+            <div class="tups-app-info">
+
+              <h3>
+                Results & Broadsheet Management
+              </h3>
+
+              <p>
+                Manage academic results and broadsheet
+                records through a structured digital
+                academic workflow.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- 9. AUTOMATED RESULT COMPUTATION -->
+
+          <article class="tups-app-card">
+
+            <div class="tups-app-image">
+
+              <img
+                src="images/tups-result-computation.jpg"
+                alt="TUPS Automated Result Computation"
+                loading="lazy"
+                decoding="async"
+              >
+
+            </div>
+
+            <div class="tups-app-info">
+
+              <h3>
+                Automated Result Computation
+              </h3>
+
+              <p>
+                Automate calculations such as totals,
+                averages, positions, grades, and other
+                academic result processes.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- 10. DIGITAL RESULTS -->
+
+          <article class="tups-app-card">
+
+            <div class="tups-app-image">
+
+              <img
+                src="images/tups-digital-results.jpg"
+                alt="TUPS Digital Result Generation and Checking"
+                loading="lazy"
+                decoding="async"
+              >
+
+            </div>
+
+            <div class="tups-app-info">
+
+              <h3>
+                Digital Result Generation & Checking
+              </h3>
+
+              <p>
+                Generate digital academic results and
+                provide convenient access to student
+                performance records.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- 11. PARENT-TEACHER COMMUNICATION -->
+
+          <article class="tups-app-card">
+
+            <div class="tups-app-image">
+
+              <img
+                src="images/tups-parent-teacher.jpg"
+                alt="TUPS Parent Teacher Communication"
+                loading="lazy"
+                decoding="async"
+              >
+
+            </div>
+
+            <div class="tups-app-info">
+
+              <h3>
+                Parent–Teacher Communication
+              </h3>
+
+              <p>
+                Support structured communication between
+                parents, teachers, and the school through
+                a digital communication environment.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- 12. ANNOUNCEMENTS -->
+
+          <article class="tups-app-card">
+
+            <div class="tups-app-image">
+
+              <img
+                src="images/tups-announcements.jpg"
+                alt="TUPS School Announcements and Advertising"
+                loading="lazy"
+                decoding="async"
+              >
+
+            </div>
+
+            <div class="tups-app-info">
+
+              <h3>
+                Announcements & Advertising
+              </h3>
+
+              <p>
+                Publish important school announcements,
+                notices, information, and internal
+                advertising through the school portal.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- 13. PARENT INFORMATION -->
+
+          <article class="tups-app-card">
+
+            <div class="tups-app-image">
+
+              <img
+                src="images/tups-parent-information.jpg"
+                alt="TUPS Parent School Information Access"
+                loading="lazy"
+                decoding="async"
+              >
+
+            </div>
+
+            <div class="tups-app-info">
+
+              <h3>
+                Parent Information Access
+              </h3>
+
+              <p>
+                Give parents convenient access to relevant
+                school information and communication from
+                wherever they are.
+              </p>
+
+            </div>
+
+          </article>
+
+
+        </div>
+
+      </section>
+
+
       <section class="cta-section">
 
         <h3>
@@ -822,6 +1267,7 @@ const pages = {
     </section>
 
   `,
+
 
 
 
@@ -1840,7 +2286,29 @@ schoolButtons.forEach(button => {
 
 });
 
+/* =========================================================
+   SERVICE MENU BUTTON EVENTS
+========================================================= */
 
+document
+  .querySelectorAll(
+    ".service-menu button[data-page]"
+  )
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      function () {
+
+        const page =
+          this.dataset.page;
+
+        loadPage(page);
+
+      }
+    );
+
+  });
 
 /* =========================================================
    LOAD SCHOOL
