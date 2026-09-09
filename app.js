@@ -2500,7 +2500,7 @@ if (cbtPortalButton) {
 */
 
 const DEMO_API_URL =
-  "PASTE_DEMO_APPS_SCRIPT_URL_HERE";
+  "https://script.google.com/macros/s/AKfycbxTYxzMNezqeAUF03_YvhEx5jHWvRtU9vsQQwkbWCFZActZwY-AMPQAaKluepyPo3svSw/exec";
 
 
 
