@@ -700,102 +700,6 @@ const pages = {
       </p>
 
 
-      <div class="content-grid">
-
-
-        <article class="content-card">
-
-          <div class="card-icon">
-            <i class="fa-solid fa-users"></i>
-          </div>
-
-          <h3>
-            Student Management
-          </h3>
-
-          <p>
-            Organise student information and
-            school records efficiently.
-          </p>
-
-        </article>
-
-
-        <article class="content-card">
-
-          <div class="card-icon">
-            <i class="fa-solid fa-file-lines"></i>
-          </div>
-
-          <h3>
-            Results & Broadsheets
-          </h3>
-
-          <p>
-            Support digital result processing
-            and academic record management.
-          </p>
-
-        </article>
-
-
-        <article class="content-card">
-
-          <div class="card-icon">
-            <i class="fa-solid fa-money-bill-wave"></i>
-          </div>
-
-          <h3>
-            Fees & Student Records
-          </h3>
-
-          <p>
-            Manage relevant student and
-            financial information digitally.
-          </p>
-
-        </article>
-
-
-        <article class="content-card">
-
-          <div class="card-icon">
-            <i class="fa-solid fa-bullhorn"></i>
-          </div>
-
-          <h3>
-            School Communication
-          </h3>
-
-          <p>
-            Publish announcements and
-            school communications.
-          </p>
-
-        </article>
-
-
-        <article class="content-card">
-
-          <div class="card-icon">
-            <i class="fa-solid fa-calendar-days"></i>
-          </div>
-
-          <h3>
-            School Calendar
-          </h3>
-
-          <p>
-            Keep school events and activities
-            organised in one place.
-          </p>
-
-        </article>
-
-
-      </div>
-
-
       <!-- =================================================
            TUPS SCHOOL MANAGEMENT APP
            SCREENSHOT GALLERY
@@ -803,19 +707,7 @@ const pages = {
 
       <section class="tups-app-gallery-section">
 
-        <div class="tups-app-gallery-heading">
 
-          <h2>
-            Explore the TUPS School Management App
-          </h2>
-
-          <p>
-            Take a closer look at the powerful tools
-            and modules available to schools through
-            the TUPS School Management platform.
-          </p>
-
-        </div>
 
 
         <div class="tups-app-gallery">
