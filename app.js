@@ -773,15 +773,15 @@ const pages = {
           </article>
 
 
- <!-- 3. STUDENT MANAGEMENT -->
+ <!-- 3. STUDENT DASHBOARD -->
 
           <article class="tups-app-card">
 
             <div class="tups-app-image">
 
               <img
-                src="images/tups-student-management.jpg"
-                alt="TUPS Student Management"
+                src="images/students.jpg"
+                alt="TUPS Student Dashboard"
                 loading="lazy"
                 decoding="async"
               >
@@ -791,13 +791,16 @@ const pages = {
             <div class="tups-app-info">
 
               <h3>
-                Student Management
+                Student Dashboard
               </h3>
 
               <p>
                 Organise student records and essential
                 academic information in a structured
-                and easily accessible environment.
+                and easily accessible environmen for parents
+				to view their wards information and see school 
+				activities such as school calendar, Announcements,
+				 Addverts, communication book, etc.
               </p>
 
             </div>
