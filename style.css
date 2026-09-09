@@ -3149,11 +3149,11 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 102, 0.92);
+  background: rgba(255, 0, 0, 0.82);
   color: #ffffff;
   font-size: 22px;
   box-shadow:
-    0 5px 20px rgba(0, 0, 0, 0.25);
+    0 0 14px rgba(255, 0, 0, 0.30);
 }
 
 
