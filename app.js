@@ -1072,7 +1072,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/tups-announcements.jpg"
+                src="images/announcements.jpg"
                 alt="TUPS School Announcements and Advertising"
                 loading="lazy"
                 decoding="async"
@@ -1083,13 +1083,12 @@ const pages = {
             <div class="tups-app-info">
 
               <h3>
-                Announcements & Advertising
+                Announcements & Parent-Teacher-Admin Communication
               </h3>
 
               <p>
                 Publish important school announcements,
-                notices, information, and internal
-                advertising through the school portal.
+                notices, information, and a 3-way communication betwen Teacher, Parentand School Admin.
               </p>
 
             </div>
