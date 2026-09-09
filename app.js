@@ -780,7 +780,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/students.jpg"
+                src="images/students_portal.JPG"
                 alt="TUPS Student Dashboard"
                 loading="lazy"
                 decoding="async"
