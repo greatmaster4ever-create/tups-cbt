@@ -3080,8 +3080,8 @@ a {
 
 .demo-card {
   box-shadow:
-    0 5px 14px rgba(0, 0, 0, 0.24),
-    0 3px 8px rgba(0, 245, 255, 0.12);
+    0 5px 8px rgba(0, 0, 0, 0.24),
+    0 3px 10px rgba(0, 245, 255, 0.12);
 
   transition:
     box-shadow 0.25s ease,
@@ -3141,17 +3141,17 @@ a {
 
 
 .demo-play-overlay span {
-  width: 62px;
-  height: 62px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(255, 0, 0, 0.82);
   color: #ffffff;
-  font-size: 22px;
+  font-size: 20px;
   box-shadow:
-    0 0 14px rgba(255, 0, 0, 0.30);
+    0 0 8px rgba(255, 0, 0, 0.22);
 }
 
 
@@ -3415,8 +3415,8 @@ a {
   border-radius: 12px;
 
   box-shadow:
-0 5px 14px rgba(0, 0, 0, 0.24),
-  0 3px 8px rgba(0, 245, 255, 0.12);
+    0 5px 8px rgba(0, 0, 0, 0.24),
+    0 3px 10px rgba(0, 245, 255, 0.12);
 
   transition:
     transform 0.3s ease,
