@@ -3079,24 +3079,22 @@ a {
 ========================================================= */
 
 .demo-card {
-  background: #ffffff;
-  border-radius: 14px;
-  overflow: hidden;
   box-shadow:
-    0 4px 15px rgba(0, 245, 255, 0.25);
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-  cursor: pointer;
-}
+    0 5px 14px rgba(0, 0, 0, 0.24),
+    0 3px 8px rgba(0, 245, 255, 0.12);
 
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
 
 .demo-card:hover {
-  transform: translateY(-5px);
   box-shadow:
-      0 6px 25px rgba(0, 245, 255, 0.50);
-}
+    0 8px 20px rgba(0, 0, 0, 0.32),
+    0 4px 10px rgba(0, 245, 255, 0.16);
 
+  transform: translateY(-3px);
+}
 
 
 /* =========================================================
@@ -3417,8 +3415,8 @@ a {
   border-radius: 12px;
 
   box-shadow:
-  0 4px 12px rgba(0, 0, 0, 0.16),
-  0 3px 10px rgba(0, 245, 255, 0.10);
+0 5px 14px rgba(0, 0, 0, 0.24),
+  0 3px 8px rgba(0, 245, 255, 0.12);
 
   transition:
     transform 0.3s ease,
@@ -3436,8 +3434,8 @@ a {
     rgba(0, 245, 255, 0.75);
 
   box-shadow:
-  0 7px 18px rgba(0, 0, 0, 0.22),
-  0 4px 12px rgba(0, 245, 255, 0.14);
+  0 8px 20px rgba(0, 0, 0, 0.32),
+  0 4px 10px rgba(0, 245, 255, 0.16);
 }
 
 
