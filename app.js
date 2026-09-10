@@ -165,7 +165,218 @@ const pages = {
 
 </div>
 
+      <!-- =====================================================
+           PARTNER SCHOOLS PUBLICITY CAROUSEL
+      ====================================================== -->
 
+      <section class="partner-carousel-section">
+
+        <div class="partner-carousel-heading">
+
+          <span class="partner-carousel-kicker">
+            OUR PARTNER SCHOOLS
+          </span>
+
+          <h2>
+            School Activities &amp; Publicity
+          </h2>
+
+          <p>
+            Discover activities, events and special moments
+            from schools powered and supported by TUPS Technologies.
+          </p>
+
+        </div>
+
+
+        <div class="partner-carousel">
+
+          <button
+            class="partner-carousel-btn partner-carousel-prev"
+            type="button"
+            aria-label="Previous partner school"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+
+
+          <div class="partner-carousel-viewport">
+
+            <div
+              class="partner-carousel-track"
+              id="partner-carousel-track"
+            >
+
+              <!-- CARD 1 -->
+
+              <article class="partner-school-card">
+
+                <div class="partner-school-image">
+
+                  <img
+                    src="images/partner-school-1.jpg"
+                    alt="Tender Lilies Royal Academy - Inter-House Sports 2026"
+                    loading="lazy"
+                    decoding="async"
+                  >
+
+                </div>
+
+                <div class="partner-school-info">
+
+                  <h3>
+                    Tender Lilies Royal Academy
+                  </h3>
+
+                  <p>
+                    Inter-House Sports 2026
+                  </p>
+
+                </div>
+
+              </article>
+
+
+              <!-- CARD 2 -->
+
+              <article class="partner-school-card">
+
+                <div class="partner-school-image">
+
+                  <img
+                    src="images/partner-school-2.jpg"
+                    alt="Tree Hill School - Cultural Day 2026"
+                    loading="lazy"
+                    decoding="async"
+                  >
+
+                </div>
+
+                <div class="partner-school-info">
+
+                  <h3>
+                    Tree Hill School
+                  </h3>
+
+                  <p>
+                    Cultural Day 2026
+                  </p>
+
+                </div>
+
+              </article>
+
+
+              <!-- CARD 3 -->
+
+              <article class="partner-school-card">
+
+                <div class="partner-school-image">
+
+                  <img
+                    src="images/partner-school-3.jpg"
+                    alt="Lead British International School - Graduation Ceremony 2026"
+                    loading="lazy"
+                    decoding="async"
+                  >
+
+                </div>
+
+                <div class="partner-school-info">
+
+                  <h3>
+                    Lead British International School
+                  </h3>
+
+                  <p>
+                    Graduation Ceremony 2026
+                  </p>
+
+                </div>
+
+              </article>
+
+
+              <!-- CARD 4 -->
+
+              <article class="partner-school-card">
+
+                <div class="partner-school-image">
+
+                  <img
+                    src="images/partner-school-4.jpg"
+                    alt="Partner School - Academic Excellence Awards 2026"
+                    loading="lazy"
+                    decoding="async"
+                  >
+
+                </div>
+
+                <div class="partner-school-info">
+
+                  <h3>
+                    Partner School
+                  </h3>
+
+                  <p>
+                    Academic Excellence Awards 2026
+                  </p>
+
+                </div>
+
+              </article>
+
+
+            </div>
+
+          </div>
+
+
+          <button
+            class="partner-carousel-btn partner-carousel-next"
+            type="button"
+            aria-label="Next partner school"
+          >
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+
+
+        </div>
+
+
+        <div
+          class="partner-carousel-dots"
+          aria-label="Partner school carousel navigation"
+        >
+
+          <button
+            class="partner-carousel-dot active"
+            type="button"
+            data-partner-slide="0"
+            aria-label="Show partner schools 1 and 2"
+          ></button>
+
+          <button
+            class="partner-carousel-dot"
+            type="button"
+            data-partner-slide="1"
+            aria-label="Show partner schools 2 and 3"
+          ></button>
+
+          <button
+            class="partner-carousel-dot"
+            type="button"
+            data-partner-slide="2"
+            aria-label="Show partner schools 3 and 4"
+          ></button>
+
+        </div>
+
+      </section>
+
+
+      <!-- INTRODUCTION -->
+      <div class="section-heading">
 
       <!-- INTRODUCTION -->
 
@@ -2321,8 +2532,9 @@ function loadSchool(schoolId) {
 
 function initializePageFeatures() {
 
-
   initializeHomePromoSlider();
+
+  initializePartnerSchoolsCarousel();
 
   initializeHeroButtons();
 
@@ -2425,7 +2637,371 @@ function initializeHomePromoSlider() {
 
 }
 
+/* =========================================================
+   PARTNER SCHOOLS CAROUSEL
+========================================================= */
 
+let partnerCarouselInterval;
+
+
+function initializePartnerSchoolsCarousel() {
+
+  clearInterval(partnerCarouselInterval);
+
+
+  const track =
+    document.getElementById(
+      "partner-carousel-track"
+    );
+
+
+  const viewport =
+    document.querySelector(
+      ".partner-carousel-viewport"
+    );
+
+
+  const cards =
+    document.querySelectorAll(
+      ".partner-school-card"
+    );
+
+
+  const prevButton =
+    document.querySelector(
+      ".partner-carousel-prev"
+    );
+
+
+  const nextButton =
+    document.querySelector(
+      ".partner-carousel-next"
+    );
+
+
+  const dots =
+    document.querySelectorAll(
+      ".partner-carousel-dot"
+    );
+
+
+  if (
+    !track ||
+    !viewport ||
+    !cards.length
+  ) {
+
+    return;
+
+  }
+
+
+  let currentSlide = 0;
+
+  let cardsPerView = 2;
+
+  let autoSlidePaused = false;
+
+
+  function updateCardsPerView() {
+
+    cardsPerView =
+      window.innerWidth <= 600
+        ? 1
+        : 2;
+
+  }
+
+
+  function showPartnerSlide(index) {
+
+    updateCardsPerView();
+
+
+    const maxSlide =
+      Math.max(
+        0,
+        cards.length -
+        cardsPerView
+      );
+
+
+    currentSlide =
+      Math.max(
+        0,
+        Math.min(index, maxSlide)
+      );
+
+
+    const cardWidth =
+      cards[0].getBoundingClientRect().width;
+
+
+    const gap =
+      parseFloat(
+        getComputedStyle(track).gap
+      ) || 0;
+
+
+    const offset =
+      currentSlide *
+      (cardWidth + gap);
+
+
+    track.style.transform =
+      `translate3d(-${offset}px, 0, 0)`;
+
+
+    dots.forEach(
+      dot => {
+
+        dot.classList.remove(
+          "active"
+        );
+
+      }
+    );
+
+
+    const dotIndex =
+      Math.min(
+        currentSlide,
+        dots.length - 1
+      );
+
+
+    if (dots[dotIndex]) {
+
+      dots[dotIndex].classList.add(
+        "active"
+      );
+
+    }
+
+  }
+
+
+  function nextPartnerSlide() {
+
+    updateCardsPerView();
+
+
+    const maxSlide =
+      Math.max(
+        0,
+        cards.length -
+        cardsPerView
+      );
+
+
+    if (
+      currentSlide >= maxSlide
+    ) {
+
+      showPartnerSlide(0);
+
+    } else {
+
+      showPartnerSlide(
+        currentSlide + 1
+      );
+
+    }
+
+  }
+
+
+  function startAutoSlide() {
+
+    clearInterval(
+      partnerCarouselInterval
+    );
+
+
+    partnerCarouselInterval =
+      setInterval(
+        () => {
+
+          if (!autoSlidePaused) {
+
+            nextPartnerSlide();
+
+          }
+
+        },
+        5000
+      );
+
+  }
+
+
+  if (prevButton) {
+
+    prevButton.addEventListener(
+      "click",
+      () => {
+
+        showPartnerSlide(
+          currentSlide - 1 < 0
+            ? cards.length - cardsPerView
+            : currentSlide - 1
+        );
+
+        startAutoSlide();
+
+      }
+    );
+
+  }
+
+
+  if (nextButton) {
+
+    nextButton.addEventListener(
+      "click",
+      () => {
+
+        nextPartnerSlide();
+
+        startAutoSlide();
+
+      }
+    );
+
+  }
+
+
+  dots.forEach(
+    (dot, index) => {
+
+      dot.addEventListener(
+        "click",
+        () => {
+
+          showPartnerSlide(index);
+
+          startAutoSlide();
+
+        }
+      );
+
+    }
+  );
+
+
+  const carousel =
+    document.querySelector(
+      ".partner-carousel-section"
+    );
+
+
+  if (carousel) {
+
+    carousel.addEventListener(
+      "mouseenter",
+      () => {
+
+        autoSlidePaused = true;
+
+      }
+    );
+
+
+    carousel.addEventListener(
+      "mouseleave",
+      () => {
+
+        autoSlidePaused = false;
+
+      }
+    );
+
+  }
+
+
+  /* =======================================================
+     TOUCH / SWIPE SUPPORT
+  ======================================================== */
+
+  let touchStartX = 0;
+
+  let touchEndX = 0;
+
+
+  viewport.addEventListener(
+    "touchstart",
+    event => {
+
+      touchStartX =
+        event.changedTouches[0].screenX;
+
+    },
+    { passive: true }
+  );
+
+
+  viewport.addEventListener(
+    "touchend",
+    event => {
+
+      touchEndX =
+        event.changedTouches[0].screenX;
+
+
+      const swipeDistance =
+        touchStartX - touchEndX;
+
+
+      if (
+        Math.abs(swipeDistance) < 45
+      ) {
+
+        return;
+
+      }
+
+
+      if (swipeDistance > 0) {
+
+        nextPartnerSlide();
+
+      } else {
+
+        showPartnerSlide(
+          currentSlide - 1 < 0
+            ? cards.length - cardsPerView
+            : currentSlide - 1
+        );
+
+      }
+
+
+      startAutoSlide();
+
+    },
+    { passive: true }
+  );
+
+
+  window.addEventListener(
+    "resize",
+    () => {
+
+      showPartnerSlide(
+        currentSlide
+      );
+
+    }
+  );
+
+
+  updateCardsPerView();
+
+  showPartnerSlide(0);
+
+  startAutoSlide();
+
+}
 
 /* =========================================================
    HERO BUTTONS
