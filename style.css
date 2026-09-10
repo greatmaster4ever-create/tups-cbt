@@ -4027,12 +4027,12 @@ a {
   overflow: hidden;
   border-radius: 16px;
   background:
-    linear-gradient(
-      145deg,
-      #050505 0%,
-      #10151a 48%,
-      #050505 100%
-    );
+linear-gradient(
+    145deg,
+    #3a3a3a 0%,
+    #505050 48%,
+    #383838 100%
+  );
   border: 1px solid rgba(0, 245, 255, 0.38);
   box-shadow:
     0 12px 0 rgba(0, 0, 0, 0.88),
