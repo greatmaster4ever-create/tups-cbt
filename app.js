@@ -178,7 +178,7 @@ const pages = {
           </span>
 
           <h2>
-            School Activities &amp; Publicity
+            Partner School's Activities &amp; Publicity
           </h2>
 
           <p>
@@ -214,7 +214,7 @@ const pages = {
                 <div class="partner-school-image">
 
                   <img
-                    src="images/partner-school-1.jpg"
+                    src="images/lbis_admission.jpg"
                     alt="Tender Lilies Royal Academy - Inter-House Sports 2026"
                     loading="lazy"
                     decoding="async"
@@ -225,11 +225,11 @@ const pages = {
                 <div class="partner-school-info">
 
                   <h3>
-                    Tender Lilies Royal Academy
+                    Lead British International School, Abuja.
                   </h3>
 
                   <p>
-                    Inter-House Sports 2026
+                    Admission in Progress.
                   </p>
 
                 </div>
@@ -244,8 +244,8 @@ const pages = {
                 <div class="partner-school-image">
 
                   <img
-                    src="images/partner-school-2.jpg"
-                    alt="Tree Hill School - Cultural Day 2026"
+                    src="images/cwa.jpg"
+                    alt="Children's World Academy"
                     loading="lazy"
                     decoding="async"
                   >
@@ -255,11 +255,11 @@ const pages = {
                 <div class="partner-school-info">
 
                   <h3>
-                    Tree Hill School
+                    Children's World Academy Gwarinpa, Abuja.
                   </h3>
 
                   <p>
-                    Cultural Day 2026
+                    Our Services.
                   </p>
 
                 </div>
@@ -274,8 +274,8 @@ const pages = {
                 <div class="partner-school-image">
 
                   <img
-                    src="images/partner-school-3.jpg"
-                    alt="Lead British International School - Graduation Ceremony 2026"
+                    src="angelite.jpg"
+                    alt="Angelite International School"
                     loading="lazy"
                     decoding="async"
                   >
@@ -285,11 +285,11 @@ const pages = {
                 <div class="partner-school-info">
 
                   <h3>
-                    Lead British International School
+                    Angelite International School
                   </h3>
 
                   <p>
-                    Graduation Ceremony 2026
+                    School Admission 2026.
                   </p>
 
                 </div>
