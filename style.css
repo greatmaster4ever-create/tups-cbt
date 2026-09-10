@@ -3664,7 +3664,7 @@ a {
 
   width: 100%;
 
-  min-height: 300px;
+  min-height: 360px;
 
   overflow: hidden;
 
@@ -3756,7 +3756,9 @@ a {
 
   display: block;
 
-  object-fit: contain;
+  object-fit: cover;
+  
+  object-position: center;
 
   background: #000000;
 
