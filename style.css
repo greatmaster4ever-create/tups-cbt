@@ -3654,3 +3654,344 @@ a {
   }
 
 }
+/* =========================================================
+   HOME PROMO CARD
+========================================================= */
+
+.home-promo-card {
+
+  display: flex;
+
+  width: 100%;
+
+  min-height: 300px;
+
+  overflow: hidden;
+
+  margin: 25px 0 35px;
+
+  background: #ffffff;
+
+  border:
+    1px solid rgba(0, 245, 255, 0.45);
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 5px 14px rgba(0, 0, 0, 0.24),
+    0 3px 8px rgba(0, 245, 255, 0.12);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+
+}
+
+
+/* =========================================================
+   LEFT — PROMOTIONAL SLIDER
+========================================================= */
+
+.home-promo-slider {
+
+  position: relative;
+
+  width: 75%;
+
+  min-height: 300px;
+
+  overflow: hidden;
+
+  background: #050505;
+
+}
+
+
+/* =========================================================
+   PROMOTIONAL SLIDES
+========================================================= */
+
+.home-promo-slide {
+
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 30px;
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
+
+}
+
+
+.home-promo-slide.active {
+
+  opacity: 1;
+
+  visibility: visible;
+
+}
+
+
+/* =========================================================
+   PLACEHOLDER CONTENT
+========================================================= */
+
+.home-promo-placeholder {
+
+  width: 100%;
+
+  text-align: center;
+
+  color: #ffffff;
+
+}
+
+
+.home-promo-placeholder span {
+
+  display: inline-block;
+
+  margin-bottom: 10px;
+
+  color: var(--tups-blue);
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+}
+
+
+.home-promo-placeholder h2 {
+
+  margin: 0 0 10px;
+
+  font-size: 28px;
+
+  line-height: 1.2;
+
+}
+
+
+.home-promo-placeholder p {
+
+  margin: 0 auto;
+
+  max-width: 550px;
+
+  color: #c4ccd1;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+
+}
+
+
+/* =========================================================
+   SLIDER DOTS
+========================================================= */
+
+.home-promo-dots {
+
+  position: absolute;
+
+  left: 0;
+
+  right: 0;
+
+  bottom: 12px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  z-index: 5;
+
+}
+
+
+.home-promo-dot {
+
+  width: 7px;
+
+  height: 7px;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.45);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+
+}
+
+
+.home-promo-dot.active {
+
+  background: var(--tups-blue);
+
+  transform: scale(1.25);
+
+}
+
+
+/* =========================================================
+   RIGHT — STATIC APP IMAGE
+========================================================= */
+
+.home-promo-app {
+
+  width: 25%;
+
+  min-height: 300px;
+
+  overflow: hidden;
+
+  background: #f5f7f8;
+
+}
+
+
+.home-promo-app img {
+
+  width: 100%;
+
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.home-promo-card:hover {
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.32),
+    0 4px 10px rgba(0, 245, 255, 0.16);
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .home-promo-card {
+
+    min-height: 250px;
+
+  }
+
+  .home-promo-slider {
+
+    min-height: 250px;
+
+  }
+
+  .home-promo-app {
+
+    min-height: 250px;
+
+  }
+
+  .home-promo-placeholder h2 {
+
+    font-size: 23px;
+
+  }
+
+  .home-promo-placeholder p {
+
+    font-size: 12px;
+
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .home-promo-card {
+
+    flex-direction: column;
+
+    min-height: 0;
+
+  }
+
+  .home-promo-slider {
+
+    width: 100%;
+
+    min-height: 220px;
+
+  }
+
+  .home-promo-app {
+
+    width: 100%;
+
+    min-height: 220px;
+
+  }
+
+  .home-promo-placeholder {
+
+    padding: 10px;
+
+  }
+
+  .home-promo-placeholder h2 {
+
+    font-size: 19px;
+
+  }
+
+  .home-promo-placeholder p {
+
+    font-size: 11px;
+
+  }
+
+}

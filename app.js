@@ -68,158 +68,102 @@ const pages = {
     <section class="content-page">
 
 
-      <!-- HERO -->
+     <!-- HOME PROMO CARD -->
 
-      <div class="home-hero">
+<div class="home-promo-card">
 
+  <!-- LEFT: PROMOTIONAL SLIDER -->
+  <div class="home-promo-slider">
 
-        <div
-          class="hero-slide active"
-          data-slide="0"
-        >
-
-          <div class="hero-content">
-
-            <div class="eyebrow">
-              TUPS TECHNOLOGIES
-            </div>
-
-            <h1>
-              Smart Technology
-              <br>
-              for Modern Schools
-            </h1>
-
-            <p>
-              TUPS Technologies develops practical
-              digital solutions that help schools
-              manage their operations, communicate
-              effectively and deliver better
-              educational experiences.
-            </p>
-
-            <button
-              class="hero-button"
-              data-page-action="school-management"
-            >
-
-              Explore TUPS School Management
-
-              <i class="fa-solid fa-arrow-right"></i>
-
-            </button>
-
-          </div>
-
-        </div>
+    <div
+  class="home-promo-slide active"
+  data-promo-slide="0"
+>
+  <video
+    class="home-promo-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+  >
+    <source
+      src="videos/home_demo.mp4"
+      type="video/mp4"
+    >
+  </video>
+</div>
 
 
-
-        <div
-          class="hero-slide"
-          data-slide="1"
-        >
-
-          <div class="hero-content">
-
-            <div class="eyebrow">
-              SCHOOL TECHNOLOGY
-            </div>
-
-            <h1>
-              One Platform.
-              <br>
-              Smarter School Management.
-            </h1>
-
-            <p>
-              From students and results to fees,
-              communication, advertisements and
-              school administration, TUPS helps
-              schools bring important operations
-              together.
-            </p>
-
-            <button
-              class="hero-button"
-              data-page-action="school-management"
-            >
-
-              Discover TUPS
-
-              <i class="fa-solid fa-arrow-right"></i>
-
-            </button>
-
-          </div>
-
-        </div>
+   <!--
+<div
+  class="home-promo-slide"
+  data-promo-slide="1"
+>
+  <div class="home-promo-placeholder">
+    <span>TUPS TECHNOLOGIES</span>
+    <h2>Smart Technology for Modern Schools</h2>
+    <p>
+      Promotional content placeholder.
+    </p>
+  </div>
+</div>
+-->
 
 
+<!--
+<div
+  class="home-promo-slide"
+  data-promo-slide="2"
+>
+  <div class="home-promo-placeholder">
+    <span>TUPS SCHOOL MANAGEMENT</span>
+    <h2>One Platform. Smarter School Management.</h2>
+    <p>
+      Promotional content placeholder.
+    </p>
+  </div>
+</div>
+-->
+    <div class="home-promo-dots">
 
-        <div
-          class="hero-slide"
-          data-slide="2"
-        >
+      <button
+        class="home-promo-dot active"
+        data-promo-target="0"
+        aria-label="Show promotion 1"
+      ></button>
 
-          <div class="hero-content">
+      <button
+        class="home-promo-dot"
+        data-promo-target="1"
+        aria-label="Show promotion 2"
+      ></button>
 
-            <div class="eyebrow">
-              TUP CBT
-            </div>
+      <button
+        class="home-promo-dot"
+        data-promo-target="2"
+        aria-label="Show promotion 3"
+      ></button>
 
-            <h1>
-              Modern Computer
-              <br>
-              Based Testing
-            </h1>
+    </div>
 
-            <p>
-              A dedicated CBT environment designed
-              to support schools with digital
-              examinations and computer-based
-              assessment.
-            </p>
-
-            <button
-              class="hero-button"
-              data-page-action="cbt"
-            >
-
-              Explore TUP CBT
-
-              <i class="fa-solid fa-arrow-right"></i>
-
-            </button>
-
-          </div>
-
-        </div>
+  </div>
 
 
+  <!-- RIGHT: STATIC TUPS APP IMAGE -->
 
-        <div class="hero-dots">
+  <div class="home-promo-app">
 
-          <button
-            class="hero-dot active"
-            data-slide-target="0"
-          ></button>
+    <img
+      src="images/mobile.jpg"
+      alt="TUPS School Management App"
+      loading="eager"
+      decoding="async"
+    >
 
-          <button
-            class="hero-dot"
-            data-slide-target="1"
-          ></button>
+  </div>
 
-          <button
-            class="hero-dot"
-            data-slide-target="2"
-          ></button>
-
-        </div>
-
-
-      </div>
-
+</div>
 
 
 
@@ -2378,7 +2322,7 @@ function loadSchool(schoolId) {
 function initializePageFeatures() {
 
 
-  initializeHeroSlider();
+  initializeHomePromoSlider();
 
   initializeHeroButtons();
 
@@ -2391,24 +2335,27 @@ function initializePageFeatures() {
 
 
 /* =========================================================
-   HERO SLIDER
+   HOME PROMO SLIDER
 ========================================================= */
 
-let heroInterval;
+let homePromoInterval;
 
 
-function initializeHeroSlider() {
+function initializeHomePromoSlider() {
 
-
-  clearInterval(heroInterval);
+  clearInterval(homePromoInterval);
 
 
   const slides =
-    document.querySelectorAll(".hero-slide");
+    document.querySelectorAll(
+      ".home-promo-slide"
+    );
 
 
   const dots =
-    document.querySelectorAll(".hero-dot");
+    document.querySelectorAll(
+      ".home-promo-dot"
+    );
 
 
   if (!slides.length) return;
@@ -2417,8 +2364,7 @@ function initializeHeroSlider() {
   let currentSlide = 0;
 
 
-  function showSlide(index) {
-
+  function showPromoSlide(index) {
 
     slides.forEach(
       slide =>
@@ -2454,7 +2400,7 @@ function initializeHeroSlider() {
         "click",
         () => {
 
-          showSlide(index);
+          showPromoSlide(index);
 
         }
       );
@@ -2463,7 +2409,7 @@ function initializeHeroSlider() {
   );
 
 
-  heroInterval =
+  homePromoInterval =
     setInterval(
       () => {
 
@@ -2471,10 +2417,10 @@ function initializeHeroSlider() {
           (currentSlide + 1) %
           slides.length;
 
-        showSlide(currentSlide);
+        showPromoSlide(currentSlide);
 
       },
-      6500
+      5000
     );
 
 }
