@@ -552,7 +552,6 @@ const pages = {
       </div>
 </div>
 
-
 <!-- WHY TUPS -->
 <div class="why-tups-wrapper">
 
@@ -592,9 +591,10 @@ const pages = {
         </h3>
 
         <p>
-          Mark and Track student attendance efficiently as parents recieve 
-		  instant message alerts on arrival and departure of their wards
-          and keep accurate daily attendance records.
+          Mark and track student attendance efficiently
+          as parents receive instant message alerts on
+          arrival and departure of their wards, while
+          keeping accurate daily attendance records.
         </p>
 
       </div>
@@ -615,16 +615,15 @@ const pages = {
       </div>
 
       <div class="tups-module-content">
-result checke
-	  r
+
         <h3>
           School Calendar
         </h3>
 
         <p>
           Organise school events, activities,
-          important dates and academic schedules 
-		  all available in the parents Portal.
+          important dates and academic schedules,
+          all available through the Parents Portal.
         </p>
 
       </div>
@@ -653,7 +652,8 @@ result checke
         <p>
           Connect teachers, parents and school
           administrators through digital communication.
-		  A 3-way communication between Parents, Teachers and School.
+          A three-way communication channel between
+          parents, teachers and the school.
         </p>
 
       </div>
@@ -666,13 +666,13 @@ result checke
 
       <div class="tups-module-image">
         <img
-          src="images/result checke
-	  r.jpg"
-          alt="TUPS online result checker"
+          src="images/result checker.jpg"
+          alt="TUPS Online Result Checker"
           loading="lazy"
           decoding="async"
         >
       </div>
+
       <div class="tups-module-content">
 
         <h3>
@@ -681,7 +681,8 @@ result checke
 
         <p>
           Give students and parents secure access
-          to check academic results online.
+          to check academic results online from
+          anywhere and at any time.
         </p>
 
       </div>
@@ -689,36 +690,28 @@ result checke
     </article>
 
 
-    <!-- STUDENTS / PAR
-	  ENTS PORTAL -->
+    <!-- STUDENTS / PARENTS PORTAL -->
     <article class="tups-module-card">
 
       <div class="tups-module-image">
-        <im
-	  g
-          src="images
-	  /tups-
-	  students-parents-portal.jpg"
+        <img
+          src="images/tups-students-parents-portal.jpg"
           alt="TUPS Students and Parents Portal"
           loading="lazy"
           decoding="async"
-        
-	  >
+        >
       </div>
 
       <div class="tups-module-content">
-	  
 
         <h3>
-          Students / Par
-	  ents Portal
+          Students / Parents Portal
         </h3>
-	  
 
-        <p
-	  >
+        <p>
           Provide convenient access to results,
-          school information and important updates.
+          school information and important updates
+          through a dedicated online portal.
         </p>
 
       </div>
@@ -746,7 +739,8 @@ result checke
 
         <p>
           Equip teachers with tools for academic
-          records, results and classroom management.
+          records, results, classroom activities
+          and effective school management.
         </p>
 
       </div>
@@ -774,7 +768,8 @@ result checke
 
         <p>
           Manage school operations, users, records,
-          resources and administrative activities.
+          resources and important administrative
+          activities from one central platform.
         </p>
 
       </div>
@@ -802,7 +797,8 @@ result checke
 
         <p>
           Automate result computation and grading
-          using programmed academic assessment rules.
+          using programmed academic assessment rules
+          for accurate and consistent results.
         </p>
 
       </div>
@@ -822,7 +818,29 @@ result checke
         >
       </div>
 
-      
+      <div class="tups-module-content">
+
+        <h3>
+          CBT Software
+        </h3>
+
+        <p>
+          Deliver computer-based examinations through
+          a dedicated and structured CBT environment
+          designed for modern schools.
+        </p>
+
+      </div>
+
+    </article>
+
+
+  </div>
+
+</div>
+
+
+<!-- TESTIMONIAL -->
 	  
 
       <!-- TESTIMONIAL -->
