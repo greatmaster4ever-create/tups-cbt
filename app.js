@@ -374,13 +374,14 @@ const pages = {
 
       </section>
 
+	   <!-- TECHNOLOGY DESIGNED FOR SCHOOLS -->
+       <div class="technology-schools-wrapper">
+      
+	  <!-- INTRODUCTION -->
+      
+	  <div class="section-heading technology-schools-section">
 
-      <!-- INTRODUCTION -->
-      <div class="section-heading">
-
-      <!-- INTRODUCTION -->
-
-      <div class="section-heading">
+      
 
         <h3>
           Technology Designed for Schools
@@ -548,7 +549,7 @@ const pages = {
 
 
       </div>
-
+</div>
 
 
 
