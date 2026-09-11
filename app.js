@@ -1,4 +1,5 @@
-/* =========================================================
+result checke
+	  r/* =========================================================
    TUPS TECHNOLOGIES
    PHASE 2 WEBSITE JAVASCRIPT
 ========================================================= */
@@ -552,88 +553,277 @@ const pages = {
 </div>
 
 
+<!-- WHY TUPS -->
+<div class="why-tups-wrapper">
 
-      <!-- WHY TUPS -->
+  <div class="section-heading why-tups-section">
 
-      <div class="section-heading">
+    <h3>
+      Why Choose TUPS?
+    </h3>
+
+    <p>
+      Explore the powerful modules that make
+      TUPS a complete digital solution for schools.
+    </p>
+
+  </div>
+
+
+  <div class="tups-modules-grid">
+
+
+    <!-- ATTENDANCE -->
+    <article class="tups-module-card">
+
+      <div class="tups-module-image">
+        <img
+          src="images/attendance.jpg"
+          alt="TUPS Attendance Module"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+
+      <div class="tups-module-content">
 
         <h3>
-          Why Choose TUPS?
+          Attendance
         </h3>
 
         <p>
-          We focus on practical technology that
-          solves real operational problems.
+          Mark and Track student attendance efficiently as parents recieve 
+		  instant message alerts on arrival and departure of their wards
+          and keep accurate daily attendance records.
         </p>
 
       </div>
 
+    </article>
 
 
-      <div class="content-grid">
+    <!-- SCHOOL CALENDAR -->
+    <article class="tups-module-card">
 
+      <div class="tups-module-image">
+        <img
+          src="images/calendar.jpg"
+          alt="TUPS School Calendar"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
 
-        <article class="content-card">
+      <div class="tups-module-content">
+result checke
+	  r
+        <h3>
+          School Calendar
+        </h3>
 
-          <div class="card-icon">
-            <i class="fa-solid fa-bolt"></i>
-          </div>
-
-          <h3>
-            Practical
-          </h3>
-
-          <p>
-            Our solutions are designed around
-            the everyday needs of schools.
-          </p>
-
-        </article>
-
-
-
-        <article class="content-card">
-
-          <div class="card-icon">
-            <i class="fa-solid fa-shield-halved"></i>
-          </div>
-
-          <h3>
-            Reliable
-          </h3>
-
-          <p>
-            We build systems with dependable
-            workflows and structured data management.
-          </p>
-
-        </article>
-
-
-
-        <article class="content-card">
-
-          <div class="card-icon">
-            <i class="fa-solid fa-people-group"></i>
-          </div>
-
-          <h3>
-            School Focused
-          </h3>
-
-          <p>
-            Our products are developed with
-            school administrators, teachers,
-            students and parents in mind.
-          </p>
-
-        </article>
-
+        <p>
+          Organise school events, activities,
+          important dates and academic schedules 
+		  all available in the parents Portal.
+        </p>
 
       </div>
 
+    </article>
 
 
+    <!-- COMMUNICATION BOOK -->
+    <article class="tups-module-card">
+
+      <div class="tups-module-image">
+        <img
+          src="images/communication book.jpg"
+          alt="TUPS Communication Book"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+
+      <div class="tups-module-content">
+
+        <h3>
+          Communication Book
+        </h3>
+
+        <p>
+          Connect teachers, parents and school
+          administrators through digital communication.
+		  A 3-way communication between Parents, Teachers and School.
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <!-- ONLINE RESULT CHECKER -->
+    <article class="tups-module-card">
+
+      <div class="tups-module-image">
+        <img
+          src="images/result checke
+	  r.jpg"
+          alt="TUPS online result checker"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+      <div class="tups-module-content">
+
+        <h3>
+          Online Result Checker
+        </h3>
+
+        <p>
+          Give students and parents secure access
+          to check academic results online.
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <!-- STUDENTS / PAR
+	  ENTS PORTAL -->
+    <article class="tups-module-card">
+
+      <div class="tups-module-image">
+        <im
+	  g
+          src="images
+	  /tups-
+	  students-parents-portal.jpg"
+          alt="TUPS Students and Parents Portal"
+          loading="lazy"
+          decoding="async"
+        
+	  >
+      </div>
+
+      <div class="tups-module-content">
+	  
+
+        <h3>
+          Students / Par
+	  ents Portal
+        </h3>
+	  
+
+        <p
+	  >
+          Provide convenient access to results,
+          school information and important updates.
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <!-- TEACHER'S PORTAL -->
+    <article class="tups-module-card">
+
+      <div class="tups-module-image">
+        <img
+          src="images/tups-teachers-portal.jpg"
+          alt="TUPS Teacher's Portal"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+
+      <div class="tups-module-content">
+
+        <h3>
+          Teacher's Portal
+        </h3>
+
+        <p>
+          Equip teachers with tools for academic
+          records, results and classroom management.
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <!-- ADMIN PORTAL -->
+    <article class="tups-module-card">
+
+      <div class="tups-module-image">
+        <img
+          src="images/tups-admin-portal.jpg"
+          alt="TUPS Admin Portal"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+
+      <div class="tups-module-content">
+
+        <h3>
+          Admin Portal
+        </h3>
+
+        <p>
+          Manage school operations, users, records,
+          resources and administrative activities.
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <!-- PROGRAMMED RESULTS GRADING -->
+    <article class="tups-module-card">
+
+      <div class="tups-module-image">
+        <img
+          src="images/tups-programmed-results.jpg"
+          alt="TUPS Programmed Results Grading System"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+
+      <div class="tups-module-content">
+
+        <h3>
+          Programmed Results Grading System
+        </h3>
+
+        <p>
+          Automate result computation and grading
+          using programmed academic assessment rules.
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <!-- CBT SOFTWARE -->
+    <article class="tups-module-card">
+
+      <div class="tups-module-image">
+        <img
+          src="images/tups-cbt-software.jpg"
+          alt="TUPS CBT Software"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+
+      
+	  
 
       <!-- TESTIMONIAL -->
 
@@ -664,7 +854,8 @@ const pages = {
 
           <blockquote>
 
-            "TUPS has helped us embrace
+            "TUPS has helped
+	  us embrace
             technology and improve the way
             we manage and communicate our
             school activities."
