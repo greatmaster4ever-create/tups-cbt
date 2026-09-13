@@ -1235,208 +1235,452 @@ a {
 
 }
 
+/* ============================================================
+   TUPS EDUCATION HUB — PROFESSIONAL MODULE STYLING
+   ============================================================ */
 
-/* =========================================================
-   SPECIAL MODULE ACCENTS
-========================================================= */
+/* ------------------------------------------------------------
+   Base Education Hub Card
+   ------------------------------------------------------------ */
+
+.hub-module {
+    --module-bg: #ffffff;
+    --module-accent: var(--tups-blue);
+
+    position: relative;
+    overflow: hidden;
+
+    background: var(--module-bg);
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    border-radius: 10px;
+
+    box-shadow:
+        3px 3px 0 rgba(0, 0, 0, 0.07);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+/* Elegant left identity strip */
+.hub-module::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 4px;
+    height: 100%;
+
+    background: var(--module-accent);
+}
+
+/* Subtle professional hover */
+.hub-module:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        4px 4px 0 rgba(0, 0, 0, 0.09);
+
+    border-color: rgba(0, 0, 0, 0.14);
+}
+
+
+/* ------------------------------------------------------------
+   Partner Schools
+   Cool corporate blue-grey
+   ------------------------------------------------------------ */
+
+.partner-module {
+    --module-bg: #f3f7fb;
+    --module-accent: #176b91;
+}
+
+
+/* ------------------------------------------------------------
+   Education News
+   Professional steel-blue
+   ------------------------------------------------------------ */
+
+.news-module {
+    --module-bg: #f1f6fb;
+    --module-accent: #315f89;
+}
+
+
+/* ------------------------------------------------------------
+   School Gist
+   Warm editorial ivory
+   ------------------------------------------------------------ */
+
+.gist-module {
+    --module-bg: #fbf8f0;
+    --module-accent: #a87524;
+}
+
+
+/* ------------------------------------------------------------
+   Abuja School Jobs
+   Professional blue-green
+   ------------------------------------------------------------ */
 
 .jobs-module {
-
-  border-top:
-    3px solid var(--tups-blue);
-
+    --module-bg: #eef8f5;
+    --module-accent: #247866;
 }
 
+
+/* ------------------------------------------------------------
+   Teacher Resources
+   Restrained professional lavender
+   ------------------------------------------------------------ */
+
+.teacher-module {
+    --module-bg: #f5f2fa;
+    --module-accent: #715b91;
+}
+
+
+/* ------------------------------------------------------------
+   Student Zone
+   Light academic sky-blue
+   ------------------------------------------------------------ */
+
+.student-module {
+    --module-bg: #eef7fc;
+    --module-accent: #287aa6;
+}
+
+
+/* ------------------------------------------------------------
+   TUPS Tools
+   Neutral technology grey
+   ------------------------------------------------------------ */
 
 .tools-module {
-
-  border-top:
-    3px solid #222;
-
+    --module-bg: #f3f4f5;
+    --module-accent: #343a40;
 }
 
+
+/* ------------------------------------------------------------
+   TUPS Play Zone
+   Fresh cyan-blue technology tone
+   ------------------------------------------------------------ */
 
 .play-module {
-
-  border-top:
-    3px solid var(--tups-blue);
-
+    --module-bg: #edf9fc;
+    --module-accent: #0098bd;
 }
 
+
+/* ------------------------------------------------------------
+   Opportunities
+   Mature academic gold
+   ------------------------------------------------------------ */
 
 .opportunities-module {
-
-  border-top:
-    3px solid #222;
-
+    --module-bg: #faf6eb;
+    --module-accent: #967326;
 }
 
 
-/* =========================================================
-   TABLET
-========================================================= */
+/* ============================================================
+   HUB HEADINGS
+   ============================================================ */
 
-@media (max-width: 900px) {
+.hub-module-heading {
+    position: relative;
+    z-index: 1;
 
-  .sidebar {
+    display: flex;
+    align-items: center;
+    gap: 9px;
 
-    width: 220px;
+    color: #18222c;
+}
 
-    padding: 14px 9px;
+.hub-module-heading h2,
+.hub-module-heading h3 {
+    margin: 0;
 
-  }
-
-
-  .hub-module {
-
-    padding: 10px;
-
-    margin-bottom: 11px;
-
-  }
-
-
-  .hub-module-heading h2 {
-
-    font-size: 11px;
-
-  }
-
-
-  .hub-module-description {
-
-    font-size: 10px;
-
-  }
-
+    color: #18222c;
+    font-weight: 700;
+    letter-spacing: 0.1px;
 }
 
 
-/* =========================================================
-   MOBILE
-========================================================= */
+/* Module icon */
+
+.hub-module-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    flex: 0 0 30px;
+
+    color: var(--module-accent);
+
+    background: rgba(255, 255, 255, 0.72);
+
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 7px;
+}
+
+
+/* ------------------------------------------------------------
+   Module descriptions
+   ------------------------------------------------------------ */
+
+.hub-module-description {
+    color: #5b6570;
+    line-height: 1.45;
+}
+
+
+/* ------------------------------------------------------------
+   Preview areas
+   ------------------------------------------------------------ */
+
+.hub-preview {
+    background: rgba(255, 255, 255, 0.58);
+
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    border-radius: 7px;
+}
+
+
+/* Individual preview items */
+
+.hub-preview-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+
+    transition:
+        background 0.18s ease,
+        padding-left 0.18s ease;
+}
+
+.hub-preview-item:last-child {
+    border-bottom: none;
+}
+
+.hub-preview-item:hover {
+    background: rgba(255, 255, 255, 0.8);
+    padding-left: 3px;
+}
+
+
+/* ------------------------------------------------------------
+   More / Action buttons
+   ------------------------------------------------------------ */
+
+.hub-more-button {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+
+    background: rgba(255, 255, 255, 0.78);
+    color: var(--module-accent);
+
+    font-weight: 700;
+
+    border-radius: 6px;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.hub-more-button:hover {
+    background: var(--module-accent);
+    color: #ffffff;
+    border-color: var(--module-accent);
+}
+
+
+/* ------------------------------------------------------------
+   Link grids
+   ------------------------------------------------------------ */
+
+.hub-link-grid {
+    display: grid;
+    gap: 6px;
+}
+
+.hub-link-grid a {
+    color: #37434e;
+
+    background: rgba(255, 255, 255, 0.58);
+
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    border-radius: 6px;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.hub-link-grid a:hover {
+    background: #ffffff;
+    color: var(--module-accent);
+    border-color: rgba(0, 0, 0, 0.13);
+}
+
+
+/* ------------------------------------------------------------
+   Abuja Jobs Badge
+   ------------------------------------------------------------ */
+
+.hub-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 3px 7px;
+
+    border-radius: 999px;
+
+    background: rgba(36, 120, 102, 0.10);
+    color: #216c5c;
+
+    border: 1px solid rgba(36, 120, 102, 0.18);
+
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+
+/* ------------------------------------------------------------
+   Play Zone mini links
+   ------------------------------------------------------------ */
+
+.play-mini-links {
+    display: grid;
+    gap: 6px;
+}
+
+.play-mini-links a {
+    background: rgba(255, 255, 255, 0.65);
+
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    border-radius: 6px;
+
+    color: #34424b;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.play-mini-links a:hover {
+    background: #ffffff;
+    color: var(--module-accent);
+    transform: translateX(2px);
+}
+
+
+/* ============================================================
+   MODULE-SPECIFIC MICRO DETAILS
+   ============================================================ */
+
+/* News */
+.news-module .hub-module-icon {
+    background: #e8f0f8;
+}
+
+
+/* School Gist */
+.gist-module .hub-module-icon {
+    background: #f5eddb;
+}
+
+
+/* Jobs */
+.jobs-module .hub-module-icon {
+    background: #e2f2ed;
+}
+
+
+/* Teacher Resources */
+.teacher-module .hub-module-icon {
+    background: #ece6f4;
+}
+
+
+/* Student Zone */
+.student-module .hub-module-icon {
+    background: #e3f1f8;
+}
+
+
+/* Tools */
+.tools-module .hub-module-icon {
+    background: #e8eaec;
+}
+
+
+/* Play Zone */
+.play-module .hub-module-icon {
+    background: #e0f4f8;
+}
+
+
+/* Opportunities */
+.opportunities-module .hub-module-icon {
+    background: #f3ead4;
+}
+
+
+/* Partner Schools */
+.partner-module .hub-module-icon {
+    background: #e4edf5;
+}
+
+
+/* ============================================================
+   MOBILE REFINEMENT
+   ============================================================ */
 
 @media (max-width: 700px) {
 
-  .sidebar {
+    .hub-module {
+        border-radius: 9px;
+        box-shadow:
+            2px 2px 0 rgba(0, 0, 0, 0.06);
+    }
 
-    width: 100%;
+    .hub-module:hover {
+        transform: none;
 
-    border-right: none;
+        box-shadow:
+            2px 2px 0 rgba(0, 0, 0, 0.06);
+    }
 
-    border-bottom:
-      1px solid #d8dfe4;
-
-    padding: 12px;
-
-  }
-
-
-  /*
-     Keep the Education Hub compact on mobile.
-     Modules can flow horizontally rather than
-     creating one extremely long sidebar.
-  */
-
-  .sidebar {
-
-    display: grid;
-
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-
-    gap: 10px;
-
-    align-items: start;
-
-  }
-
-
-  .hub-module {
-
-    margin: 0;
-
-    padding: 10px;
-
-  }
-
-
-  .partner-module {
-
-    grid-column:
-      1 / -1;
-
-  }
-
-
-  .partner-schools {
-
-    display: grid;
-
-    grid-template-columns:
-      1fr 1fr;
-
-    gap: 5px;
-
-  }
-
-
-  .school-item {
-
-    padding: 7px;
-
-    font-size: 10px;
-
-  }
-
-
-  .school-logo-placeholder {
-
-    width: 34px;
-
-    height: 34px;
-
-  }
-
+    .hub-module::before {
+        width: 3px;
+    }
 }
 
 
-/* =========================================================
-   SMALL PHONES
-========================================================= */
+/* ============================================================
+   REDUCED MOTION ACCESSIBILITY
+   ============================================================ */
 
-@media (max-width: 480px) {
+@media (prefers-reduced-motion: reduce) {
 
-  .sidebar {
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-
-  .partner-module {
-
-    grid-column:
-      auto;
-
-  }
-
-
-  .partner-schools {
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-
-  .hub-module {
-
-    padding: 10px;
-
-  }
-
+    .hub-module,
+    .hub-module:hover,
+    .hub-preview-item,
+    .hub-more-button,
+    .hub-link-grid a,
+    .play-mini-links a {
+        transition: none;
+        transform: none;
+    }
 }
 
 /* =========================================================
