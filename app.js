@@ -576,7 +576,7 @@ const pages = {
 
       <div class="tups-module-image">
         <img
-          src="images/attendance.jpg"
+          src="images/attendance.png"
           alt="TUPS Attendance Module"
           loading="lazy"
           decoding="async"
@@ -606,7 +606,7 @@ const pages = {
 
       <div class="tups-module-image">
         <img
-          src="images/calendar.jpg"
+          src="images/calendar.png"
           alt="TUPS School Calendar"
           loading="lazy"
           decoding="async"
@@ -635,7 +635,7 @@ const pages = {
 
       <div class="tups-module-image">
         <img
-          src="images/communication book.jpg"
+          src="images/communication book.png"
           alt="TUPS Communication Book"
           loading="lazy"
           decoding="async"
@@ -665,7 +665,7 @@ const pages = {
 
       <div class="tups-module-image">
         <img
-          src="images/result checker.jpg"
+          src="images/result checker.png"
           alt="TUPS Online Result Checker"
           loading="lazy"
           decoding="async"
@@ -694,7 +694,7 @@ const pages = {
 
       <div class="tups-module-image">
         <img
-          src="images/tups-students-parents-portal.jpg"
+          src="images/tups-students-parents-portal.png"
           alt="TUPS Students and Parents Portal"
           loading="lazy"
           decoding="async"
@@ -723,7 +723,7 @@ const pages = {
 
       <div class="tups-module-image">
         <img
-          src="images/tups-teachers-portal.jpg"
+          src="images/tups-teachers-portal.png"
           alt="TUPS Teacher's Portal"
           loading="lazy"
           decoding="async"
@@ -752,7 +752,7 @@ const pages = {
 
       <div class="tups-module-image">
         <img
-          src="images/tups-admin-portal.jpg"
+          src="images/tups-admin-portal.png"
           alt="TUPS Admin Portal"
           loading="lazy"
           decoding="async"
@@ -781,7 +781,7 @@ const pages = {
 
       <div class="tups-module-image">
         <img
-          src="images/tups-programmed-results.jpg"
+          src="images/tups-programmed-results.png"
           alt="TUPS Programmed Results Grading System"
           loading="lazy"
           decoding="async"
@@ -798,6 +798,32 @@ const pages = {
           Automate result computation and grading
           using programmed academic assessment rules
           for accurate and consistent results.
+        </p>
+
+      </div>
+
+    </article>
+
+    <!-- ANNOUNCEMENT DASHBOARD -->
+    <article class="tups-module-card">
+
+      <div class="tups-module-image">
+        <img
+          src="images/announcement.png"
+          alt="TUPS Programmed Results Grading System"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+
+      <div class="tups-module-content">
+
+        <h3>
+          Programmed Results Grading System
+        </h3>
+
+        <p>
+         All School announcements displays on the parent/students portal for parents to be always updated.
         </p>
 
       </div>
