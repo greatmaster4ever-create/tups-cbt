@@ -809,7 +809,7 @@ const pages = {
 
       <div class="tups-module-image">
         <img
-          src="images/announcement.png"
+          src="images/announcement.jpg"
           alt="TUPS Programmed Results Grading System"
           loading="lazy"
           decoding="async"
