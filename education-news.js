@@ -16,201 +16,123 @@
 const educationNewsItems = [
 
   {
-    title: "115 Federal Unity Colleges remain shut as schools reopen nationwide",
-    category: "Schools & Policy",
-    date: "September 14, 2026",
-    source: "Punch",
-    summary:
-      "Workers in Federal Unity Colleges have maintained a shutdown over the controversy surrounding the concession of King's College as schools reopen across the country.",
-    url:
-      "https://punchng.com/115-unity-colleges-remain-shut-as-schools-reopen-nationwide"
-  },
-
-  {
-    title: "School fees rise as parents face higher costs at resumption",
-    category: "Parents & Schools",
-    date: "September 14, 2026",
-    source: "Vanguard",
-    summary:
-      "Parents are facing higher education costs as schools reopen for the 2026/2027 academic session, with many private schools increasing fees amid rising operating costs.",
-    url:
-      "https://www.vanguardngr.com/2026/09/school-resumption-parents-lament-as-fees-go-up-40-2/"
-  },
-
-  {
-    title: "FG reaffirms Federal Unity Colleges resumption plans",
-    category: "Education Policy",
-    date: "September 11, 2026",
-    source: "Punch",
-    summary:
-      "The Federal Ministry of Education reaffirmed plans for Federal Unity Colleges to resume academic activities as scheduled for the new academic session.",
-    url:
-      "https://punchng.com/federal-unity-colleges-to-resume-monday-education-ministry/"
-  },
-
-  {
-    title: "Lagos releases 2026/2027 academic calendar",
-    category: "School Calendar",
-    date: "July 16, 2026",
-    source: "Punch",
-    summary:
-      "Lagos State released its harmonised academic calendar for public and private primary and secondary schools, with September 14 fixed as the resumption date.",
-    url:
-      "https://punchng.com/lagos-releases-2026-2027-academic-calendar-fixes-september-14-resumption/"
-  },
-
-  {
-    title: "Parents face rising costs of fees, books and school expenses",
-    category: "Parents & Schools",
-    date: "September 10, 2026",
-    source: "Vanguard",
-    summary:
-      "Parents and guardians are dealing with higher tuition, textbook and accommodation costs as children return to school for the new academic session.",
-    url:
-      "https://www.vanguardngr.com/2026/09/new-academic-session-parents-face-hurdles-as-fees-cost-of-books-others-escalate/"
-  },
-
-  {
-    title: "WAEC verification fee faces criticism",
-    category: "Exams",
-    date: "September 9, 2026",
-    source: "Punch",
-    summary:
-      "A Punch editorial has criticised the proposed N4,000 WAEC and NECO result verification charge and questioned the additional financial burden on students.",
-    url:
-      "https://punchng.com/tinubu-cancel-waec-verification-fees/"
-  },
-
-  {
-    title: "WAEC faces scrutiny over 2026 results",
-    category: "Exams",
-    date: "August 18, 2026",
-    source: "Punch",
-    summary:
-      "Schools and education stakeholders have raised concerns about alleged grading anomalies and technical issues surrounding the 2026 WASSCE results.",
-    url:
-      "https://punchng.com/waec-under-fire-over-2026-results-alleged-grading-anomalies/"
-  },
-
-  {
-    title: "JAMB explains admission position for under-16 candidates",
-    category: "Admissions",
-    date: "August 2026",
-    source: "Vanguard",
-    summary:
-      "JAMB clarified that underage candidates who meet the required benchmark are eligible for consideration but are not automatically guaranteed admission.",
-    url:
-      "https://www.vanguardngr.com/2026/08/jamb-why-scoring-80-may-not-secure-admission-for-under-16-candidates/"
-  },
-
-  {
-    title: "FG says one million out-of-school children returned to classrooms",
-    category: "Education Development",
+    title: "JAMB to Take Over HND Admissions Nationwide",
+    category: "JAMB / Admissions",
     date: "September 2026",
-    source: "Vanguard",
     summary:
-      "The Federal Government says one million out-of-school children have returned to classrooms over a 20-month period as efforts continue to improve access to education.",
-    url:
-      "https://www.vanguardngr.com/2026/09/one-million-out-of-school-children-return-to-classrooms-in-20-months-fg/"
+      "The Federal Government has approved a centralised process under which JAMB will take over HND admissions in polytechnics, colleges of nursing sciences and other affected institutions from the current admission session.",
+    source: "The Sun",
+    url: "https://thesun.ng/jamb-takes-over-hnd-admissions-as-fg-moves-to-curb-irregularities/"
   },
 
   {
-    title: "Kwara sets September 21 resumption date",
-    category: "School Calendar",
+    title: "Resumption Halted in Federal Unity Colleges Amid Dispute",
+    category: "Schools / Education Policy",
+    date: "September 15, 2026",
+    summary:
+      "Education unions and workers have halted resumption activities in several Federal Unity Colleges as the dispute surrounding the concession of King's College, Lagos, continues.",
+    source: "Premium Times",
+    url: "https://www.premiumtimesng.com/news/top-news/909562-strike-resumption-halted-in-federal-unity-colleges-in-anambra-ebonyi-enugu.html"
+  },
+
+  {
+    title: "Nigeria's Safe-School Programme Faces Fresh Security Concerns",
+    category: "School Safety",
     date: "September 14, 2026",
-    source: "Punch",
     summary:
-      "Kwara State announced September 21, 2026 as the resumption date for public and private primary and secondary schools for the new academic session.",
-    url:
-      "https://punchng.com/kwara-sets-september-21-resumption-date-for-2026-2027-academic-session/"
+      "A Guardian report examines continuing security concerns around Nigerian schools as pupils return, including the number of schools still lacking adequate protection and recent attacks affecting students and teachers.",
+    source: "Guardian Nigeria",
+    url: "https://guardian.ng/news/nigerias-n144bn-safe-school-plan-fails-to-calm-security-fears-as-pupils-return/"
   },
 
   {
-    title: "Oyo reaffirms commitment to quality education",
-    category: "Schools & Government",
-    date: "September 2026",
-    source: "Punch",
-    summary:
-      "The Oyo State Government renewed its commitment to improving learning outcomes and strengthening teaching and school standards.",
-    url:
-      "https://punchng.com/makinde-reaffirms-commitment-to-quality-education-as-oyo-schools-resume/"
-  },
-
-  {
-    title: "Education unions suspend resumption in Federal Unity Colleges",
-    category: "Schools & Policy",
-    date: "September 11, 2026",
-    source: "Vanguard",
-    summary:
-      "Education unions announced a suspension of student resumption in Federal Unity Colleges in protest over the concession of King's College, Lagos.",
-    url:
-      "https://www.vanguardngr.com/2026/09/education-unions-suspend-resumption-in-federal-unity-colleges-nationwide/"
-  },
-
-  {
-    title: "King's College concession dispute stalls Unity Colleges",
-    category: "Schools & Policy",
+    title: "Zamfara Targets More Than 453,000 Out-of-School Children",
+    category: "Basic Education",
     date: "September 14, 2026",
-    source: "Vanguard",
     summary:
-      "The dispute over the concession of King's College, Lagos has affected resumption at Federal Unity Colleges, with parents and unions opposing the arrangement.",
-    url:
-      "https://www.vanguardngr.com/2026/09/protest-over-concession-of-kings-college-stalls-resumption-of-unity-colleges/"
+      "Zamfara has launched a campaign aimed at enrolling hundreds of thousands of out-of-school children, with authorities saying the focus is shifting from simply counting children to getting them into classrooms.",
+    source: "Channels Television",
+    url: "https://www.channelstv.com/2026/09/14/zamfara-targets-453602-out-of-school-children-for-enrolment/"
   },
 
   {
-    title: "Ondo changes primary-to-secondary school progression policy",
-    category: "Education Policy",
-    date: "September 2026",
-    source: "Punch",
-    summary:
-      "Ondo State introduced a policy affecting the progression of pupils from primary school into secondary education.",
-    url:
-      "https://punchng.com/ondo-bans-primary-4-to-secondary-school-promotion/"
-  },
-
-  {
-    title: "Nigeria continues push to bring more children into school",
-    category: "Education Development",
-    date: "September 2026",
-    source: "Punch",
-    summary:
-      "Education stakeholders continue to focus on reducing Nigeria's large out-of-school population through enrolment and education-support programmes.",
-    url:
-      "https://punchng.com/more-than-5000-schools-destroyed-by-insurgency-zulum/"
-  },
-
-  {
-    title: "WAEC promotes CBT to combat examination malpractice",
-    category: "Exams",
-    date: "August 2026",
-    source: "Punch",
-    summary:
-      "A WAEC official has advocated stronger computer-based testing as a way of tackling examination malpractice and so-called miracle centres.",
-    url:
-      "https://punchng.com/cbt-best-way-to-curb-miracle-centres-examination-malpractice-waec-official/"
-  },
-
-  {
-    title: "Education technology continues to reshape learning",
-    category: "Education Technology",
+    title: "WAEC Releases Selected Texts for 2026–2030 WASSCE",
+    category: "WAEC / Examinations",
     date: "2026",
-    source: "Punch",
     summary:
-      "Digital learning platforms and education technology continue to provide Nigerian students with additional ways to prepare for examinations and access learning materials.",
-    url:
-      "https://punchng.com/firm-unveils-learning-platform-for-students/"
+      "WAEC has published selected texts for several WASSCE subjects, including Arabic, Edo, Efik, Hausa, Ibibio, Igbo, Literature-in-English and Yoruba for the 2026–2030 examination cycle.",
+    source: "WAEC Nigeria",
+    url: "https://www.waecnigeria.org/article/list-selected-texts-wassce-arabic-edo-efik-hausa-ibibio-igbo-literature-english-and-yoruba"
   },
 
   {
-    title: "High school fees do not always mean better academic performance",
-    category: "Parents & Schools",
-    date: "August 2026",
-    source: "Vanguard",
+    title: "JAMB Extends Deadline for Candidates to Accept or Reject Old Admissions",
+    category: "JAMB / Admissions",
+    date: "August 30, 2026",
     summary:
-      "A report examines whether increasingly expensive private-school fees necessarily translate into stronger academic outcomes for students.",
-    url:
-      "https://www.vanguardngr.com/2026/08/education-when-high-fee-doesnt-mean-better-academic-performance/"
+      "JAMB extended the deadline for candidates with admission offers from 2021 onward to accept or reject those offers, giving affected candidates until September 30, 2026.",
+    source: "JAMB",
+    url: "https://jamb.gov.ng/bulletins"
+  },
+
+  {
+    title: "JAMB 2026/2027 Admissions Continue on CAPS",
+    category: "JAMB / Admissions",
+    date: "September 2026",
+    summary:
+      "JAMB's Central Admissions Processing System continues to record admissions activity for the 2026/2027 academic session, with candidates and institutions processing admissions through CAPS.",
+    source: "JAMB",
+    url: "https://caps.jamb.gov.ng/dashboard.aspx"
+  },
+
+  {
+    title: "NERDC Continues Curriculum Development and Basic Education Reform",
+    category: "Curriculum / NERDC",
+    date: "September 2026",
+    summary:
+      "NERDC continues its work on curriculum development, including the implementation and dissemination of Nigeria's adapted basic education curriculum and related education policy documents.",
+    source: "NERDC",
+    url: "https://www.nerdc.gov.ng/"
+  },
+
+  {
+    title: "Schools Face Higher Costs as Fees Rise for New Academic Session",
+    category: "Schools / Parents",
+    date: "September 14, 2026",
+    summary:
+      "Parents and guardians are facing increased education costs as many private schools raise fees and other school-related expenses for the new academic session.",
+    source: "Vanguard",
+    url: "https://www.vanguardngr.com/category/education-2/"
+  },
+
+  {
+    title: "JAMB Admission Status: Candidates Urged to Check CAPS",
+    category: "JAMB / Students",
+    date: "August 29, 2026",
+    summary:
+      "Candidates seeking admission for the 2026/2027 academic session have been advised to regularly check their JAMB CAPS profiles and promptly accept or reject admission offers.",
+    source: "TVC News",
+    url: "https://www.tvcnews.tv/explainer-how-to-check-jamb-admission-status/"
+  },
+
+  {
+    title: "Teen Trust Highlights NABTEB Examination Registration Deadline",
+    category: "Examinations / Students",
+    date: "August 31, 2026",
+    summary:
+      "Teen Trust reported on NABTEB's registration deadline for the 2026 November and December certificate examinations, providing useful information for students and schools preparing candidates.",
+    source: "Teen Trust",
+    url: "https://teentrust.ng/nabteb-sets-september-10-deadline-for-2026-november-and-december-exams/"
+  },
+
+  {
+    title: "Federal Government Pushes Measures Against Examination Malpractice",
+    category: "Education Policy / Examinations",
+    date: "2026",
+    summary:
+      "Recent government and examination-sector measures continue to focus on improving examination integrity and reducing malpractice across Nigeria's education system.",
+    source: "Channels Television",
+    url: "https://www.channelstv.com/"
   }
 
 ];
