@@ -2579,20 +2579,39 @@ document.addEventListener(
     if (!hubButton) return;
 
     const hubName =
-      hubButton.dataset.hub;
+  hubButton.dataset.hub;
 
-    if (hubName !== "news") return;
+if (
+  hubName !== "news" &&
+  hubName !== "gist"
+) return;
 
     event.preventDefault();
 
     try {
 
-      const module =
-        await import(
-          "./education-news.js"
-        );
+      if (hubName === "news") {
 
-      module.loadEducationNews();
+  const module =
+    await import(
+      "./education-news.js"
+    );
+
+  module.loadEducationNews();
+
+}
+
+
+if (hubName === "gist") {
+
+  const module =
+    await import(
+      "./school-gist.js"
+    );
+
+  module.loadSchoolGist();
+
+}
 
     } catch (error) {
 
