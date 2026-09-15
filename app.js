@@ -2565,88 +2565,6 @@ schoolButtons.forEach(button => {
 
 
 });
-
-/* =========================================================
-   TUPS EDUCATION HUB MODULE EVENTS
-========================================================= */
-
-document.addEventListener(
-  "click",
-  async function (event) {
-
-    const hubButton =
-      event.target.closest("[data-hub]");
-
-
-    if (!hubButton) return;
-
-
-    const hubName =
-      hubButton.dataset.hub;
-
-
-    if (hubName !== "news") return;
-
-
-    event.preventDefault();
-
-
-    try {
-
-      const module =
-        await import(
-          "../education-news.js"
-        );
-
-
-      module.loadEducationNews();
-
-
-    } catch (error) {
-
-      console.error(
-        "TUPS Education News failed to load:",
-        error
-      );
-
-
-      if (contentArea) {
-
-        contentArea.innerHTML = `
-
-          <section class="content-page">
-
-            <div class="content-card">
-
-              <div class="card-icon">
-
-                <i class="fa-solid fa-triangle-exclamation"></i>
-
-              </div>
-
-              <h2>
-                Education News
-              </h2>
-
-              <p>
-                The Education News service could not
-                be loaded at this time. Please try again.
-              </p>
-
-            </div>
-
-          </section>
-
-        `;
-
-      }
-
-    }
-
-  }
-);
-
-
 /* =========================================================
    TUPS EDUCATION HUB MODULE EVENTS
 ========================================================= */
@@ -2671,7 +2589,7 @@ document.addEventListener(
 
       const module =
         await import(
-          "./js/education-news.js"
+          "./education-news.js"
         );
 
       module.loadEducationNews();
@@ -2688,18 +2606,14 @@ document.addEventListener(
         contentArea.innerHTML = `
           <section class="content-page">
             <div class="content-card">
-
               <div class="card-icon">
                 <i class="fa-solid fa-triangle-exclamation"></i>
               </div>
-
               <h2>Education News</h2>
-
               <p>
                 The Education News service could not
                 be loaded at this time. Please try again.
               </p>
-
             </div>
           </section>
         `;
