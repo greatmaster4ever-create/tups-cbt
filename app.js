@@ -2595,7 +2595,7 @@ document.addEventListener(
 
       const module =
         await import(
-          "./education-news.js"
+          "../education-news.js"
         );
 
 
