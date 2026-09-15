@@ -1,14 +1,16 @@
 /* =========================================================
    TUPS EDUCATION NEWS MODULE
-   VERSION 2
+   VERSION 3
    ---------------------------------------------------------
-   Real curated education stories.
-   Full article remains on the original publisher's website.
+   - Education News page
+   - Sidebar latest-news preview
+   - Pagination
+   - Original-source links
 ========================================================= */
 
 
 /* =========================================================
-   EDUCATION NEWS DATA
+   NEWS DATA
 ========================================================= */
 
 const educationNewsItems = [
@@ -19,7 +21,7 @@ const educationNewsItems = [
     date: "September 14, 2026",
     source: "Punch",
     summary:
-      "Workers in 115 Federal Unity Colleges have maintained a shutdown over the controversy surrounding the concession of King's College, Lagos, as schools reopen across the country.",
+      "Workers in Federal Unity Colleges have maintained a shutdown over the controversy surrounding the concession of King's College as schools reopen across the country.",
     url:
       "https://punchng.com/115-unity-colleges-remain-shut-as-schools-reopen-nationwide"
   },
@@ -30,100 +32,197 @@ const educationNewsItems = [
     date: "September 14, 2026",
     source: "Vanguard",
     summary:
-      "Parents are facing higher education costs as schools reopen for the 2026/2027 academic session, with school owners citing rising operating expenses.",
+      "Parents are facing higher education costs as schools reopen for the 2026/2027 academic session, with many private schools increasing fees amid rising operating costs.",
     url:
-      "https://www.vanguardngr.com/2026/09/school-resumption-parents-lament-as-fees-go-up-40/"
+      "https://www.vanguardngr.com/2026/09/school-resumption-parents-lament-as-fees-go-up-40-2/"
   },
 
   {
-    title: "FG to give students 100MB free data daily from October 1",
-    category: "Education Technology",
+    title: "FG reaffirms Federal Unity Colleges resumption plans",
+    category: "Education Policy",
     date: "September 11, 2026",
     source: "Punch",
     summary:
-      "The Federal Government has announced a new initiative to provide students with daily data access for approved educational websites and digital learning platforms.",
+      "The Federal Ministry of Education reaffirmed plans for Federal Unity Colleges to resume academic activities as scheduled for the new academic session.",
     url:
-      "https://punchng.com/fg-to-give-students-100mb-free-data-daily-from-october-1/"
+      "https://punchng.com/federal-unity-colleges-to-resume-monday-education-ministry/"
   },
 
   {
-    title: "Lagos makes LASRRA registration compulsory for school enrolment",
-    category: "Education Policy",
-    date: "September 4, 2026",
+    title: "Lagos releases 2026/2027 academic calendar",
+    category: "School Calendar",
+    date: "July 16, 2026",
     source: "Punch",
     summary:
-      "Lagos State has introduced compulsory LASRRA registration for learners enrolling in public and private schools as part of efforts to build a reliable learner database.",
+      "Lagos State released its harmonised academic calendar for public and private primary and secondary schools, with September 14 fixed as the resumption date.",
     url:
-      "https://punchng.com/lagos-makes-lasrra-registration-compulsory-for-school-enrolment/"
+      "https://punchng.com/lagos-releases-2026-2027-academic-calendar-fixes-september-14-resumption/"
   },
 
   {
-    title: "Nigeria must protect the classroom as schools reopen",
-    category: "School Safety",
-    date: "September 15, 2026",
+    title: "Parents face rising costs of fees, books and school expenses",
+    category: "Parents & Schools",
+    date: "September 10, 2026",
     source: "Vanguard",
     summary:
-      "A new education-focused commentary highlights the importance of protecting students and teachers as Nigerian schools begin the 2026/2027 academic session.",
+      "Parents and guardians are dealing with higher tuition, textbook and accommodation costs as children return to school for the new academic session.",
     url:
-      "https://www.vanguardngr.com/2026/09/nigeria-must-protect-the-classroom/"
+      "https://www.vanguardngr.com/2026/09/new-academic-session-parents-face-hurdles-as-fees-cost-of-books-others-escalate/"
   },
 
   {
-    title: "More than 5,000 schools destroyed by insurgency, says Zulum",
-    category: "Schools & Development",
-    date: "September 13, 2026",
-    source: "Punch",
-    summary:
-      "Borno State Governor Babagana Zulum says more than 5,000 school structures have been destroyed during the state's prolonged insurgency.",
-    url:
-      "https://punchng.com/more-than-5000-schools-destroyed-by-insurgency-zulum/"
-  },
-
-  {
-    title: "Ondo bans Primary 4 to secondary school promotion",
-    category: "Education Policy",
-    date: "September 11, 2026",
-    source: "Punch",
-    summary:
-      "Ondo State has introduced a policy preventing pupils from moving directly from Primary 4 into secondary school, citing the need to preserve the established education structure.",
-    url:
-      "https://punchng.com/ondo-bans-primary-4-to-secondary-school-promotion/"
-  },
-
-  {
-    title: "One million out-of-school children returned to classrooms in 20 months",
-    category: "Education Development",
+    title: "WAEC verification fee faces criticism",
+    category: "Exams",
     date: "September 9, 2026",
+    source: "Punch",
+    summary:
+      "A Punch editorial has criticised the proposed N4,000 WAEC and NECO result verification charge and questioned the additional financial burden on students.",
+    url:
+      "https://punchng.com/tinubu-cancel-waec-verification-fees/"
+  },
+
+  {
+    title: "WAEC faces scrutiny over 2026 results",
+    category: "Exams",
+    date: "August 18, 2026",
+    source: "Punch",
+    summary:
+      "Schools and education stakeholders have raised concerns about alleged grading anomalies and technical issues surrounding the 2026 WASSCE results.",
+    url:
+      "https://punchng.com/waec-under-fire-over-2026-results-alleged-grading-anomalies/"
+  },
+
+  {
+    title: "JAMB explains admission position for under-16 candidates",
+    category: "Admissions",
+    date: "August 2026",
     source: "Vanguard",
     summary:
-      "The Federal Government says one million out-of-school children have returned to classrooms over the past 20 months as efforts continue to improve access to education.",
+      "JAMB clarified that underage candidates who meet the required benchmark are eligible for consideration but are not automatically guaranteed admission.",
+    url:
+      "https://www.vanguardngr.com/2026/08/jamb-why-scoring-80-may-not-secure-admission-for-under-16-candidates/"
+  },
+
+  {
+    title: "FG says one million out-of-school children returned to classrooms",
+    category: "Education Development",
+    date: "September 2026",
+    source: "Vanguard",
+    summary:
+      "The Federal Government says one million out-of-school children have returned to classrooms over a 20-month period as efforts continue to improve access to education.",
     url:
       "https://www.vanguardngr.com/2026/09/one-million-out-of-school-children-return-to-classrooms-in-20-months-fg/"
   },
 
   {
-    title: "Kwara sets September 21 resumption date for 2026/2027 session",
+    title: "Kwara sets September 21 resumption date",
     category: "School Calendar",
     date: "September 14, 2026",
     source: "Punch",
     summary:
-      "Kwara State has announced September 21, 2026 as the resumption date for public and private primary and secondary schools for the new academic session.",
+      "Kwara State announced September 21, 2026 as the resumption date for public and private primary and secondary schools for the new academic session.",
     url:
       "https://punchng.com/kwara-sets-september-21-resumption-date-for-2026-2027-academic-session/"
   },
 
   {
-    title: "Oyo reaffirms commitment to quality education as schools resume",
+    title: "Oyo reaffirms commitment to quality education",
     category: "Schools & Government",
-    date: "September 11, 2026",
+    date: "September 2026",
     source: "Punch",
     summary:
-      "The Oyo State Government has renewed its commitment to improving learning outcomes and strengthening teaching and school standards during the new academic session.",
+      "The Oyo State Government renewed its commitment to improving learning outcomes and strengthening teaching and school standards.",
     url:
       "https://punchng.com/makinde-reaffirms-commitment-to-quality-education-as-oyo-schools-resume/"
+  },
+
+  {
+    title: "Education unions suspend resumption in Federal Unity Colleges",
+    category: "Schools & Policy",
+    date: "September 11, 2026",
+    source: "Vanguard",
+    summary:
+      "Education unions announced a suspension of student resumption in Federal Unity Colleges in protest over the concession of King's College, Lagos.",
+    url:
+      "https://www.vanguardngr.com/2026/09/education-unions-suspend-resumption-in-federal-unity-colleges-nationwide/"
+  },
+
+  {
+    title: "King's College concession dispute stalls Unity Colleges",
+    category: "Schools & Policy",
+    date: "September 14, 2026",
+    source: "Vanguard",
+    summary:
+      "The dispute over the concession of King's College, Lagos has affected resumption at Federal Unity Colleges, with parents and unions opposing the arrangement.",
+    url:
+      "https://www.vanguardngr.com/2026/09/protest-over-concession-of-kings-college-stalls-resumption-of-unity-colleges/"
+  },
+
+  {
+    title: "Ondo changes primary-to-secondary school progression policy",
+    category: "Education Policy",
+    date: "September 2026",
+    source: "Punch",
+    summary:
+      "Ondo State introduced a policy affecting the progression of pupils from primary school into secondary education.",
+    url:
+      "https://punchng.com/ondo-bans-primary-4-to-secondary-school-promotion/"
+  },
+
+  {
+    title: "Nigeria continues push to bring more children into school",
+    category: "Education Development",
+    date: "September 2026",
+    source: "Punch",
+    summary:
+      "Education stakeholders continue to focus on reducing Nigeria's large out-of-school population through enrolment and education-support programmes.",
+    url:
+      "https://punchng.com/more-than-5000-schools-destroyed-by-insurgency-zulum/"
+  },
+
+  {
+    title: "WAEC promotes CBT to combat examination malpractice",
+    category: "Exams",
+    date: "August 2026",
+    source: "Punch",
+    summary:
+      "A WAEC official has advocated stronger computer-based testing as a way of tackling examination malpractice and so-called miracle centres.",
+    url:
+      "https://punchng.com/cbt-best-way-to-curb-miracle-centres-examination-malpractice-waec-official/"
+  },
+
+  {
+    title: "Education technology continues to reshape learning",
+    category: "Education Technology",
+    date: "2026",
+    source: "Punch",
+    summary:
+      "Digital learning platforms and education technology continue to provide Nigerian students with additional ways to prepare for examinations and access learning materials.",
+    url:
+      "https://punchng.com/firm-unveils-learning-platform-for-students/"
+  },
+
+  {
+    title: "High school fees do not always mean better academic performance",
+    category: "Parents & Schools",
+    date: "August 2026",
+    source: "Vanguard",
+    summary:
+      "A report examines whether increasingly expensive private-school fees necessarily translate into stronger academic outcomes for students.",
+    url:
+      "https://www.vanguardngr.com/2026/08/education-when-high-fee-doesnt-mean-better-academic-performance/"
   }
 
 ];
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+const NEWS_PER_PAGE = 6;
+
+let currentNewsPage = 1;
 
 
 /* =========================================================
@@ -132,10 +231,10 @@ const educationNewsItems = [
 
 export function loadEducationNews() {
 
-  const educationNewsContainer =
+  const contentArea =
     document.getElementById("content-area");
 
-  if (!educationNewsContainer) {
+  if (!contentArea) {
 
     console.warn(
       "TUPS Education News: content-area not found."
@@ -145,10 +244,11 @@ export function loadEducationNews() {
   }
 
 
-  renderEducationNews(
-    educationNewsContainer
-  );
+  currentNewsPage = 1;
 
+  renderEducationNews(contentArea);
+
+  updateEducationNewsSidebar();
 
   window.scrollTo({
     top: 0,
@@ -159,7 +259,7 @@ export function loadEducationNews() {
 
 
 /* =========================================================
-   RENDER PAGE
+   RENDER MAIN NEWS PAGE
 ========================================================= */
 
 function renderEducationNews(container) {
@@ -167,15 +267,33 @@ function renderEducationNews(container) {
   const featuredStory =
     educationNewsItems[0];
 
-  const latestStories =
-    educationNewsItems.slice(1);
+  const totalPages =
+    Math.ceil(
+      educationNewsItems.length /
+      NEWS_PER_PAGE
+    );
+
+
+  const startIndex =
+    (currentNewsPage - 1) *
+    NEWS_PER_PAGE;
+
+  const endIndex =
+    startIndex + NEWS_PER_PAGE;
+
+  const pageStories =
+    educationNewsItems.slice(
+      startIndex,
+      endIndex
+    );
 
 
   container.innerHTML = `
 
     <section class="content-page education-news-page">
 
-      <!-- PAGE HEADER -->
+      <!-- HEADER -->
+
       <div class="school-page-header">
 
         <div class="large-school-logo">
@@ -197,6 +315,7 @@ function renderEducationNews(container) {
 
 
       <!-- FEATURED STORY -->
+
       <section class="education-news-featured">
 
         <div class="education-news-featured-label">
@@ -255,7 +374,8 @@ function renderEducationNews(container) {
       </section>
 
 
-      <!-- LATEST NEWS -->
+      <!-- LATEST -->
+
       <section class="education-news-latest">
 
         <div class="education-news-section-heading">
@@ -279,7 +399,7 @@ function renderEducationNews(container) {
 
         <div class="content-grid education-news-grid">
 
-          ${latestStories.map(news => `
+          ${pageStories.map(news => `
 
             <article class="content-card education-news-card">
 
@@ -330,10 +450,16 @@ function renderEducationNews(container) {
 
         </div>
 
+
+        <!-- PAGINATION -->
+
+        ${renderPagination(totalPages)}
+
       </section>
 
 
-      <!-- HUB FOOTER -->
+      <!-- HUB CTA -->
+
       <section class="cta-section education-news-cta">
 
         <div class="card-icon">
@@ -354,6 +480,7 @@ function renderEducationNews(container) {
 
 
       <!-- SOURCE NOTE -->
+
       <div class="education-news-source-note">
 
         <i class="fa-solid fa-circle-info"></i>
@@ -370,22 +497,296 @@ function renderEducationNews(container) {
 
   `;
 
+
+  attachPaginationEvents();
+
 }
 
 
 /* =========================================================
-   BASIC HTML ESCAPING
-   ---------------------------------------------------------
-   Prevents news text from injecting HTML.
+   PAGINATION HTML
+========================================================= */
+
+function renderPagination(totalPages) {
+
+  if (totalPages <= 1) {
+    return "";
+  }
+
+
+  let html = `
+    <nav
+      class="education-news-pagination"
+      aria-label="Education news pagination"
+    >
+  `;
+
+
+  /* Previous */
+
+  html += `
+
+    <button
+      type="button"
+      class="education-news-page-button education-news-prev"
+      data-page="${currentNewsPage - 1}"
+      ${currentNewsPage === 1 ? "disabled" : ""}
+      aria-label="Previous page"
+    >
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+  `;
+
+
+  /* Page numbers */
+
+  for (
+    let page = 1;
+    page <= totalPages;
+    page++
+  ) {
+
+    html += `
+
+      <button
+        type="button"
+        class="education-news-page-button ${
+          page === currentNewsPage
+            ? "active"
+            : ""
+        }"
+        data-page="${page}"
+        aria-label="Page ${page}"
+        ${
+          page === currentNewsPage
+            ? 'aria-current="page"'
+            : ""
+        }
+      >
+        ${page}
+      </button>
+
+    `;
+
+  }
+
+
+  /* Next */
+
+  html += `
+
+    <button
+      type="button"
+      class="education-news-page-button education-news-next"
+      data-page="${currentNewsPage + 1}"
+      ${
+        currentNewsPage === totalPages
+          ? "disabled"
+          : ""
+      }
+      aria-label="Next page"
+    >
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+  `;
+
+
+  html += `
+    </nav>
+  `;
+
+
+  return html;
+
+}
+
+
+/* =========================================================
+   PAGINATION EVENTS
+========================================================= */
+
+function attachPaginationEvents() {
+
+  document
+    .querySelectorAll(
+      ".education-news-page-button"
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        function () {
+
+          const requestedPage =
+            Number(
+              this.dataset.page
+            );
+
+
+          if (
+            !requestedPage ||
+            requestedPage === currentNewsPage
+          ) {
+            return;
+          }
+
+
+          const totalPages =
+            Math.ceil(
+              educationNewsItems.length /
+              NEWS_PER_PAGE
+            );
+
+
+          if (
+            requestedPage < 1 ||
+            requestedPage > totalPages
+          ) {
+            return;
+          }
+
+
+          currentNewsPage =
+            requestedPage;
+
+
+          const contentArea =
+            document.getElementById(
+              "content-area"
+            );
+
+
+          if (contentArea) {
+
+            renderEducationNews(
+              contentArea
+            );
+
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+
+          }
+
+        }
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   SIDEBAR NEWS PREVIEW
+========================================================= */
+
+function updateEducationNewsSidebar() {
+
+  const preview =
+    document.querySelector(
+      ".news-module .hub-preview"
+    );
+
+
+  if (!preview) {
+    return;
+  }
+
+
+  const latestStories =
+    educationNewsItems.slice(
+      0,
+      3
+    );
+
+
+  preview.innerHTML = `
+
+    ${latestStories.map(news => `
+
+      <button
+        type="button"
+        class="education-news-sidebar-item"
+        data-news-url="${news.url}"
+      >
+
+        <strong>
+          ${escapeNewsHTML(news.title)}
+        </strong>
+
+        <span>
+          ${escapeNewsHTML(news.source)}
+          ·
+          ${escapeNewsHTML(news.date)}
+        </span>
+
+      </button>
+
+    `).join("")}
+
+  `;
+
+
+  preview
+    .querySelectorAll(
+      ".education-news-sidebar-item"
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        function () {
+
+          const url =
+            this.dataset.newsUrl;
+
+          if (url) {
+
+            window.open(
+              url,
+              "_blank",
+              "noopener,noreferrer"
+            );
+
+          }
+
+        }
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   HTML ESCAPING
 ========================================================= */
 
 function escapeNewsHTML(value) {
 
   return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
