@@ -5953,3 +5953,595 @@ linear-gradient(
     }
 
 }
+
+/* =========================================================
+   TUPS SCHOOL GIST & GOSSIP
+   Full-page styling
+========================================================= */
+
+.school-gist-page {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 10px 0 50px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.school-gist-header {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 32px;
+    padding: 30px;
+    border: 2px solid #00f5ff;
+    border-radius: 16px;
+    background: #050505;
+    box-shadow: 8px 8px 0 #000;
+}
+
+.school-gist-header::before {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    top: -150px;
+    right: -80px;
+    border-radius: 50%;
+    background: rgba(0, 245, 255, 0.08);
+    pointer-events: none;
+}
+
+.school-gist-header::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    bottom: -120px;
+    left: 30%;
+    border-radius: 50%;
+    background: rgba(0, 102, 204, 0.12);
+    pointer-events: none;
+}
+
+.school-gist-title-row {
+    position: relative;
+    z-index: 1;
+}
+
+.school-gist-kicker {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 5px 10px;
+    border: 1px solid #00f5ff;
+    border-radius: 5px;
+    color: #00f5ff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.school-gist-header h1 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 1.1;
+    font-weight: 900;
+}
+
+.school-gist-header p {
+    max-width: 760px;
+    margin: 12px 0 0;
+    color: #c9c9c9;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   TOPIC BAR
+========================================================= */
+
+.school-gist-topic-bar {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(0, 245, 255, 0.25);
+}
+
+.school-gist-topic-bar span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 6px 12px;
+    border: 1px solid rgba(0, 245, 255, 0.4);
+    border-radius: 20px;
+    background: rgba(0, 245, 255, 0.05);
+    color: #e9ffff;
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.school-gist-section {
+    margin-bottom: 42px;
+}
+
+.school-gist-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #111;
+}
+
+.school-gist-section-heading > div {
+    min-width: 0;
+}
+
+.school-gist-section-kicker {
+    display: block;
+    margin-bottom: 4px;
+    color: #777;
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.school-gist-section-heading h2 {
+    margin: 0;
+    color: #111;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    line-height: 1.2;
+    font-weight: 900;
+}
+
+.school-gist-section-heading p {
+    margin: 5px 0 0;
+    color: #666;
+    font-size: 0.88rem;
+}
+
+.school-gist-count {
+    flex-shrink: 0;
+    padding: 6px 10px;
+    border-radius: 5px;
+    background: #050505;
+    color: #00f5ff;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   HOT SECTION
+========================================================= */
+
+.school-gist-hot {
+    padding: 20px;
+    border: 2px solid #111;
+    border-radius: 14px;
+    background: #f7f7f7;
+}
+
+.school-gist-hot .school-gist-section-heading {
+    border-bottom-color: #00f5ff;
+}
+
+
+/* =========================================================
+   STORY GRID
+========================================================= */
+
+.school-gist-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+
+/* =========================================================
+   STORY CARD
+========================================================= */
+
+.school-gist-card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    overflow: hidden;
+    border: 2px solid #111;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 5px 5px 0 #000;
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease;
+}
+
+.school-gist-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 #000;
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.school-gist-image-link {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    background: #111;
+}
+
+.school-gist-image-link img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+}
+
+.school-gist-card:hover .school-gist-image-link img {
+    transform: scale(1.045);
+}
+
+
+/* =========================================================
+   HOT BADGE
+========================================================= */
+
+.school-gist-hot-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    border: 1px solid #111;
+    border-radius: 4px;
+    background: #fff;
+    color: #111;
+    font-size: 0.68rem;
+    font-weight: 900;
+    box-shadow: 3px 3px 0 #000;
+}
+
+
+/* =========================================================
+   CARD CONTENT
+========================================================= */
+
+.school-gist-card-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.school-gist-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 9px;
+}
+
+.school-gist-card-meta span {
+    overflow: hidden;
+    color: #777;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.school-gist-card-meta span:first-child {
+    color: #006666;
+}
+
+.school-gist-card h3 {
+    margin: 0 0 9px;
+    color: #111;
+    font-size: 1rem;
+    line-height: 1.35;
+    font-weight: 850;
+}
+
+.school-gist-card p {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: #555;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+}
+
+
+/* =========================================================
+   CARD FOOTER
+========================================================= */
+
+.school-gist-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 13px;
+    color: #777;
+    font-size: 0.65rem;
+    font-weight: 700;
+}
+
+.school-gist-card-footer span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.school-gist-card-footer i {
+    margin-right: 3px;
+    color: #008b8b;
+}
+
+
+/* =========================================================
+   READ GIST BUTTON
+========================================================= */
+
+.school-gist-read-more {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 13px;
+    padding: 9px 10px;
+    border: 2px solid #111;
+    border-radius: 5px;
+    background: #050505;
+    color: #00f5ff;
+    font-size: 0.74rem;
+    font-weight: 850;
+    text-decoration: none;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.school-gist-read-more:hover {
+    background: #00f5ff;
+    color: #050505;
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.school-gist-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 22px;
+}
+
+.school-gist-page-button {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    border: 2px solid #111;
+    border-radius: 5px;
+    background: #fff;
+    color: #111;
+    cursor: pointer;
+    font-size: 0.72rem;
+    font-weight: 800;
+    transition:
+        transform 0.18s ease,
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+.school-gist-page-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: #111;
+    color: #00f5ff;
+}
+
+.school-gist-page-button.active {
+    background: #111;
+    color: #00f5ff;
+    box-shadow: 3px 3px 0 #00f5ff;
+}
+
+.school-gist-page-button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.school-gist-empty {
+    grid-column: 1 / -1;
+    padding: 35px;
+    border: 2px dashed #aaa;
+    border-radius: 10px;
+    color: #777;
+    text-align: center;
+}
+
+
+/* =========================================================
+   SOURCE NOTE
+========================================================= */
+
+.school-gist-source-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin-top: 35px;
+    padding: 14px 16px;
+    border-left: 4px solid #00f5ff;
+    background: #f4f4f4;
+    color: #666;
+    font-size: 0.75rem;
+    line-height: 1.55;
+}
+
+.school-gist-source-note i {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: #008b8b;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .school-gist-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .school-gist-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .school-gist-header {
+        padding: 24px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .school-gist-page {
+        padding-bottom: 30px;
+    }
+
+    .school-gist-header {
+        margin-bottom: 25px;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 5px 5px 0 #000;
+    }
+
+    .school-gist-header h1 {
+        font-size: 1.65rem;
+    }
+
+    .school-gist-header p {
+        font-size: 0.85rem;
+    }
+
+    .school-gist-topic-bar {
+        gap: 6px;
+        margin-top: 18px;
+        padding-top: 14px;
+    }
+
+    .school-gist-topic-bar span {
+        font-size: 0.64rem;
+        padding: 5px 8px;
+    }
+
+    .school-gist-hot {
+        padding: 14px;
+    }
+
+    .school-gist-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .school-gist-count {
+        align-self: flex-start;
+    }
+
+    .school-gist-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .school-gist-card {
+        box-shadow: 4px 4px 0 #000;
+    }
+
+    .school-gist-card:hover {
+        transform: none;
+        box-shadow: 4px 4px 0 #000;
+    }
+
+    .school-gist-pagination {
+        gap: 5px;
+    }
+
+    .school-gist-page-button {
+        min-width: 34px;
+        height: 34px;
+        padding: 0 8px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .school-gist-card,
+    .school-gist-card:hover,
+    .school-gist-image-link img,
+    .school-gist-page-button,
+    .school-gist-read-more {
+        transition: none;
+        transform: none;
+    }
+
+}
