@@ -1,4 +1,3 @@
-```javascript
 // ============================================================
 // TUPS SCHOOL GIST
 // DYNAMIC DISPLAY ENGINE
@@ -1172,4 +1171,3 @@ function escapeAttribute(
   );
 
 }
-```
