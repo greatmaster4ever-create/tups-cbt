@@ -1,417 +1,440 @@
 /* =========================================================
-   TUPS EDUCATION NEWS MODULE
-   VERSION 3
-   ---------------------------------------------------------
-   - Education News page
-   - Sidebar latest-news preview
-   - Pagination
-   - Original-source links
+   TUPS EDUCATION NEWS
+   DYNAMIC FEED VERSION 2.0
 ========================================================= */
+
+const TUPS_NEWS_FEED_URL =
+  "https://script.google.com/macros/s/AKfycbxW-qt2N1ggueT8Y5eZGLM9ltM8mGbOiKBKRYx6ZxD0X00rqw23nNJotkO1L2ueEF-E/exec";
+
+const EDUCATION_NEWS_PER_PAGE = 6;
+
+let educationNewsItems = [];
+let educationNewsCurrentPage = 1;
 
 
 /* =========================================================
-   NEWS DATA
+   LOAD EDUCATION NEWS
 ========================================================= */
 
-const educationNewsItems = [
+export async function loadEducationNews() {
 
-  {
-    title: "JAMB to Take Over HND Admissions Nationwide",
-    category: "JAMB / Admissions",
-    date: "September 2026",
-    summary:
-      "The Federal Government has approved a centralised process under which JAMB will take over HND admissions in polytechnics, colleges of nursing sciences and other affected institutions from the current admission session.",
-    source: "The Sun",
-    url: "https://thesun.ng/jamb-takes-over-hnd-admissions-as-fg-moves-to-curb-irregularities/"
-  },
+  if (!contentArea) return;
 
-  {
-    title: "Resumption Halted in Federal Unity Colleges Amid Dispute",
-    category: "Schools / Education Policy",
-    date: "September 15, 2026",
-    summary:
-      "Education unions and workers have halted resumption activities in several Federal Unity Colleges as the dispute surrounding the concession of King's College, Lagos, continues.",
-    source: "Premium Times",
-    url: "https://www.premiumtimesng.com/news/top-news/909562-strike-resumption-halted-in-federal-unity-colleges-in-anambra-ebonyi-enugu.html"
-  },
+  contentArea.innerHTML = `
+    <section class="content-page education-news-page">
 
-  {
-    title: "Nigeria's Safe-School Programme Faces Fresh Security Concerns",
-    category: "School Safety",
-    date: "September 14, 2026",
-    summary:
-      "A Guardian report examines continuing security concerns around Nigerian schools as pupils return, including the number of schools still lacking adequate protection and recent attacks affecting students and teachers.",
-    source: "Guardian Nigeria",
-    url: "https://guardian.ng/news/nigerias-n144bn-safe-school-plan-fails-to-calm-security-fears-as-pupils-return/"
-  },
+      <div class="content-card education-news-loading">
 
-  {
-    title: "Zamfara Targets More Than 453,000 Out-of-School Children",
-    category: "Basic Education",
-    date: "September 14, 2026",
-    summary:
-      "Zamfara has launched a campaign aimed at enrolling hundreds of thousands of out-of-school children, with authorities saying the focus is shifting from simply counting children to getting them into classrooms.",
-    source: "Channels Television",
-    url: "https://www.channelstv.com/2026/09/14/zamfara-targets-453602-out-of-school-children-for-enrolment/"
-  },
+        <div class="card-icon">
+          <i class="fa-solid fa-newspaper"></i>
+        </div>
 
-  {
-    title: "WAEC Releases Selected Texts for 2026–2030 WASSCE",
-    category: "WAEC / Examinations",
-    date: "2026",
-    summary:
-      "WAEC has published selected texts for several WASSCE subjects, including Arabic, Edo, Efik, Hausa, Ibibio, Igbo, Literature-in-English and Yoruba for the 2026–2030 examination cycle.",
-    source: "WAEC Nigeria",
-    url: "https://www.waecnigeria.org/article/list-selected-texts-wassce-arabic-edo-efik-hausa-ibibio-igbo-literature-english-and-yoruba"
-  },
+        <h2>Education News</h2>
 
-  {
-    title: "JAMB Extends Deadline for Candidates to Accept or Reject Old Admissions",
-    category: "JAMB / Admissions",
-    date: "August 30, 2026",
-    summary:
-      "JAMB extended the deadline for candidates with admission offers from 2021 onward to accept or reject those offers, giving affected candidates until September 30, 2026.",
-    source: "JAMB",
-    url: "https://jamb.gov.ng/bulletins"
-  },
+        <p>
+          Loading the latest education news...
+        </p>
 
-  {
-    title: "JAMB 2026/2027 Admissions Continue on CAPS",
-    category: "JAMB / Admissions",
-    date: "September 2026",
-    summary:
-      "JAMB's Central Admissions Processing System continues to record admissions activity for the 2026/2027 academic session, with candidates and institutions processing admissions through CAPS.",
-    source: "JAMB",
-    url: "https://caps.jamb.gov.ng/dashboard.aspx"
-  },
+      </div>
 
-  {
-    title: "NERDC Continues Curriculum Development and Basic Education Reform",
-    category: "Curriculum / NERDC",
-    date: "September 2026",
-    summary:
-      "NERDC continues its work on curriculum development, including the implementation and dissemination of Nigeria's adapted basic education curriculum and related education policy documents.",
-    source: "NERDC",
-    url: "https://www.nerdc.gov.ng/"
-  },
+    </section>
+  `;
 
-  {
-    title: "Schools Face Higher Costs as Fees Rise for New Academic Session",
-    category: "Schools / Parents",
-    date: "September 14, 2026",
-    summary:
-      "Parents and guardians are facing increased education costs as many private schools raise fees and other school-related expenses for the new academic session.",
-    source: "Vanguard",
-    url: "https://www.vanguardngr.com/category/education-2/"
-  },
+  try {
 
-  {
-    title: "JAMB Admission Status: Candidates Urged to Check CAPS",
-    category: "JAMB / Students",
-    date: "August 29, 2026",
-    summary:
-      "Candidates seeking admission for the 2026/2027 academic session have been advised to regularly check their JAMB CAPS profiles and promptly accept or reject admission offers.",
-    source: "TVC News",
-    url: "https://www.tvcnews.tv/explainer-how-to-check-jamb-admission-status/"
-  },
-
-  {
-    title: "Teen Trust Highlights NABTEB Examination Registration Deadline",
-    category: "Examinations / Students",
-    date: "August 31, 2026",
-    summary:
-      "Teen Trust reported on NABTEB's registration deadline for the 2026 November and December certificate examinations, providing useful information for students and schools preparing candidates.",
-    source: "Teen Trust",
-    url: "https://teentrust.ng/nabteb-sets-september-10-deadline-for-2026-november-and-december-exams/"
-  },
-
-  {
-    title: "Federal Government Pushes Measures Against Examination Malpractice",
-    category: "Education Policy / Examinations",
-    date: "2026",
-    summary:
-      "Recent government and examination-sector measures continue to focus on improving examination integrity and reducing malpractice across Nigeria's education system.",
-    source: "Channels Television",
-    url: "https://www.channelstv.com/"
-  }
-
-];
-
-
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-const NEWS_PER_PAGE = 6;
-
-let currentNewsPage = 1;
-
-
-/* =========================================================
-   MAIN LOADER
-========================================================= */
-
-export function loadEducationNews() {
-
-  const contentArea =
-    document.getElementById("content-area");
-
-  if (!contentArea) {
-
-    console.warn(
-      "TUPS Education News: content-area not found."
+    const response = await fetch(
+      `${TUPS_NEWS_FEED_URL}?feed=news&t=${Date.now()}`,
+      {
+        method: "GET",
+        cache: "no-store"
+      }
     );
 
-    return;
+    if (!response.ok) {
+      throw new Error(
+        `Education News request failed: HTTP ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+
+    if (
+      !data ||
+      data.success !== true ||
+      !Array.isArray(data.items)
+    ) {
+      throw new Error(
+        "Education News feed returned an invalid response."
+      );
+    }
+
+    educationNewsItems = normalizeEducationNews(data.items);
+
+    educationNewsCurrentPage = 1;
+
+    renderEducationNews();
+
+  } catch (error) {
+
+    console.error(
+      "TUPS Education News failed to load:",
+      error
+    );
+
+    renderEducationNewsError();
+
   }
-
-
-  currentNewsPage = 1;
-
-  renderEducationNews(contentArea);
-
-  updateEducationNewsSidebar();
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
 
 }
 
 
 /* =========================================================
-   RENDER MAIN NEWS PAGE
+   NORMALIZE DATABASE STORIES
 ========================================================= */
 
-function renderEducationNews(container) {
+function normalizeEducationNews(items) {
 
-  const featuredStory =
-    educationNewsItems[0];
+  const seenIds = new Set();
+  const seenUrls = new Set();
 
-  const totalPages =
-    Math.ceil(
-      educationNewsItems.length /
-      NEWS_PER_PAGE
-    );
+  const normalized = [];
+
+  items.forEach((item) => {
+
+    if (!item || typeof item !== "object") return;
+
+    const id =
+      String(item.id || "").trim();
+
+    const title =
+      String(item.title || "").trim();
+
+    const url =
+      String(item.url || "").trim();
+
+    const source =
+      String(item.source || "").trim();
+
+    const image =
+      String(item.image || "").trim();
+
+    const excerpt =
+      String(item.excerpt || "").trim();
+
+    const section =
+      String(item.section || "").trim();
+
+    const contentType =
+      String(item.contentType || "").trim().toLowerCase();
+
+    const status =
+      String(item.status || "").trim().toLowerCase();
+
+    if (!title || !url) return;
+
+    /* -----------------------------------------------------
+       Only education-news records
+    ----------------------------------------------------- */
+
+    if (
+      contentType &&
+      contentType !== "news"
+    ) {
+      return;
+    }
+
+    /* -----------------------------------------------------
+       Ignore inactive records
+    ----------------------------------------------------- */
+
+    if (
+      status &&
+      status !== "active"
+    ) {
+      return;
+    }
+
+    /* -----------------------------------------------------
+       Basic URL validation
+    ----------------------------------------------------- */
+
+    let validUrl = "";
+
+    try {
+
+      const parsedUrl =
+        new URL(url);
+
+      if (
+        parsedUrl.protocol !== "http:" &&
+        parsedUrl.protocol !== "https:"
+      ) {
+        return;
+      }
+
+      validUrl = parsedUrl.href;
+
+    } catch (error) {
+
+      return;
+
+    }
+
+    /* -----------------------------------------------------
+       Deduplicate by ID
+    ----------------------------------------------------- */
+
+    if (id) {
+
+      if (seenIds.has(id)) {
+        return;
+      }
+
+      seenIds.add(id);
+
+    }
+
+    /* -----------------------------------------------------
+       Deduplicate by URL
+    ----------------------------------------------------- */
+
+    const normalizedUrl =
+      validUrl.toLowerCase().replace(/\/$/, "");
+
+    if (seenUrls.has(normalizedUrl)) {
+      return;
+    }
+
+    seenUrls.add(normalizedUrl);
+
+    normalized.push({
+
+      id:
+        id ||
+        normalizedUrl,
+
+      title,
+
+      url:
+        validUrl,
+
+      source:
+        source ||
+        "Education Source",
+
+      sourceType:
+        String(item.sourceType || "").trim(),
+
+      publishedAt:
+        item.publishedAt ||
+        item.discoveredAt ||
+        "",
+
+      discoveredAt:
+        item.discoveredAt ||
+        "",
+
+      image,
+
+      excerpt,
+
+      section:
+        section ||
+        "education",
+
+      status:
+        status ||
+        "active",
+
+      contentType:
+        "news"
+
+    });
+
+  });
+
+  /* -------------------------------------------------------
+     Newest first
+  ------------------------------------------------------- */
+
+  normalized.sort((a, b) => {
+
+    const dateA =
+      new Date(a.publishedAt || 0).getTime();
+
+    const dateB =
+      new Date(b.publishedAt || 0).getTime();
+
+    return dateB - dateA;
+
+  });
+
+  return normalized;
+
+}
 
 
-  const startIndex =
-    (currentNewsPage - 1) *
-    NEWS_PER_PAGE;
+/* =========================================================
+   RENDER EDUCATION NEWS
+========================================================= */
 
-  const endIndex =
-    startIndex + NEWS_PER_PAGE;
+function renderEducationNews() {
 
-  const pageStories =
-    educationNewsItems.slice(
-      startIndex,
-      endIndex
-    );
+  if (!contentArea) return;
 
+  if (!educationNewsItems.length) {
 
-  container.innerHTML = `
+    contentArea.innerHTML = `
+      <section class="content-page education-news-page">
 
-    <section class="content-page education-news-page">
+        <div class="content-card">
 
-      <!-- HEADER -->
-
-      <div class="school-page-header">
-
-        <div class="large-school-logo">
-          <i class="fa-solid fa-newspaper"></i>
-        </div>
-
-        <div>
+          <div class="card-icon">
+            <i class="fa-solid fa-newspaper"></i>
+          </div>
 
           <h2>Education News</h2>
 
           <p>
-            Important education stories, school developments,
-            policies and opportunities from Nigeria and beyond.
+            No education news is currently available.
           </p>
 
+          <button
+            type="button"
+            class="hub-more-button"
+            id="educationNewsRetry"
+          >
+            Try again
+            <i class="fa-solid fa-rotate-right"></i>
+          </button>
+
         </div>
+
+      </section>
+    `;
+
+    const retryButton =
+      document.getElementById(
+        "educationNewsRetry"
+      );
+
+    if (retryButton) {
+
+      retryButton.addEventListener(
+        "click",
+        loadEducationNews
+      );
+
+    }
+
+    return;
+
+  }
+
+  const totalPages =
+    Math.ceil(
+      educationNewsItems.length /
+      EDUCATION_NEWS_PER_PAGE
+    );
+
+  if (
+    educationNewsCurrentPage >
+    totalPages
+  ) {
+    educationNewsCurrentPage =
+      totalPages;
+  }
+
+  const startIndex =
+    (educationNewsCurrentPage - 1) *
+    EDUCATION_NEWS_PER_PAGE;
+
+  const pageItems =
+    educationNewsItems.slice(
+      startIndex,
+      startIndex +
+      EDUCATION_NEWS_PER_PAGE
+    );
+
+  const featured =
+    educationNewsItems[0];
+
+  const latestItems =
+    pageItems;
+
+  contentArea.innerHTML = `
+
+    <section class="content-page education-news-page">
+
+      <div class="education-news-header">
+
+        <div class="education-news-kicker">
+          EDUCATION NEWS
+        </div>
+
+        <h1>
+          Latest Nigerian Education News
+        </h1>
+
+        <p>
+          Important updates, announcements and
+          developments across Nigeria's education sector.
+        </p>
 
       </div>
 
 
       <!-- FEATURED STORY -->
 
-      <section class="education-news-featured">
-
-        <div class="education-news-featured-label">
-          <i class="fa-solid fa-star"></i>
-          Featured Education Story
-        </div>
-
-        <article class="education-news-featured-card">
-
-          <div class="education-news-card-content">
-
-            <div class="education-news-meta">
-
-              <span>
-                ${escapeNewsHTML(featuredStory.category)}
-              </span>
-
-              <span>
-                ${escapeNewsHTML(featuredStory.date)}
-              </span>
-
-            </div>
-
-            <h3>
-              ${escapeNewsHTML(featuredStory.title)}
-            </h3>
-
-            <p>
-              ${escapeNewsHTML(featuredStory.summary)}
-            </p>
-
-            <div class="education-news-source">
-
-              <span>
-                Source:
-                <strong>
-                  ${escapeNewsHTML(featuredStory.source)}
-                </strong>
-              </span>
-
-              <a
-                href="${featuredStory.url}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Read Full Story
-                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-              </a>
-
-            </div>
-
-          </div>
-
-        </article>
-
-      </section>
+      ${
+        educationNewsCurrentPage === 1
+          ? renderFeaturedStory(featured)
+          : ""
+      }
 
 
-      <!-- LATEST -->
+      <!-- LATEST STORIES -->
 
-      <section class="education-news-latest">
+      <section class="education-news-section">
 
         <div class="education-news-section-heading">
 
-          <div>
-
-            <span class="education-news-kicker">
-              TUPS EDUCATION HUB
-            </span>
-
-            <h3>Latest Education News</h3>
-
-          </div>
-
-          <span class="education-news-count">
-            ${educationNewsItems.length} stories
-          </span>
+          <h2>
+            <i class="fa-solid fa-newspaper"></i>
+            Latest Education News
+          </h2>
 
         </div>
 
+        <div class="education-news-grid">
 
-        <div class="content-grid education-news-grid">
-
-          ${pageStories.map(news => `
-
-            <article class="content-card education-news-card">
-
-              <div class="card-icon">
-                <i class="fa-solid fa-graduation-cap"></i>
-              </div>
-
-              <div class="education-news-meta">
-
-                <span>
-                  ${escapeNewsHTML(news.category)}
-                </span>
-
-                <span>
-                  ${escapeNewsHTML(news.date)}
-                </span>
-
-              </div>
-
-              <h3>
-                ${escapeNewsHTML(news.title)}
-              </h3>
-
-              <p>
-                ${escapeNewsHTML(news.summary)}
-              </p>
-
-              <div class="education-news-card-footer">
-
-                <small>
-                  ${escapeNewsHTML(news.source)}
-                </small>
-
-                <a
-                  href="${news.url}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Read More
-                  <i class="fa-solid fa-arrow-right"></i>
-                </a>
-
-              </div>
-
-            </article>
-
-          `).join("")}
+          ${
+            latestItems
+              .map(renderNewsCard)
+              .join("")
+          }
 
         </div>
-
-
-        <!-- PAGINATION -->
-
-        ${renderPagination(totalPages)}
 
       </section>
 
 
-      <!-- HUB CTA -->
+      <!-- PAGINATION -->
 
-      <section class="cta-section education-news-cta">
+      ${
+        totalPages > 1
+          ? renderNewsPagination(totalPages)
+          : ""
+      }
 
-        <div class="card-icon">
-          <i class="fa-solid fa-lightbulb"></i>
-        </div>
-
-        <h3>
-          More from the TUPS Education Hub
-        </h3>
-
-        <p>
-          Stay informed about schools, teachers,
-          students, education policy, opportunities
-          and developments across Nigeria.
-        </p>
-
-      </section>
-
-
-      <!-- SOURCE NOTE -->
 
       <div class="education-news-source-note">
 
         <i class="fa-solid fa-circle-info"></i>
 
-        <span>
-          TUPS Education News provides short summaries
-          and links to original publishers. Full stories
-          remain on their respective websites.
-        </span>
+        News stories are sourced from publicly available
+        education and news publications. Read the original
+        story through the source link provided.
 
       </div>
 
@@ -419,40 +442,212 @@ function renderEducationNews(container) {
 
   `;
 
-
-  attachPaginationEvents();
+  attachEducationNewsEvents();
 
 }
 
 
 /* =========================================================
-   PAGINATION HTML
+   FEATURED STORY
 ========================================================= */
 
-function renderPagination(totalPages) {
+function renderFeaturedStory(item) {
 
-  if (totalPages <= 1) {
-    return "";
-  }
+  if (!item) return "";
 
+  return `
 
-  let html = `
-    <nav
-      class="education-news-pagination"
-      aria-label="Education news pagination"
-    >
+    <article class="education-news-featured">
+
+      ${
+        item.image
+          ? `
+            <a
+              href="${escapeAttribute(item.url)}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="education-news-featured-image"
+            >
+
+              <img
+                src="${escapeAttribute(item.image)}"
+                alt="${escapeAttribute(item.title)}"
+                loading="lazy"
+              >
+
+            </a>
+          `
+          : ""
+      }
+
+      <div class="education-news-featured-content">
+
+        <div class="education-news-meta">
+
+          <span>
+            ${escapeHtml(item.source)}
+          </span>
+
+          ${
+            formatNewsDate(item.publishedAt)
+              ? `
+                <span>
+                  ${formatNewsDate(item.publishedAt)}
+                </span>
+              `
+              : ""
+          }
+
+        </div>
+
+        <h2>
+          ${escapeHtml(item.title)}
+        </h2>
+
+        ${
+          item.excerpt
+            ? `
+              <p>
+                ${escapeHtml(item.excerpt)}
+              </p>
+            `
+            : ""
+        }
+
+        <a
+          href="${escapeAttribute(item.url)}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="education-news-read-more"
+        >
+          Read original story
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+      </div>
+
+    </article>
+
   `;
 
+}
 
-  /* Previous */
+
+/* =========================================================
+   NEWS CARD
+========================================================= */
+
+function renderNewsCard(item) {
+
+  return `
+
+    <article class="education-news-card">
+
+      ${
+        item.image
+          ? `
+            <a
+              href="${escapeAttribute(item.url)}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="education-news-card-image"
+            >
+
+              <img
+                src="${escapeAttribute(item.image)}"
+                alt="${escapeAttribute(item.title)}"
+                loading="lazy"
+              >
+
+            </a>
+          `
+          : `
+            <div class="education-news-card-image education-news-no-image">
+
+              <i class="fa-solid fa-newspaper"></i>
+
+            </div>
+          `
+      }
+
+
+      <div class="education-news-card-content">
+
+        <div class="education-news-card-meta">
+
+          <span>
+            ${escapeHtml(item.source)}
+          </span>
+
+          ${
+            formatNewsDate(item.publishedAt)
+              ? `
+                <span>
+                  ${formatNewsDate(item.publishedAt)}
+                </span>
+              `
+              : ""
+          }
+
+        </div>
+
+
+        <h3>
+          ${escapeHtml(item.title)}
+        </h3>
+
+
+        ${
+          item.excerpt
+            ? `
+              <p>
+                ${escapeHtml(item.excerpt)}
+              </p>
+            `
+            : ""
+        }
+
+
+        <div class="education-news-card-footer">
+
+          <a
+            href="${escapeAttribute(item.url)}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="education-news-read-more"
+          >
+            Read story
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  `;
+
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+function renderNewsPagination(totalPages) {
+
+  let html = `
+    <div class="education-news-pagination">
+  `;
 
   html += `
 
     <button
       type="button"
-      class="education-news-page-button education-news-prev"
-      data-page="${currentNewsPage - 1}"
-      ${currentNewsPage === 1 ? "disabled" : ""}
+      class="education-news-page-button"
+      data-news-page="${educationNewsCurrentPage - 1}"
+      ${educationNewsCurrentPage === 1 ? "disabled" : ""}
       aria-label="Previous page"
     >
       <i class="fa-solid fa-chevron-left"></i>
@@ -460,8 +655,6 @@ function renderPagination(totalPages) {
 
   `;
 
-
-  /* Page numbers */
 
   for (
     let page = 1;
@@ -474,17 +667,11 @@ function renderPagination(totalPages) {
       <button
         type="button"
         class="education-news-page-button ${
-          page === currentNewsPage
+          page === educationNewsCurrentPage
             ? "active"
             : ""
         }"
-        data-page="${page}"
-        aria-label="Page ${page}"
-        ${
-          page === currentNewsPage
-            ? 'aria-current="page"'
-            : ""
-        }
+        data-news-page="${page}"
       >
         ${page}
       </button>
@@ -494,16 +681,14 @@ function renderPagination(totalPages) {
   }
 
 
-  /* Next */
-
   html += `
 
     <button
       type="button"
-      class="education-news-page-button education-news-next"
-      data-page="${currentNewsPage + 1}"
+      class="education-news-page-button"
+      data-news-page="${educationNewsCurrentPage + 1}"
       ${
-        currentNewsPage === totalPages
+        educationNewsCurrentPage === totalPages
           ? "disabled"
           : ""
       }
@@ -516,9 +701,8 @@ function renderPagination(totalPages) {
 
 
   html += `
-    </nav>
+    </div>
   `;
-
 
   return html;
 
@@ -526,69 +710,52 @@ function renderPagination(totalPages) {
 
 
 /* =========================================================
-   PAGINATION EVENTS
+   EVENTS
 ========================================================= */
 
-function attachPaginationEvents() {
+function attachEducationNewsEvents() {
 
-  document
-    .querySelectorAll(
-      ".education-news-page-button"
-    )
-    .forEach(button => {
+  const paginationButtons =
+    document.querySelectorAll(
+      "[data-news-page]"
+    );
+
+  paginationButtons.forEach(
+    (button) => {
 
       button.addEventListener(
         "click",
-        function () {
+        () => {
 
-          const requestedPage =
+          const page =
             Number(
-              this.dataset.page
+              button.dataset.newsPage
             );
 
-
-          if (
-            !requestedPage ||
-            requestedPage === currentNewsPage
-          ) {
+          if (!page || page < 1) {
             return;
           }
-
 
           const totalPages =
             Math.ceil(
               educationNewsItems.length /
-              NEWS_PER_PAGE
+              EDUCATION_NEWS_PER_PAGE
             );
 
-
-          if (
-            requestedPage < 1 ||
-            requestedPage > totalPages
-          ) {
+          if (page > totalPages) {
             return;
           }
 
+          educationNewsCurrentPage =
+            page;
 
-          currentNewsPage =
-            requestedPage;
-
-
-          const contentArea =
-            document.getElementById(
-              "content-area"
-            );
-
+          renderEducationNews();
 
           if (contentArea) {
 
-            renderEducationNews(
-              contentArea
-            );
-
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth"
+            contentArea.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
             });
 
           }
@@ -596,119 +763,120 @@ function attachPaginationEvents() {
         }
       );
 
-    });
+    }
+  );
 
 }
 
 
 /* =========================================================
-   SIDEBAR NEWS PREVIEW
+   ERROR DISPLAY
 ========================================================= */
 
-function updateEducationNewsSidebar() {
+function renderEducationNewsError() {
 
-  const preview =
-    document.querySelector(
-      ".news-module .hub-preview"
-    );
+  if (!contentArea) return;
 
+  contentArea.innerHTML = `
 
-  if (!preview) {
-    return;
-  }
+    <section class="content-page education-news-page">
 
+      <div class="content-card">
 
-  const latestStories =
-    educationNewsItems.slice(
-      0,
-      3
-    );
+        <div class="card-icon">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
 
+        <h2>
+          Education News
+        </h2>
 
-  preview.innerHTML = `
+        <p>
+          The Education News service could not be
+          loaded at this time. Please try again.
+        </p>
 
-    ${latestStories.map(news => `
+        <button
+          type="button"
+          class="hub-more-button"
+          id="educationNewsRetry"
+        >
+          Try again
+          <i class="fa-solid fa-rotate-right"></i>
+        </button>
 
-      <button
-        type="button"
-        class="education-news-sidebar-item"
-        data-news-url="${news.url}"
-      >
+      </div>
 
-        <strong>
-          ${escapeNewsHTML(news.title)}
-        </strong>
-
-        <span>
-          ${escapeNewsHTML(news.source)}
-          ·
-          ${escapeNewsHTML(news.date)}
-        </span>
-
-      </button>
-
-    `).join("")}
+    </section>
 
   `;
 
+  const retryButton =
+    document.getElementById(
+      "educationNewsRetry"
+    );
 
-  preview
-    .querySelectorAll(
-      ".education-news-sidebar-item"
-    )
-    .forEach(button => {
+  if (retryButton) {
 
-      button.addEventListener(
-        "click",
-        function () {
+    retryButton.addEventListener(
+      "click",
+      loadEducationNews
+    );
 
-          const url =
-            this.dataset.newsUrl;
-
-          if (url) {
-
-            window.open(
-              url,
-              "_blank",
-              "noopener,noreferrer"
-            );
-
-          }
-
-        }
-      );
-
-    });
+  }
 
 }
 
 
 /* =========================================================
-   HTML ESCAPING
+   DATE FORMATTER
 ========================================================= */
 
-function escapeNewsHTML(value) {
+function formatNewsDate(value) {
+
+  if (!value) return "";
+
+  const date =
+    new Date(value);
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+    return "";
+  }
+
+  return date.toLocaleDateString(
+    "en-NG",
+    {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    }
+  );
+
+}
+
+
+/* =========================================================
+   HTML SAFETY
+========================================================= */
+
+function escapeHtml(value) {
 
   return String(value)
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+function escapeAttribute(value) {
+
+  return escapeHtml(value);
 
 }

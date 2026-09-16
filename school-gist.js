@@ -1,3 +1,4 @@
+```javascript
 // ============================================================
 // TUPS SCHOOL GIST
 // DYNAMIC DISPLAY ENGINE
@@ -15,6 +16,7 @@
 // excerpt
 // section
 // status
+// contentType
 // ============================================================
 
 
@@ -141,7 +143,7 @@ export async function loadSchoolGist() {
     const response =
       await fetch(
         TUPS_GIST_FEED_URL +
-        "?t=" +
+        "?feed=gist&t=" +
         Date.now(),
         {
           cache: "no-store"
@@ -193,6 +195,7 @@ export async function loadSchoolGist() {
      * excerpt
      * section
      * status
+     * contentType
      */
 
     schoolGistItems =
@@ -300,9 +303,38 @@ function normaliseGistItems(items) {
         status:
           String(
             rawItem.status || ""
+          ).trim().toLowerCase(),
+
+        contentType:
+          String(
+            rawItem.contentType || ""
           ).trim().toLowerCase()
 
       };
+
+
+      /*
+       * IMPORTANT:
+       *
+       * Only records explicitly classified
+       * as School Gist should appear here.
+       *
+       * The Apps Script also filters the
+       * public feed with ?feed=gist.
+       *
+       * This frontend check is a second layer
+       * of protection so an Education News
+       * record can never accidentally render
+       * inside School Gist.
+       */
+
+      if (
+        item.contentType !== "gist"
+      ) {
+
+        return;
+
+      }
 
 
       /*
@@ -1140,3 +1172,4 @@ function escapeAttribute(
   );
 
 }
+```
