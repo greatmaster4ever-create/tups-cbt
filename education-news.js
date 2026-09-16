@@ -29,7 +29,7 @@ const TUPS_NEWS_FEED_URL =
   "https://script.google.com/macros/s/AKfycbxW-qt2N1ggueT8Y5eZGLM9ltM8mGbOiKBKRYx6ZxD0X00rqw23nNJotkO1L2ueEF-E/exec";
 
 
-const EDUCATION_NEWS_PER_PAGE = 4;
+const EDUCATION_NEWS_PER_PAGE = 12;
 
 
 /*
