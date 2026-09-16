@@ -2,14 +2,31 @@
 // TUPS SCHOOL GIST
 // DYNAMIC DISPLAY ENGINE
 // NO HARDCODED NEWS
+//
+// DATABASE / JSON FIELDS USED:
+// id
+// title
+// url
+// source
+// sourceType
+// publishedAt
+// discoveredAt
+// image
+// excerpt
+// section
+// status
 // ============================================================
+
 
 const TUPS_GIST_FEED_URL =
   "https://script.google.com/macros/s/AKfycbxW-qt2N1ggueT8Y5eZGLM9ltM8mGbOiKBKRYx6ZxD0X00rqw23nNJotkO1L2ueEF-E/exec";
 
+
 const SCHOOL_GIST_PER_PAGE = 4;
 
+
 const schoolGistPages = {
+
   hot: 1,
   trending: 1,
   achievements: 1,
@@ -17,9 +34,55 @@ const schoolGistPages = {
   schoolLife: 1,
   social: 1,
   buzz: 1
+
 };
 
+
 let schoolGistItems = [];
+
+
+// ============================================================
+// SECTION DEFINITIONS
+// ============================================================
+
+const SCHOOL_GIST_SECTIONS = [
+
+  {
+    key: "hot",
+    title: "🔥 HOT RIGHT NOW"
+  },
+
+  {
+    key: "trending",
+    title: "👀 TRENDING SCHOOL GIST"
+  },
+
+  {
+    key: "achievements",
+    title: "🏆 ACHIEVEMENTS & AWARDS"
+  },
+
+  {
+    key: "sports",
+    title: "⚽ SPORTS & COMPETITIONS"
+  },
+
+  {
+    key: "schoolLife",
+    title: "📸 SCHOOL LIFE"
+  },
+
+  {
+    key: "social",
+    title: "📱 SOCIAL SCHOOL POSTS"
+  },
+
+  {
+    key: "buzz",
+    title: "😂 BUZZ & GOSSIP"
+  }
+
+];
 
 
 // ============================================================
@@ -32,6 +95,7 @@ export async function loadSchoolGist() {
 
 
   contentArea.innerHTML = `
+
     <section class="school-gist-page">
 
       <div class="school-gist-header">
@@ -51,19 +115,24 @@ export async function loadSchoolGist() {
 
       </div>
 
+
       <div
         class="school-gist-topic-bar"
         id="schoolGistTopicBar">
       </div>
 
+
       <div
         id="schoolGistContent">
+
         <div class="school-gist-empty">
           Loading fresh school gist...
         </div>
+
       </div>
 
     </section>
+
   `;
 
 
@@ -107,8 +176,29 @@ export async function loadSchoolGist() {
     }
 
 
+    /*
+     * Normalise the JSON returned by the
+     * School Gist Apps Script.
+     *
+     * Database fields:
+     *
+     * id
+     * title
+     * url
+     * source
+     * sourceType
+     * publishedAt
+     * discoveredAt
+     * image
+     * excerpt
+     * section
+     * status
+     */
+
     schoolGistItems =
-      data.items;
+      normaliseGistItems(
+        data.items
+      );
 
 
     resetGistPages();
@@ -133,6 +223,292 @@ export async function loadSchoolGist() {
 
 
 // ============================================================
+// NORMALISE GIST DATA
+// ============================================================
+
+function normaliseGistItems(items) {
+
+  const seenIds =
+    new Set();
+
+  const seenUrls =
+    new Set();
+
+
+  const validItems =
+    [];
+
+
+  items.forEach(
+    function(rawItem) {
+
+      if (!rawItem) return;
+
+
+      const item = {
+
+        id:
+          String(
+            rawItem.id || ""
+          ).trim(),
+
+        title:
+          String(
+            rawItem.title || ""
+          ).trim(),
+
+        url:
+          String(
+            rawItem.url || ""
+          ).trim(),
+
+        source:
+          String(
+            rawItem.source || "TUPS"
+          ).trim(),
+
+        sourceType:
+          String(
+            rawItem.sourceType || ""
+          ).trim(),
+
+        publishedAt:
+          String(
+            rawItem.publishedAt || ""
+          ).trim(),
+
+        discoveredAt:
+          String(
+            rawItem.discoveredAt || ""
+          ).trim(),
+
+        image:
+          String(
+            rawItem.image || ""
+          ).trim(),
+
+        excerpt:
+          String(
+            rawItem.excerpt || ""
+          ).trim(),
+
+        section:
+          String(
+            rawItem.section || ""
+          ).trim(),
+
+        status:
+          String(
+            rawItem.status || ""
+          ).trim().toLowerCase()
+
+      };
+
+
+      /*
+       * Only active stories should appear.
+       *
+       * If status is missing, retain the item
+       * for backward compatibility with a feed
+       * that may not yet expose the field.
+       */
+
+      if (
+        item.status &&
+        item.status !== "active"
+      ) {
+
+        return;
+
+      }
+
+
+      /*
+       * A story needs a title and a valid
+       * HTTP/HTTPS source URL.
+       */
+
+      if (
+        !item.title ||
+        !isSafeGistURL(
+          item.url
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      /*
+       * Every story must have exactly
+       * one recognised section.
+       */
+
+      const validSection =
+        SCHOOL_GIST_SECTIONS.some(
+          function(section) {
+
+            return (
+              section.key ===
+              item.section
+            );
+
+          }
+        );
+
+
+      if (!validSection) {
+
+        return;
+
+      }
+
+
+      /*
+       * Deduplicate by database ID first.
+       */
+
+      if (
+        item.id &&
+        seenIds.has(
+          item.id
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      /*
+       * Also deduplicate by URL.
+       *
+       * This protects the page if the same
+       * story somehow appears twice in JSON
+       * under different IDs.
+       */
+
+      const normalisedURL =
+        normaliseGistURL(
+          item.url
+        );
+
+
+      if (
+        seenUrls.has(
+          normalisedURL
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      if (item.id) {
+
+        seenIds.add(
+          item.id
+        );
+
+      }
+
+
+      seenUrls.add(
+        normalisedURL
+      );
+
+
+      validItems.push(
+        item
+      );
+
+    }
+  );
+
+
+  return validItems;
+
+}
+
+
+// ============================================================
+// SAFE URL CHECK
+// ============================================================
+
+function isSafeGistURL(url) {
+
+  try {
+
+    const parsed =
+      new URL(
+        url
+      );
+
+
+    return (
+      parsed.protocol ===
+        "https:" ||
+      parsed.protocol ===
+        "http:"
+    );
+
+  } catch {
+
+    return false;
+
+  }
+
+}
+
+
+// ============================================================
+// NORMALISE URL
+// ============================================================
+
+function normaliseGistURL(url) {
+
+  try {
+
+    const parsed =
+      new URL(
+        url
+      );
+
+
+    /*
+     * Remove trailing slash so these are
+     * treated as the same story:
+     *
+     * example.com/story
+     * example.com/story/
+     */
+
+    parsed.pathname =
+      parsed.pathname.replace(
+        /\/+$/,
+        ""
+      );
+
+
+    return (
+      parsed.href
+        .toLowerCase()
+    );
+
+  } catch {
+
+    return String(
+      url || ""
+    ).trim().toLowerCase();
+
+  }
+
+}
+
+
+// ============================================================
 // RESET
 // ============================================================
 
@@ -143,7 +519,9 @@ function resetGistPages() {
   ).forEach(
     function(section) {
 
-      schoolGistPages[section] = 1;
+      schoolGistPages[
+        section
+      ] = 1;
 
     }
   );
@@ -166,51 +544,21 @@ function renderSchoolGistFeed() {
   if (!container) return;
 
 
-  const sections = [
-
-    {
-      key: "hot",
-      title: "🔥 HOT RIGHT NOW"
-    },
-
-    {
-      key: "trending",
-      title: "👀 TRENDING SCHOOL GIST"
-    },
-
-    {
-      key: "achievements",
-      title: "🏆 ACHIEVEMENTS & AWARDS"
-    },
-
-    {
-      key: "sports",
-      title: "⚽ SPORTS & COMPETITIONS"
-    },
-
-    {
-      key: "schoolLife",
-      title: "📸 SCHOOL LIFE"
-    },
-
-    {
-      key: "social",
-      title: "📱 SOCIAL SCHOOL POSTS"
-    },
-
-    {
-      key: "buzz",
-      title: "😂 BUZZ & GOSSIP"
-    }
-
-  ];
-
-
   let html = "";
 
 
-  sections.forEach(
+  SCHOOL_GIST_SECTIONS.forEach(
     function(section) {
+
+      /*
+       * IMPORTANT:
+       *
+       * A story belongs to exactly ONE section.
+       *
+       * We deliberately use strict equality
+       * rather than assigning/recycling stories
+       * across multiple sections.
+       */
 
       const items =
         schoolGistItems.filter(
@@ -226,7 +574,9 @@ function renderSchoolGistFeed() {
 
 
       if (!items.length) {
+
         return;
+
       }
 
 
@@ -243,10 +593,14 @@ function renderSchoolGistFeed() {
   if (!html) {
 
     html = `
+
       <div class="school-gist-empty">
+
         No fresh school gist is available
         right now. Please check again soon.
+
       </div>
+
     `;
 
   }
@@ -295,7 +649,7 @@ function renderGistSection(
 
     <section
       class="school-gist-section"
-      data-gist-section="${section.key}"
+      data-gist-section="${escapeAttribute(section.key)}"
     >
 
       <div class="school-gist-section-heading">
@@ -310,7 +664,9 @@ function renderGistSection(
 
       </div>
 
+
       <div class="school-gist-grid">
+
   `;
 
 
@@ -327,7 +683,9 @@ function renderGistSection(
 
 
   html += `
+
       </div>
+
   `;
 
 
@@ -338,7 +696,9 @@ function renderGistSection(
     );
 
 
-  if (totalPages > 1) {
+  if (
+    totalPages > 1
+  ) {
 
     html +=
       renderGistPagination(
@@ -351,7 +711,9 @@ function renderGistSection(
 
 
   html += `
+
     </section>
+
   `;
 
 
@@ -367,66 +729,87 @@ function renderGistSection(
 function renderGistCard(item) {
 
   const imageHTML =
-    item.image
+    item.image &&
+    isSafeGistURL(
+      item.image
+    )
       ? `
+
         <a
           class="school-gist-image-link"
           href="${escapeAttribute(item.url)}"
           target="_blank"
           rel="noopener noreferrer"
         >
+
           <img
             src="${escapeAttribute(item.image)}"
             alt="${escapeAttribute(item.title)}"
             loading="lazy"
           >
+
         </a>
+
       `
       : "";
 
 
   const published =
-    item.publishedAt
-      ? new Date(
-          item.publishedAt
-        ).toLocaleDateString(
-          "en-NG",
-          {
-            day: "numeric",
-            month: "short",
-            year: "numeric"
-          }
-        )
-      : "";
+    formatGistDate(
+      item.publishedAt
+    );
 
 
   return `
 
-    <article class="school-gist-card">
+    <article
+      class="school-gist-card"
+      data-gist-id="${escapeAttribute(item.id)}"
+    >
 
       ${imageHTML}
 
+
       <div class="school-gist-card-content">
+
 
         <div class="school-gist-card-meta">
 
           <span>
-            ${escapeGistHTML(item.source || "TUPS")}
+            ${escapeGistHTML(
+              item.source || "TUPS"
+            )}
           </span>
 
+
           <span>
-            ${escapeGistHTML(published)}
+            ${escapeGistHTML(
+              published
+            )}
           </span>
 
         </div>
 
+
         <h3>
-          ${escapeGistHTML(item.title)}
+          ${escapeGistHTML(
+            item.title
+          )}
         </h3>
 
-        <p>
-          ${escapeGistHTML(item.excerpt || "")}
-        </p>
+
+        ${
+          item.excerpt
+            ? `
+              <p>
+                ${escapeGistHTML(
+                  item.excerpt
+                )}
+              </p>
+            `
+            : ""
+        }
+
 
         <div class="school-gist-card-footer">
 
@@ -436,17 +819,65 @@ function renderGistCard(item) {
             target="_blank"
             rel="noopener noreferrer"
           >
+
             Read story
+
             <i class="fa-solid fa-arrow-right"></i>
+
           </a>
 
         </div>
+
 
       </div>
 
     </article>
 
   `;
+
+}
+
+
+// ============================================================
+// DATE FORMAT
+// ============================================================
+
+function formatGistDate(
+  value
+) {
+
+  if (!value) {
+
+    return "";
+
+  }
+
+
+  const date =
+    new Date(
+      value
+    );
+
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return "";
+
+  }
+
+
+  return date.toLocaleDateString(
+    "en-NG",
+    {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    }
+  );
 
 }
 
@@ -462,10 +893,12 @@ function renderGistPagination(
 ) {
 
   let html = `
+
     <div
       class="school-gist-pagination"
-      data-gist-pagination="${section}"
+      data-gist-pagination="${escapeAttribute(section)}"
     >
+
   `;
 
 
@@ -476,6 +909,7 @@ function renderGistPagination(
   ) {
 
     html += `
+
       <button
         type="button"
         class="school-gist-page-button ${
@@ -484,17 +918,22 @@ function renderGistPagination(
             : ""
         }"
         data-gist-page="${i}"
-        data-gist-section="${section}"
+        data-gist-section="${escapeAttribute(section)}"
       >
+
         ${i}
+
       </button>
+
     `;
 
   }
 
 
   html += `
+
     </div>
+
   `;
 
 
@@ -524,11 +963,36 @@ function attachGistPaginationEvents() {
               button.dataset
                 .gistSection;
 
+
             const page =
               Number(
                 button.dataset
                   .gistPage
               );
+
+
+            if (
+              !schoolGistPages
+                .hasOwnProperty(
+                  section
+                )
+            ) {
+
+              return;
+
+            }
+
+
+            if (
+              !Number.isInteger(
+                page
+              ) ||
+              page < 1
+            ) {
+
+              return;
+
+            }
 
 
             schoolGistPages[
@@ -541,7 +1005,7 @@ function attachGistPaginationEvents() {
 
             const sectionElement =
               document.querySelector(
-                `[data-gist-section="${section}"]`
+                `[data-gist-section="${CSS.escape(section)}"]`
               );
 
 
@@ -589,21 +1053,45 @@ function renderSchoolGistError() {
         class="fa-solid fa-triangle-exclamation">
       </i>
 
+
       <p>
         Fresh School Gist could not be loaded
         right now.
       </p>
 
+
       <button
         type="button"
-        onclick="loadSchoolGist()"
+        id="schoolGistRetryButton"
       >
+
         Try again
+
       </button>
 
     </div>
 
   `;
+
+
+  const retryButton =
+    document.getElementById(
+      "schoolGistRetryButton"
+    );
+
+
+  if (retryButton) {
+
+    retryButton.addEventListener(
+      "click",
+      function() {
+
+        loadSchoolGist();
+
+      }
+    );
+
+  }
 
 }
 
@@ -612,7 +1100,9 @@ function renderSchoolGistError() {
 // ESCAPING
 // ============================================================
 
-function escapeGistHTML(value) {
+function escapeGistHTML(
+  value
+) {
 
   return String(
     value || ""
@@ -641,7 +1131,9 @@ function escapeGistHTML(value) {
 }
 
 
-function escapeAttribute(value) {
+function escapeAttribute(
+  value
+) {
 
   return escapeGistHTML(
     value
