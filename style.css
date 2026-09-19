@@ -6923,8 +6923,9 @@ linear-gradient(
   }
 
 }
+
 /* =========================================================
-   MOBILE MENU — ORGANIZED GREY TABS
+   MOBILE MENU — GREY TABS AND PROPER DROPDOWNS
 ========================================================= */
 
 @media (max-width: 650px) {
@@ -6936,20 +6937,17 @@ linear-gradient(
     display: flex;
     flex-direction: column;
     align-items: stretch;
-
     gap: 8px;
     padding: 12px;
   }
 
-  /* Main tabs and dropdown containers */
+  /* Main navigation tabs */
   .site-header.mobile-navigation-open
   .main-navigation > .nav-button,
   .site-header.mobile-navigation-open
   .main-navigation > .nav-dropdown {
 
     width: 100%;
-    min-height: 40px;
-
     margin: 0;
     padding: 0;
 
@@ -6960,47 +6958,52 @@ linear-gradient(
     box-sizing: border-box;
   }
 
-  /* Standard navigation buttons */
+  /* Normal tabs */
   .site-header.mobile-navigation-open
   .main-navigation > .nav-button {
+
+    min-height: 40px;
+    padding: 10px 12px;
 
     display: flex;
     align-items: center;
     justify-content: flex-start;
 
-    padding: 10px 12px;
-
     line-height: 1.2;
   }
 
-  /* Dropdown trigger buttons */
+  /* Dropdown trigger */
   .site-header.mobile-navigation-open
   .main-navigation > .nav-dropdown
   > button {
+
+    width: 100%;
+    min-height: 40px;
+    padding: 10px 12px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    width: 100%;
-    min-height: 40px;
-
-    padding: 10px 12px;
-
     background: transparent;
     border: none;
-
     color: #ffffff;
+
     line-height: 1.2;
   }
 
-  /* Consistent spacing inside dropdown containers */
+  /* Do not force dropdown containers into a new layout */
   .site-header.mobile-navigation-open
   .main-navigation > .nav-dropdown {
 
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    min-height: 40px;
+  }
+
+  /* Preserve the existing dropdown menu behavior */
+  .site-header.mobile-navigation-open
+  .main-navigation .dropdown-menu {
+
+    margin: 0;
   }
 
   /* Hover effects */
@@ -7012,7 +7015,7 @@ linear-gradient(
     background: #505050;
   }
 
-  /* Keyboard focus accessibility */
+  /* Keyboard focus */
   .site-header.mobile-navigation-open
   .main-navigation button:focus-visible {
 
