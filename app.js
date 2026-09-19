@@ -157,7 +157,7 @@ const pages = {
     <img
       src="images/mobile.jpg"
       alt="TUPS School Management App"
-      loading="eager"
+      loading="lazy"
       decoding="async"
     >
 
@@ -4375,18 +4375,67 @@ if (sidebarHandle) {
 
 /* Mobile header menu */
 
-if (mobileMenuButton) {
+/* =========================================================
+   MOBILE HEADER NAVIGATION TOGGLE
+========================================================= */
 
-  mobileMenuButton.addEventListener(
+const headerMenuButton =
+  document.getElementById("mobile-menu-button");
+
+const headerSite =
+  document.querySelector(".site-header");
+
+
+function setHeaderNavigationState(isOpen) {
+
+  if (!headerSite || !headerMenuButton) {
+    return;
+  }
+
+  headerSite.classList.toggle(
+    "mobile-navigation-open",
+    isOpen
+  );
+
+  headerMenuButton.setAttribute(
+    "aria-expanded",
+    String(isOpen)
+  );
+
+  headerMenuButton.setAttribute(
+    "aria-label",
+    isOpen
+      ? "Close navigation"
+      : "Open navigation"
+  );
+
+  const icon =
+    headerMenuButton.querySelector("i");
+
+  if (icon) {
+
+    icon.className =
+      isOpen
+        ? "fa-solid fa-xmark"
+        : "fa-solid fa-bars";
+
+  }
+
+}
+
+
+if (headerMenuButton && headerSite) {
+
+  headerMenuButton.addEventListener(
     "click",
     () => {
 
       const isOpen =
-        educationSidebar.classList.contains(
-          "sidebar-open"
+        headerSite.classList.contains(
+          "mobile-navigation-open"
         );
 
-      setSidebarState(!isOpen);
+      setHeaderNavigationState(!isOpen);
 
     }
   );

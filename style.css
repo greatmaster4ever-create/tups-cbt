@@ -6912,3 +6912,14 @@ linear-gradient(
   }
 
 }
+/* =========================================================
+   MOBILE: HIDE LARGE TUPS APP PHONE IMAGE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .home-promo-app {
+    display: none !important;
+  }
+
+}
