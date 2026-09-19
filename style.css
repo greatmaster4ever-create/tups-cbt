@@ -6923,3 +6923,101 @@ linear-gradient(
   }
 
 }
+/* =========================================================
+   MOBILE MENU — ORGANIZED GREY TABS
+========================================================= */
+
+@media (max-width: 650px) {
+
+  /* Main navigation layout */
+  .site-header.mobile-navigation-open
+  .main-navigation {
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 8px;
+    padding: 12px;
+  }
+
+  /* Main tabs and dropdown containers */
+  .site-header.mobile-navigation-open
+  .main-navigation > .nav-button,
+  .site-header.mobile-navigation-open
+  .main-navigation > .nav-dropdown {
+
+    width: 100%;
+    min-height: 40px;
+
+    margin: 0;
+    padding: 0;
+
+    background: #3a3a3a;
+    border-bottom: 1px solid #777;
+    border-radius: 4px;
+
+    box-sizing: border-box;
+  }
+
+  /* Standard navigation buttons */
+  .site-header.mobile-navigation-open
+  .main-navigation > .nav-button {
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 10px 12px;
+
+    line-height: 1.2;
+  }
+
+  /* Dropdown trigger buttons */
+  .site-header.mobile-navigation-open
+  .main-navigation > .nav-dropdown
+  > button {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    min-height: 40px;
+
+    padding: 10px 12px;
+
+    background: transparent;
+    border: none;
+
+    color: #ffffff;
+    line-height: 1.2;
+  }
+
+  /* Consistent spacing inside dropdown containers */
+  .site-header.mobile-navigation-open
+  .main-navigation > .nav-dropdown {
+
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Hover effects */
+  .site-header.mobile-navigation-open
+  .main-navigation > .nav-button:hover,
+  .site-header.mobile-navigation-open
+  .main-navigation > .nav-dropdown:hover {
+
+    background: #505050;
+  }
+
+  /* Keyboard focus accessibility */
+  .site-header.mobile-navigation-open
+  .main-navigation button:focus-visible {
+
+    outline: 2px solid #00f5ff;
+    outline-offset: 2px;
+  }
+
+}
