@@ -3649,23 +3649,35 @@ if (applicationForm) {
 }
 
 
-
 /* =========================================================
    CBT PORTAL BUTTON
 ========================================================= */
 
 const cbtPortalButton =
-  document.querySelector(
-    ".cbt-button"
-  );
+  document.querySelector(".cbt-button");
 
 
 if (cbtPortalButton) {
 
-
   cbtPortalButton.addEventListener(
     "click",
     () => {
+
+      const isMobile =
+        window.matchMedia("(max-width: 650px)").matches;
+
+
+      if (isMobile) {
+
+        alert(
+          "The TUP CBT Portal can only be opened in desktop view. " +
+          "Please use a desktop or laptop computer."
+        );
+
+        return;
+
+      }
+
 
       alert(
         "TUP CBT Portal link will be connected when the CBT website is ready."
@@ -4280,6 +4292,171 @@ function renderDemoError(
   `;
 
 }
+
+/* =========================================================
+   MOBILE SIDEBAR DRAWER
+========================================================= */
+
+const mobileMenuButton =
+  document.getElementById("mobile-menu-button");
+
+const sidebarHandle =
+  document.getElementById("sidebar-handle");
+
+const educationSidebar =
+  document.getElementById("education-sidebar");
+
+const sidebarOverlay =
+  document.getElementById("sidebar-overlay");
+
+
+function setSidebarState(isOpen) {
+
+  if (
+    !educationSidebar ||
+    !sidebarHandle ||
+    !sidebarOverlay
+  ) {
+    return;
+  }
+
+  educationSidebar.classList.toggle(
+    "sidebar-open",
+    isOpen
+  );
+
+  sidebarHandle.classList.toggle(
+    "handle-open",
+    isOpen
+  );
+
+  sidebarOverlay.classList.toggle(
+    "overlay-visible",
+    isOpen
+  );
+
+  sidebarHandle.setAttribute(
+    "aria-expanded",
+    String(isOpen)
+  );
+
+  if (mobileMenuButton) {
+
+    mobileMenuButton.setAttribute(
+      "aria-expanded",
+      String(isOpen)
+    );
+
+  }
+
+}
+
+
+/* Sidebar handle */
+
+if (sidebarHandle) {
+
+  sidebarHandle.addEventListener(
+    "click",
+    () => {
+
+      const isOpen =
+        educationSidebar.classList.contains(
+          "sidebar-open"
+        );
+
+      setSidebarState(!isOpen);
+
+    }
+  );
+
+}
+
+
+/* Mobile header menu */
+
+if (mobileMenuButton) {
+
+  mobileMenuButton.addEventListener(
+    "click",
+    () => {
+
+      const isOpen =
+        educationSidebar.classList.contains(
+          "sidebar-open"
+        );
+
+      setSidebarState(!isOpen);
+
+    }
+  );
+
+}
+
+
+/* Close when overlay is touched */
+
+if (sidebarOverlay) {
+
+  sidebarOverlay.addEventListener(
+    "click",
+    () => {
+
+      setSidebarState(false);
+
+    }
+  );
+
+}
+
+
+/* Close after selecting a sidebar item */
+
+if (educationSidebar) {
+
+  educationSidebar.addEventListener(
+    "click",
+    (event) => {
+
+      const selectedItem =
+        event.target.closest(
+          "button, a"
+        );
+
+      if (!selectedItem) {
+        return;
+      }
+
+      if (
+        window.matchMedia(
+          "(max-width: 650px)"
+        ).matches
+      ) {
+
+        setSidebarState(false);
+
+      }
+
+    }
+  );
+
+}
+
+
+/* Close drawer with Escape */
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (event.key === "Escape") {
+
+      setSidebarState(false);
+
+    }
+
+  }
+);
 
 
 
