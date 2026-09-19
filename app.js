@@ -4457,7 +4457,40 @@ if (sidebarOverlay) {
   );
 
 }
+/* =========================================================
+   CLOSE MOBILE MENU AFTER SELECTING A PAGE
+========================================================= */
 
+if (mainNavigation) {
+
+  mainNavigation.addEventListener(
+    "click",
+    (event) => {
+
+      const selectedItem =
+        event.target.closest(
+          "button[data-page], button[data-demo-category]"
+        );
+
+      // Do nothing when clicking a dropdown trigger
+      if (!selectedItem) {
+        return;
+      }
+
+      // Close immediately on mobile
+      if (
+        window.matchMedia("(max-width: 650px)").matches
+      ) {
+
+        setHeaderNavigationState(false);
+
+      }
+
+    },
+    true
+  );
+
+}
 
 /* Close after selecting a sidebar item */
 
