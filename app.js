@@ -4730,7 +4730,67 @@ function escapeDemoHTML(value) {
 
 }
 
+/* =========================================================
+   MOBILE HEADER MENU - CLOSE AFTER SELECTION
+========================================================= */
 
+document.addEventListener("click", function (event) {
+
+  if (
+    !window.matchMedia("(max-width: 650px)").matches
+  ) {
+    return;
+  }
+
+  const selectedItem = event.target.closest(
+    ".main-navigation button[data-page], " +
+    ".main-navigation button[data-demo-category], " +
+    ".main-navigation .application-trigger"
+  );
+
+  if (!selectedItem) {
+    return;
+  }
+
+  const header =
+    document.querySelector(".site-header");
+
+  const menuButton =
+    document.getElementById("mobile-menu-button");
+
+  if (header) {
+
+    header.classList.remove(
+      "mobile-navigation-open"
+    );
+
+  }
+
+  if (menuButton) {
+
+    menuButton.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+    menuButton.setAttribute(
+      "aria-label",
+      "Open navigation"
+    );
+
+    const icon =
+      menuButton.querySelector("i");
+
+    if (icon) {
+
+      icon.className =
+        "fa-solid fa-bars";
+
+    }
+
+  }
+
+});
 
 /* =========================================================
    INITIALIZE DEMO NAVIGATION
