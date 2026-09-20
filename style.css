@@ -7068,3 +7068,18 @@ linear-gradient(
   }
 
 }
+/* =========================================================
+   MOBILE WATCH DEMO ALIGNMENT FIX
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .site-header.mobile-navigation-open
+  .main-navigation
+  > .demo-nav-dropdown
+  > .demo-nav-button {
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+
+}
