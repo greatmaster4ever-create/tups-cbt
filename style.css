@@ -7033,3 +7033,38 @@ linear-gradient(
   }
 
 }
+/* =========================================================
+   MOBILE HEADER MENU - FINAL OVERRIDE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .site-header {
+    position: relative !important;
+    z-index: 3000 !important;
+  }
+
+  .mobile-menu-button {
+    display: inline-flex !important;
+    position: relative !important;
+    z-index: 3200 !important;
+  }
+
+  .site-header .main-navigation {
+    display: none !important;
+  }
+
+  .site-header.mobile-navigation-open .main-navigation {
+    display: flex !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-height: 75vh !important;
+    overflow-y: auto !important;
+    flex-direction: column !important;
+    z-index: 3100 !important;
+  }
+
+}
