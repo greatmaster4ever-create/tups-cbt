@@ -6557,7 +6557,6 @@ linear-gradient(
   display: none;
 }
 
-
 /* =========================================================
    MOBILE LAYOUT
 ========================================================= */
@@ -6579,7 +6578,7 @@ linear-gradient(
     width: 100%;
     padding: 8px 10px;
     gap: 7px;
-	position: relative;
+    position: relative;
     z-index: 3000;
     display: flex;
     flex-wrap: nowrap;
@@ -6639,13 +6638,19 @@ linear-gradient(
     display: none;
   }
 
-.site-header.mobile-navigation-open
+
+  /* =====================================================
+     MOBILE NAVIGATION — ORGANIZED GREY TABS
+  ===================================================== */
+
+  .site-header.mobile-navigation-open
   .main-navigation {
 
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 5px;
+
+    gap: 6px;
 
     position: absolute;
     top: 100%;
@@ -6664,54 +6669,125 @@ linear-gradient(
     z-index: 3100;
   }
 
+
+  /* Main tabs and dropdown containers */
+
   .site-header.mobile-navigation-open
-  .main-navigation .nav-button {
+  .main-navigation > .nav-button,
+  .site-header.mobile-navigation-open
+  .main-navigation > .nav-dropdown {
 
     width: 100%;
-    min-height: 38px;
+    min-height: 40px;
 
+    margin: 0;
+    padding: 0;
+
+    background: #3a3a3a;
+    border-bottom: 1px solid #777;
+    border-radius: 4px;
+
+    box-sizing: border-box;
+  }
+
+
+  /* Normal navigation tabs */
+
+  .site-header.mobile-navigation-open
+  .main-navigation > .nav-button {
+
+    display: flex;
+    align-items: center;
     justify-content: flex-start;
-    text-align: left;
 
-    padding: 9px 12px;
+    padding: 10px 12px;
 
     font-size: 12px;
+    line-height: 1.2;
   }
 
+
+  /* Dropdown trigger */
+
   .site-header.mobile-navigation-open
-  .nav-dropdown {
+  .main-navigation > .nav-dropdown
+  > button {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     width: 100%;
+    min-height: 40px;
+
+    margin: 0;
+    padding: 10px 12px;
+
+    background: transparent;
+    border: none;
+
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 1.2;
   }
 
+
+  /* Dropdown container */
+
   .site-header.mobile-navigation-open
-  .dropdown-menu {
+  .main-navigation > .nav-dropdown {
 
-    position: static;
     width: 100%;
+    margin: 0;
+    padding: 0;
+  }
 
-    max-height: none;
-    overflow: visible;
 
+  /* Preserve dropdown open/close behavior */
+
+  .site-header.mobile-navigation-open
+  .main-navigation .dropdown-menu {
+
+    margin: 0;
     box-shadow: none;
   }
 
+
+  /* Dropdown menu buttons */
+
   .site-header.mobile-navigation-open
-  .dropdown-menu button {
+  .main-navigation .dropdown-menu button {
+
+    width: 100%;
+    min-height: 36px;
+
+    margin: 0;
+    padding: 9px 12px;
 
     font-size: 11px;
-    padding: 9px 12px;
   }
 
-  .mobile-menu-button i {
-    transition: transform 0.2s ease;
-  }
+
+  /* Hover effect */
 
   .site-header.mobile-navigation-open
-  .mobile-menu-button i {
+  .main-navigation > .nav-button:hover,
+  .site-header.mobile-navigation-open
+  .main-navigation > .nav-dropdown:hover {
 
-    transform: rotate(90deg);
+    background: #505050;
   }
+
+
+  /* Keyboard focus */
+
+  .site-header.mobile-navigation-open
+  .main-navigation button:focus-visible {
+
+    outline: 2px solid #00f5ff;
+    outline-offset: 2px;
+  }
+
 
   /* Keep portal buttons visible */
 
@@ -6912,6 +6988,8 @@ linear-gradient(
   }
 
 }
+
+
 /* =========================================================
    MOBILE: HIDE LARGE TUPS APP PHONE IMAGE
 ========================================================= */
@@ -6920,107 +6998,6 @@ linear-gradient(
 
   .home-promo-app {
     display: none !important;
-  }
-
-}
-
-/* =========================================================
-   MOBILE MENU — GREY TABS AND PROPER DROPDOWNS
-========================================================= */
-
-@media (max-width: 650px) {
-
-  /* Main navigation layout */
-  .site-header.mobile-navigation-open
-  .main-navigation {
-
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-    padding: 12px;
-  }
-
-  /* Main navigation tabs */
-  .site-header.mobile-navigation-open
-  .main-navigation > .nav-button,
-  .site-header.mobile-navigation-open
-  .main-navigation > .nav-dropdown {
-
-    width: 100%;
-    margin: 0;
-    padding: 0;
-
-    background: #3a3a3a;
-    border-bottom: 1px solid #777;
-    border-radius: 4px;
-
-    box-sizing: border-box;
-  }
-
-  /* Normal tabs */
-  .site-header.mobile-navigation-open
-  .main-navigation > .nav-button {
-
-    min-height: 40px;
-    padding: 10px 12px;
-
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    line-height: 1.2;
-  }
-
-  /* Dropdown trigger */
-  .site-header.mobile-navigation-open
-  .main-navigation > .nav-dropdown
-  > button {
-
-    width: 100%;
-    min-height: 40px;
-    padding: 10px 12px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    background: transparent;
-    border: none;
-    color: #ffffff;
-
-    line-height: 1.2;
-  }
-
-  /* Do not force dropdown containers into a new layout */
-  .site-header.mobile-navigation-open
-  .main-navigation > .nav-dropdown {
-
-    min-height: 40px;
-  }
-
-  /* Preserve the existing dropdown menu behavior */
-  .site-header.mobile-navigation-open
-  .main-navigation .dropdown-menu {
-
-    margin: 0;
-  }
-
-  /* Hover effects */
-  .site-header.mobile-navigation-open
-  .main-navigation > .nav-button:hover,
-  .site-header.mobile-navigation-open
-  .main-navigation > .nav-dropdown:hover {
-
-    background: #505050;
-  }
-
-  /* Keyboard focus */
-  .site-header.mobile-navigation-open
-  .main-navigation button:focus-visible {
-
-    outline: 2px solid #00f5ff;
-    outline-offset: 2px;
   }
 
 }
