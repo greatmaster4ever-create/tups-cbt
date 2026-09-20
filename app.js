@@ -4798,40 +4798,12 @@ document.addEventListener("click", function (event) {
 
 initializeDemoNavigation();
 /* =========================================================
-   MOBILE HEADER MENU
+   MOBILE HEADER DROPDOWNS
+   Header menu button is handled by
+   setHeaderNavigationState() above.
 ========================================================= */
 
 document.addEventListener("click", function (event) {
-
-  const menuButton =
-    event.target.closest(".mobile-menu-button");
-
-  if (menuButton) {
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    const header =
-      document.querySelector(".site-header");
-
-    if (!header) return;
-
-    header.classList.toggle(
-      "mobile-navigation-open"
-    );
-
-    menuButton.setAttribute(
-      "aria-expanded",
-      header.classList.contains(
-        "mobile-navigation-open"
-      )
-        ? "true"
-        : "false"
-    );
-
-    return;
-  }
-
 
   /* Mobile dropdown buttons */
 
