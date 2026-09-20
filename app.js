@@ -4799,6 +4799,324 @@ document.addEventListener("click", function (event) {
 initializeDemoNavigation();
 
 /* =========================================================
+   MOBILE HEADER NAVIGATION
+========================================================= */
+
+(function initializeMobileNavigation() {
+
+  const siteHeader =
+    document.querySelector(".site-header");
+
+  const mobileMenuButton =
+    document.querySelector(".mobile-menu-button");
+
+  const mainNavigation =
+    document.querySelector(".main-navigation");
+
+
+  if (
+    !siteHeader ||
+    !mobileMenuButton ||
+    !mainNavigation
+  ) {
+
+    console.warn(
+      "TUPS: Mobile navigation elements not found."
+    );
+
+    return;
+
+  }
+
+
+  /* =====================================================
+     MOBILE MENU BUTTON
+  ===================================================== */
+
+  mobileMenuButton.addEventListener(
+    "click",
+    function (event) {
+
+      event.preventDefault();
+
+      event.stopPropagation();
+
+
+      const opening =
+        !siteHeader.classList.contains(
+          "mobile-navigation-open"
+        );
+
+
+      siteHeader.classList.toggle(
+        "mobile-navigation-open",
+        opening
+      );
+
+
+      mobileMenuButton.setAttribute(
+        "aria-expanded",
+        opening ? "true" : "false"
+      );
+
+
+      /* Close all dropdowns when the main
+         mobile menu is opened/closed */
+
+      document
+        .querySelectorAll(
+          ".nav-dropdown.mobile-dropdown-open"
+        )
+        .forEach(dropdown => {
+
+          dropdown.classList.remove(
+            "mobile-dropdown-open"
+          );
+
+        });
+
+    }
+  );
+
+
+  /* =====================================================
+     MOBILE DROPDOWN TRIGGERS
+  ===================================================== */
+
+  document
+    .querySelectorAll(
+      ".main-navigation > .nav-dropdown > .dropdown-trigger"
+    )
+    .forEach(trigger => {
+
+      trigger.addEventListener(
+        "click",
+        function (event) {
+
+          /* Desktop behaviour remains untouched */
+
+          if (
+            window.innerWidth > 650
+          ) {
+            return;
+          }
+
+
+          event.preventDefault();
+
+          event.stopPropagation();
+
+
+          const dropdown =
+            this.closest(".nav-dropdown");
+
+
+          if (!dropdown) {
+            return;
+          }
+
+
+          const wasOpen =
+            dropdown.classList.contains(
+              "mobile-dropdown-open"
+            );
+
+
+          /* Close every other dropdown */
+
+          document
+            .querySelectorAll(
+              ".main-navigation > .nav-dropdown"
+            )
+            .forEach(otherDropdown => {
+
+              otherDropdown.classList.remove(
+                "mobile-dropdown-open"
+              );
+
+            });
+
+
+          /* Open selected dropdown */
+
+          if (!wasOpen) {
+
+            dropdown.classList.add(
+              "mobile-dropdown-open"
+            );
+
+          }
+
+        }
+      );
+
+    });
+
+
+  /* =====================================================
+     CLOSE MOBILE MENU AFTER NAVIGATION
+  ===================================================== */
+
+  mainNavigation.addEventListener(
+    "click",
+    function (event) {
+
+      if (
+        window.innerWidth > 650
+      ) {
+        return;
+      }
+
+
+      const menuItem =
+        event.target.closest(
+          ".dropdown-menu button"
+        );
+
+
+      const normalButton =
+        event.target.closest(
+          ".nav-button[data-page]:not(.dropdown-trigger)"
+        );
+
+
+      if (
+        !menuItem &&
+        !normalButton
+      ) {
+        return;
+      }
+
+
+      siteHeader.classList.remove(
+        "mobile-navigation-open"
+      );
+
+
+      document
+        .querySelectorAll(
+          ".nav-dropdown.mobile-dropdown-open"
+        )
+        .forEach(dropdown => {
+
+          dropdown.classList.remove(
+            "mobile-dropdown-open"
+          );
+
+        });
+
+
+      mobileMenuButton.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+    }
+  );
+
+
+  /* =====================================================
+     CLOSE WHEN CLICKING OUTSIDE HEADER
+  ===================================================== */
+
+  document.addEventListener(
+    "click",
+    function (event) {
+
+      if (
+        window.innerWidth > 650
+      ) {
+        return;
+      }
+
+
+      if (
+        siteHeader.contains(
+          event.target
+        )
+      ) {
+        return;
+      }
+
+
+      siteHeader.classList.remove(
+        "mobile-navigation-open"
+      );
+
+
+      document
+        .querySelectorAll(
+          ".nav-dropdown.mobile-dropdown-open"
+        )
+        .forEach(dropdown => {
+
+          dropdown.classList.remove(
+            "mobile-dropdown-open"
+          );
+
+        });
+
+
+      mobileMenuButton.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+    }
+  );
+
+
+  /* =====================================================
+     ESCAPE KEY
+  ===================================================== */
+
+  document.addEventListener(
+    "keydown",
+    function (event) {
+
+      if (
+        event.key !== "Escape"
+      ) {
+        return;
+      }
+
+
+      siteHeader.classList.remove(
+        "mobile-navigation-open"
+      );
+
+
+      document
+        .querySelectorAll(
+          ".nav-dropdown.mobile-dropdown-open"
+        )
+        .forEach(dropdown => {
+
+          dropdown.classList.remove(
+            "mobile-dropdown-open"
+          );
+
+        });
+
+
+      mobileMenuButton.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+    }
+  );
+
+
+  mobileMenuButton.setAttribute(
+    "aria-expanded",
+    "false"
+  );
+
+
+})();
+
+/* =========================================================
    INITIAL PAGE
 ========================================================= */
 

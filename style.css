@@ -6743,13 +6743,45 @@ linear-gradient(
   }
 
 
-  /* Preserve dropdown open/close behavior */
+    /* =====================================================
+     MOBILE DROPDOWN — CONTROLLED BY CLICK
+  ===================================================== */
 
   .site-header.mobile-navigation-open
   .main-navigation .dropdown-menu {
 
+    position: static;
+
+    width: 100%;
+
     margin: 0;
+
     box-shadow: none;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: none;
+
+    display: none;
+  }
+
+
+  /* Show only the dropdown that was clicked */
+
+  .site-header.mobile-navigation-open
+  .main-navigation
+  > .nav-dropdown.mobile-dropdown-open
+  .dropdown-menu {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    display: block;
+
+    transform: none;
   }
 
 
