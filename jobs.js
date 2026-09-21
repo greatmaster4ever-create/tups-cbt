@@ -38,8 +38,11 @@
   let jobs = [];
 
   let currentPage = 1;
+  let currentJobFilter = "all";
 
-  const JOBS_PER_PAGE = 10;
+let currentJobSearch = "";
+
+  const JOBS_PER_PAGE = 12;
 
 
   /* =======================================================
@@ -84,78 +87,204 @@
      LOAD JOBS PAGE
   ======================================================= */
 
-  function loadJobsPage() {
+function loadJobsPage() {
 
-    const contentArea =
-      document.getElementById(
-        "content-area"
-      );
+  const contentArea =
+    document.getElementById(
+      "content-area"
+    );
 
-    if (!contentArea) {
+  if (!contentArea) {
 
-      console.error(
-        "TUPS Jobs: #content-area not found."
-      );
+    console.error(
+      "TUPS Jobs: #content-area not found."
+    );
 
-      return;
-    }
-
-
-    currentPage = 1;
-
-
-    contentArea.innerHTML = `
-
-      <section class="jobs-page">
-
-        <div class="jobs-page-header">
-
-          <div>
-
-            <span class="jobs-page-icon">
-              <i class="fa-solid fa-briefcase"></i>
-            </span>
-
-            <h1>
-              Jobs &amp; Vacancies
-            </h1>
-
-            <p>
-              Find current job opportunities from
-              schools, companies and other legitimate
-              sources.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div
-          class="jobs-loading"
-          id="jobs-loading"
-        >
-
-          <i class="fa-solid fa-spinner fa-spin"></i>
-
-          Loading current vacancies...
-
-        </div>
-
-
-        <div
-          id="jobs-content"
-          class="jobs-content"
-        ></div>
-
-      </section>
-
-    `;
-
-
-    loadJobsData();
-
+    return;
   }
+
+  currentPage = 1;
+
+  contentArea.innerHTML = `
+
+    <section class="jobs-page">
+
+      <div class="jobs-page-header">
+
+        <div>
+
+          <span class="jobs-page-icon">
+            <i class="fa-solid fa-briefcase"></i>
+          </span>
+
+          <h1>
+            Jobs &amp; Vacancies
+          </h1>
+
+          <p>
+            Find current opportunities from
+            schools, companies and legitimate
+            job sources in Nigeria and beyond.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="jobs-search-area">
+
+        <div class="jobs-search-box">
+
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+          <input
+            type="search"
+            id="jobs-search"
+            placeholder="Search jobs, companies, locations..."
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <div class="jobs-filter-row">
+
+          <button
+            type="button"
+            class="jobs-filter active"
+            data-job-filter="all"
+          >
+            All Jobs
+          </button>
+
+          <button
+            type="button"
+            class="jobs-filter"
+            data-job-filter="nigeria"
+          >
+            🇳🇬 Nigeria
+          </button>
+
+          <button
+            type="button"
+            class="jobs-filter"
+            data-job-filter="abuja"
+          >
+            Abuja / FCT
+          </button>
+
+          <button
+            type="button"
+            class="jobs-filter"
+            data-job-filter="education"
+          >
+            Education
+          </button>
+
+          <button
+            type="button"
+            class="jobs-filter"
+            data-job-filter="technology"
+          >
+            IT &amp; Technology
+          </button>
+
+          <button
+            type="button"
+            class="jobs-filter"
+            data-job-filter="finance"
+          >
+            Finance
+          </button>
+
+          <button
+            type="button"
+            class="jobs-filter"
+            data-job-filter="healthcare"
+          >
+            Healthcare
+          </button>
+
+          <button
+            type="button"
+            class="jobs-filter"
+            data-job-filter="engineering"
+          >
+            Engineering
+          </button>
+
+          <button
+            type="button"
+            class="jobs-filter"
+            data-job-filter="administration"
+          >
+            Administration
+          </button>
+
+          <button
+            type="button"
+            class="jobs-filter"
+            data-job-filter="sales"
+          >
+            Sales &amp; Marketing
+          </button>
+
+          <button
+            type="button"
+            class="jobs-filter"
+            data-job-filter="creative"
+          >
+            Media &amp; Creative
+          </button>
+
+          <button
+            type="button"
+            class="jobs-filter"
+            data-job-filter="internship"
+          >
+            Internship / Graduate
+          </button>
+
+          <button
+            type="button"
+            class="jobs-filter"
+            data-job-filter="remote"
+          >
+            Remote
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="jobs-loading"
+        id="jobs-loading"
+      >
+
+        <i class="fa-solid fa-spinner fa-spin"></i>
+
+        Loading current vacancies...
+
+      </div>
+
+
+      <div
+        id="jobs-content"
+        class="jobs-content"
+      ></div>
+
+    </section>
+
+  `;
+
+  attachJobsSearchEvents();
+
+  loadJobsData();
+
+}
 
 
   /* =======================================================
@@ -265,123 +394,653 @@
      RENDER JOBS
   ======================================================= */
 
-  function renderJobs() {
+function renderJobs() {
 
-    const container =
-      document.getElementById(
-        "jobs-content"
-      );
+  const container =
+    document.getElementById(
+      "jobs-content"
+    );
 
-    if (!container) {
-      return;
-    }
+  if (!container) {
+    return;
+  }
 
+  const loading =
+    document.getElementById(
+      "jobs-loading"
+    );
 
-    const loading =
-      document.getElementById(
-        "jobs-loading"
-      );
+  if (loading) {
 
-    if (loading) {
+    loading.style.display =
+      "none";
 
-      loading.style.display =
-        "none";
-
-    }
-
-
-    if (
-      !jobs ||
-      !jobs.length
-    ) {
-
-      container.innerHTML = `
-
-        <div class="jobs-empty">
-
-          <i class="fa-solid fa-briefcase"></i>
-
-          <h3>
-            No vacancies available right now.
-          </h3>
-
-          <p>
-            Please check again later for new
-            opportunities.
-          </p>
-
-        </div>
-
-      `;
-
-      return;
-    }
+  }
 
 
-    const start =
-      (currentPage - 1) *
-      JOBS_PER_PAGE;
+  const filteredJobs =
+    getFilteredJobs();
 
 
-    const end =
-      start +
-      JOBS_PER_PAGE;
+  if (!filteredJobs.length) {
 
+    container.innerHTML = `
 
-    const pageJobs =
-      jobs.slice(
-        start,
-        end
-      );
+      <div class="jobs-empty">
 
+        <i class="fa-solid fa-magnifying-glass"></i>
 
-    let html = `
+        <h3>
+          No matching vacancies found.
+        </h3>
 
-      <div class="jobs-summary">
-
-        <strong>
-          ${jobs.length}
-        </strong>
-
-        current vacancies
+        <p>
+          Try another search term or select
+          a different category.
+        </p>
 
       </div>
 
-
-      <div class="jobs-list">
-
     `;
 
+    return;
+  }
 
-    pageJobs.forEach(
-      function (job) {
 
-        html +=
-          createJobCard(job);
+  const totalPages =
+    Math.ceil(
+      filteredJobs.length /
+      JOBS_PER_PAGE
+    );
+
+
+  if (currentPage > totalPages) {
+    currentPage = totalPages;
+  }
+
+
+  const start =
+    (currentPage - 1) *
+    JOBS_PER_PAGE;
+
+
+  const pageJobs =
+    filteredJobs.slice(
+      start,
+      start + JOBS_PER_PAGE
+    );
+
+
+  let html = `
+
+    <div class="jobs-summary">
+
+      <strong>
+        ${filteredJobs.length}
+      </strong>
+
+      matching vacancies
+
+    </div>
+
+
+    <div class="jobs-list">
+
+  `;
+
+
+  pageJobs.forEach(
+    function (job) {
+
+      html +=
+        createJobCard(job);
+
+    }
+  );
+
+
+  html += `
+
+    </div>
+
+  `;
+
+
+  html +=
+    createFilteredPagination(
+      totalPages
+    );
+
+
+  container.innerHTML =
+    html;
+
+
+  attachJobEvents();
+
+}
+
+/* =======================================================
+   SEARCH & CATEGORY FILTERING
+======================================================= */
+
+function getFilteredJobs() {
+
+  const search =
+    currentJobSearch
+      .trim()
+      .toLowerCase();
+
+
+  return jobs.filter(
+    function (job) {
+
+      const searchableText = [
+
+        job.title,
+        job.company,
+        job.location,
+        job.area,
+        job.state,
+        job.category,
+        job.sector,
+        job.employmentType,
+        job.source
+
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+
+      if (
+        search &&
+        !searchableText.includes(search)
+      ) {
+
+        return false;
+
+      }
+
+
+      return matchesJobFilter(
+        job,
+        currentJobFilter
+      );
+
+    }
+  );
+
+}
+
+
+function matchesJobFilter(job, filter) {
+
+  if (filter === "all") {
+    return true;
+  }
+
+  const title =
+    String(job.title || "").toLowerCase();
+
+  const company =
+    String(job.company || "").toLowerCase();
+
+  const location =
+    String(job.location || "").toLowerCase();
+
+  const area =
+    String(job.area || "").toLowerCase();
+
+  const state =
+    String(job.state || "").toLowerCase();
+
+  const category =
+    String(job.category || "").toLowerCase();
+
+  const sector =
+    String(job.sector || "").toLowerCase();
+
+  const employmentType =
+    String(job.employmentType || "").toLowerCase();
+
+  const text = [
+    title,
+    company,
+    location,
+    area,
+    state,
+    category,
+    sector,
+    employmentType
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  /*
+   * NIGERIA FILTER
+   */
+
+  if (filter === "nigeria") {
+
+    const nigeriaKeywords = [
+
+      "nigeria",
+      "abuja",
+      "fct",
+      "lagos",
+      "kano",
+      "kaduna",
+      "rivers",
+      "port harcourt",
+      "oyo",
+      "ibadan",
+      "enugu",
+      "anambra",
+      "delta",
+      "kwara",
+      "plateau",
+      "benue",
+      "osun",
+      "ogun",
+      "ondo",
+      "ekiti",
+      "imo",
+      "abia",
+      "cross river",
+      "akwa ibom",
+      "bayelsa",
+      "nasarawa",
+      "kogi",
+      "sokoto",
+      "katsina",
+      "jigawa",
+      "borno",
+      "yobe",
+      "zamfara",
+      "gombe",
+      "taraba",
+      "bauchi",
+      "ebonyi",
+      "edo",
+      "ondo"
+    ];
+
+    return nigeriaKeywords.some(function(keyword) {
+
+      return text.includes(keyword);
+
+    });
+
+  }
+
+
+  /*
+   * ABUJA / FCT FILTER
+   */
+
+  if (filter === "abuja") {
+
+    const abujaKeywords = [
+
+      "abuja",
+      "fct",
+      "federal capital territory",
+
+      // Abuja districts and areas
+      "gwarinpa",
+      "kubwa",
+      "jabi",
+      "wuse",
+      "wuse 2",
+      "maitama",
+      "asokoro",
+      "utako",
+      "lugbe",
+      "lokogoma",
+      "galadimawa",
+      "life camp",
+      "lifecamp",
+      "karsana",
+      "katampe",
+      "jikwoyi",
+      "nyanya",
+      "karu",
+      "kurudu",
+      "apo",
+      "garki",
+      "gudu",
+      "durumi",
+      "dakibiyu",
+      "wuye",
+      "airport road",
+      " kubwa"
+    ];
+
+    return abujaKeywords.some(function(keyword) {
+
+      return text.includes(keyword.trim());
+
+    });
+
+  }
+
+
+  /*
+   * CATEGORY FILTERS
+   */
+
+  const filterMap = {
+
+    education: [
+
+      "education",
+      "teacher",
+      "teaching",
+      "school",
+      "lecturer",
+      "academic",
+      "tutor",
+      "principal",
+      "head teacher",
+      "school administrator",
+      "early years",
+      "primary education",
+      "secondary education"
+
+    ],
+
+    technology: [
+
+      "technology",
+      "software",
+      "developer",
+      "programmer",
+      "programming",
+      "web development",
+      "mobile development",
+      "ict",
+      "information technology",
+      "cybersecurity",
+      "cyber security",
+      "network administrator",
+      "cloud",
+      "database",
+      "data analyst",
+      "data science",
+      "artificial intelligence",
+      "machine learning",
+      "devops",
+      "technical support"
+
+    ],
+
+    finance: [
+
+      "finance",
+      "accounting",
+      "accountant",
+      "bank",
+      "banking",
+      "audit",
+      "auditor",
+      "financial",
+      "treasury",
+      "tax",
+      "payroll",
+      "investment"
+
+    ],
+
+    healthcare: [
+
+      "health",
+      "healthcare",
+      "medical",
+      "nurse",
+      "nursing",
+      "doctor",
+      "pharmacy",
+      "pharmacist",
+      "hospital",
+      "clinical",
+      "laboratory",
+      "health officer"
+
+    ],
+
+    engineering: [
+
+      "engineering",
+      "engineer",
+      "mechanical",
+      "electrical",
+      "civil engineer",
+      "chemical engineer",
+      "construction",
+      "structural",
+      "maintenance engineer",
+      "project engineer"
+
+    ],
+
+    administration: [
+
+      "administration",
+      "administrative",
+      "office",
+      "secretary",
+      "receptionist",
+      "operations",
+      "human resources",
+      "hr officer",
+      "personal assistant",
+      "executive assistant",
+      "front desk"
+
+    ],
+
+    sales: [
+
+      "sales",
+      "marketing",
+      "business development",
+      "commercial",
+      "customer service",
+      "account manager",
+      "brand manager",
+      "sales representative",
+      "business development officer"
+
+    ],
+
+    creative: [
+
+      "creative",
+      "media",
+      "content",
+      "designer",
+      "design",
+      "graphics",
+      "graphic designer",
+      "video",
+      "photographer",
+      "writer",
+      "copywriter",
+      "animation",
+      "public relations"
+
+    ],
+
+    internship: [
+
+      "internship",
+      "intern",
+      "graduate",
+      "graduate trainee",
+      "trainee",
+      "entry level",
+      "entry-level",
+      "nysc",
+      "national youth service"
+
+    ],
+
+    remote: [
+
+      "remote",
+      "work from home",
+      "work-from-home",
+      "worldwide",
+      "anywhere",
+      "distributed team"
+
+    ]
+
+  };
+
+
+  const keywords =
+    filterMap[filter] || [];
+
+
+  return keywords.some(function(keyword) {
+
+    return text.includes(keyword);
+
+  });
+
+}
+
+
+function attachJobsSearchEvents() {
+
+  const searchInput =
+    document.getElementById(
+      "jobs-search"
+    );
+
+
+  if (searchInput) {
+
+    searchInput.addEventListener(
+      "input",
+      function () {
+
+        currentJobSearch =
+          searchInput.value;
+
+        currentPage = 1;
+
+        renderJobs();
 
       }
     );
 
-
-    html += `
-
-      </div>
-
-    `;
-
-
-    html +=
-      createPagination();
-
-
-    container.innerHTML =
-      html;
-
-
-    attachJobEvents();
-
   }
 
+
+  const filters =
+    document.querySelectorAll(
+      "[data-job-filter]"
+    );
+
+
+  filters.forEach(
+    function (button) {
+
+      button.addEventListener(
+        "click",
+        function () {
+
+          currentJobFilter =
+            button.dataset.jobFilter;
+
+          currentPage = 1;
+
+
+          filters.forEach(
+            function (item) {
+
+              item.classList.remove(
+                "active"
+              );
+
+            }
+          );
+
+
+          button.classList.add(
+            "active"
+          );
+
+
+          renderJobs();
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+function createFilteredPagination(
+  totalPages
+) {
+
+  if (totalPages <= 1) {
+    return "";
+  }
+
+
+  return `
+
+    <div class="jobs-pagination">
+
+      <button
+        type="button"
+        class="jobs-page-button"
+        data-job-page="previous"
+        ${currentPage === 1 ? "disabled" : ""}
+      >
+
+        <i class="fa-solid fa-chevron-left"></i>
+
+        Previous
+
+      </button>
+
+
+      <span class="jobs-page-number">
+
+        Page
+        ${currentPage}
+        of
+        ${totalPages}
+
+      </span>
+
+
+      <button
+        type="button"
+        class="jobs-page-button"
+        data-job-page="next"
+        ${currentPage === totalPages ? "disabled" : ""}
+      >
+
+        Next
+
+        <i class="fa-solid fa-chevron-right"></i>
+
+      </button>
+
+    </div>
+
+  `;
+
+}
 
   /* =======================================================
      CREATE JOB CARD
@@ -579,10 +1238,10 @@
   function createPagination() {
 
     const totalPages =
-      Math.ceil(
-        jobs.length /
-        JOBS_PER_PAGE
-      );
+  Math.ceil(
+    getFilteredJobs().length /
+    JOBS_PER_PAGE
+  );
 
 
     if (totalPages <= 1) {
@@ -663,11 +1322,11 @@
               button.dataset.jobPage;
 
 
-            const totalPages =
-              Math.ceil(
-                jobs.length /
-                JOBS_PER_PAGE
-              );
+            const filteredJobs = getFilteredJobs();
+
+			const totalPages = Math.ceil(
+			filteredJobs.length / JOBS_PER_PAGE
+		);
 
 
             if (
