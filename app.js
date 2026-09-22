@@ -1198,15 +1198,15 @@ const pages = {
 
           </article>
 
-          <!-- 4. SUBJECT MANAGEMENT -->
+          <!-- 4. STUDENT ATTENDANCE SYSTEM-->
 
           <article class="tups-app-card">
 
             <div class="tups-app-image">
 
               <img
-                src="images/tups-subject-management.jpg"
-                alt="TUPS Subject Management"
+                src="images/attendance.jpg"
+                alt="TUPS Student Attendance"
                 loading="lazy"
                 decoding="async"
               >
@@ -1216,13 +1216,13 @@ const pages = {
             <div class="tups-app-info">
 
               <h3>
-                Subject Management
+                Student Attendance Marker and Alert
               </h3>
 
               <p>
-                Manage school subjects and associate them
-                with the appropriate departments, classes,
-                and academic levels.
+                Students Attendance at arrival and departure are marked and 
+				by our attendance marker, counts are taken and relevant
+				analytics are derived.
               </p>
 
             </div>
@@ -1237,7 +1237,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/tups-teacher-access.jpg"
+                src="images/admin.jpg"
                 alt="TUPS Teacher and Administrative Access"
                 loading="lazy"
                 decoding="async"
@@ -1248,12 +1248,12 @@ const pages = {
             <div class="tups-app-info">
 
               <h3>
-                Teacher & Administrative Access
+                Dedicated & Secured Admin Access Portal.
               </h3>
 
               <p>
-                Provide authorised teachers and
-                administrators with access to functions
+                Provide authorised
+                administrators with dedicated access to functions
                 relevant to their responsibilities.
               </p>
 
@@ -1269,7 +1269,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/tups-school-fees.jpg"
+                src="images/studednt_fees.jpg"
                 alt="TUPS School Fees Management"
                 loading="lazy"
                 decoding="async"
@@ -1284,7 +1284,7 @@ const pages = {
               </h3>
 
               <p>
-                Organise payment records, monitor
+                Organised Payments and payment records, monitor
                 outstanding balances, and keep school
                 fee information properly structured.
               </p>
@@ -1301,7 +1301,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/tups-financial-analytics.jpg"
+                src="images/fin_analytics.jpg"
                 alt="TUPS Financial Analytics and Monitoring"
                 loading="lazy"
                 decoding="async"
@@ -1326,15 +1326,15 @@ const pages = {
           </article>
 
 
-          <!-- 8. RESULTS & BROADSHEET -->
+          <!-- 8. REPORT CARD TEMPLATE SYSTEM -->
 
           <article class="tups-app-card">
 
             <div class="tups-app-image">
 
               <img
-                src="images/tups-results-broadsheet.jpg"
-                alt="TUPS Academic Results and Broadsheet Management"
+                src="images/result template.jpg"
+                alt="TUPS Report Card Template System"
                 loading="lazy"
                 decoding="async"
               >
@@ -1344,13 +1344,13 @@ const pages = {
             <div class="tups-app-info">
 
               <h3>
-                Results & Broadsheet Management
+                Report Card Template System
               </h3>
 
               <p>
                 Manage academic results and broadsheet
-                records through a structured digital
-                academic workflow.
+                records and generate a programmed result 
+				using a designated sectional template.
               </p>
 
             </div>
@@ -1365,7 +1365,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/tups-result-computation.jpg"
+                src="images/computations.jpg"
                 alt="TUPS Automated Result Computation"
                 loading="lazy"
                 decoding="async"
@@ -1382,7 +1382,8 @@ const pages = {
               <p>
                 Automate calculations such as totals,
                 averages, positions, grades, and other
-                academic result processes.
+                academic result processes with a 
+				programmed TUPS Result System MENU BAR.
               </p>
 
             </div>
@@ -1397,7 +1398,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/tups-digital-results.jpg"
+                src="images/results.jpg"
                 alt="TUPS Digital Result Generation and Checking"
                 loading="lazy"
                 decoding="async"
@@ -1429,7 +1430,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/tups-parent-teacher.jpg"
+                src="images/pta_communication.jpg"
                 alt="TUPS Parent Teacher Communication"
                 loading="lazy"
                 decoding="async"
@@ -1461,7 +1462,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/announcements.jpg"
+                src="images/announcement.jpg"
                 alt="TUPS School Announcements and Advertising"
                 loading="lazy"
                 decoding="async"
@@ -1485,14 +1486,14 @@ const pages = {
           </article>
 
 
-          <!-- 13. PARENT INFORMATION -->
+          <!-- 13. PARENT INFORMATION ACCESS-->
 
           <article class="tups-app-card">
 
             <div class="tups-app-image">
 
               <img
-                src="images/tups-parent-information.jpg"
+                src="images/parents_info_access.jpg"
                 alt="TUPS Parent School Information Access"
                 loading="lazy"
                 decoding="async"
@@ -1509,7 +1510,8 @@ const pages = {
               <p>
                 Give parents convenient access to relevant
                 school information and communication from
-                wherever they are.
+                wherever they are without having to call
+				school management.
               </p>
 
             </div>
