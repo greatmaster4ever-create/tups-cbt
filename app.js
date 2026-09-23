@@ -274,7 +274,7 @@ const pages = {
                 <div class="partner-school-image">
 
                   <img
-                    src="images/angelite.jpg"
+                    src="images/angelite.JPG"
                     alt="Angelite International School"
                     loading="lazy"
                     decoding="async"
@@ -1269,7 +1269,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/studednt_fees.JPG"
+                src="images/student_fees.JPG"
                 alt="TUPS School Fees Management"
                 loading="lazy"
                 decoding="async"
