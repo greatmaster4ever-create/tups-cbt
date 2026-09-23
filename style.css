@@ -6934,8 +6934,8 @@ linear-gradient(
     border: none;
     border-radius: 0 7px 7px 0;
 
-    background: var(--tups-black);
-    color: var(--tups-blue);
+    background: #800020;
+    color: white;
 
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
 
