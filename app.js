@@ -207,35 +207,6 @@ const pages = {
               id="partner-carousel-track"
             >
 
-              <!-- CARD 1 -->
-
-              <article class="partner-school-card">
-
-                <div class="partner-school-image">
-
-                  <img
-                    src="images/lbis_admission.jpg"
-                    alt="Tender Lilies Royal Academy - Inter-House Sports 2026"
-                    loading="lazy"
-                    decoding="async"
-                  >
-
-                </div>
-
-                <div class="partner-school-info">
-
-                  <h3>
-                    Lead British International School, Abuja.
-                  </h3>
-
-                  <p>
-                    Admission in Progress.
-                  </p>
-
-                </div>
-
-              </article>
-
 
               <!-- CARD 2 -->
 
@@ -296,16 +267,45 @@ const pages = {
 
               </article>
 
-
-              <!-- CARD 4 -->
+  <!-- CARD 1 -->
 
               <article class="partner-school-card">
 
                 <div class="partner-school-image">
 
                   <img
-                    src="images/partner-school-4.jpg"
-                    alt="Partner School - Academic Excellence Awards 2026"
+                    src="images/lbis_admission.jpg"
+                    alt="Tender Lilies Royal Academy - Inter-House Sports 2026"
+                    loading="lazy"
+                    decoding="async"
+                  >
+
+                </div>
+
+                <div class="partner-school-info">
+
+                  <h3>
+                    Lead British International School, Abuja.
+                  </h3>
+
+                  <p>
+                    Admission in Progress.
+                  </p>
+
+                </div>
+
+              </article>
+
+    <!-- CARD 4 -->
+
+              <article class="partner-school-card">
+
+                <div class="partner-school-image">
+
+                  <img
+                    src="images/pis.jpg"
+                    alt="Premier International School - 
+					Academic Excellence Awards 2026"
                     loading="lazy"
                     decoding="async"
                   >
@@ -319,7 +319,7 @@ const pages = {
                   </h3>
 
                   <p>
-                    Academic Excellence Awards 2026
+                    CLASS OF 2025/2026 WAEC RESULTS
                   </p>
 
                 </div>
