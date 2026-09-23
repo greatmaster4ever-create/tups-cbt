@@ -37,13 +37,19 @@
 
   let jobs = [];
 
-  let currentPage = 1;
+  let currentApiPage = 1;
+
   let currentJobFilter = "all";
 
-let currentJobSearch = "";
+  let currentJobSearch = "";
 
-  const JOBS_PER_PAGE = 12;
+  let jobsHasMore = false;
 
+  let jobsTotal = 0;
+
+  let jobsLoading = false;
+
+  const JOBS_API_PAGE_SIZE = 30;
 
   /* =======================================================
      INITIALISE
@@ -103,7 +109,15 @@ function loadJobsPage() {
     return;
   }
 
-  currentPage = 1;
+  currentApiPage = 1;
+
+  jobs = [];
+
+  jobsHasMore = false;
+
+  jobsTotal = 0;
+
+  jobsLoading = false;
 
   contentArea.innerHTML = `
 
@@ -291,20 +305,33 @@ function loadJobsPage() {
      LOAD DATA
   ======================================================= */
 
-  async function loadJobsData() {
+    async function loadJobsData() {
+
+    if (jobsLoading) {
+      return;
+    }
+
+
+    jobsLoading = true;
+
 
     const cached =
       getCachedJobs();
 
 
     /*
-     * Show cached jobs immediately when available.
-     * This keeps the page responsive.
+     * Show cached first page immediately
+     * when available.
      */
 
-    if (cached && cached.length) {
+    if (
+      cached &&
+      cached.length
+    ) {
 
       jobs = cached;
+
+      currentApiPage = 1;
 
       renderJobs();
 
@@ -313,13 +340,20 @@ function loadJobsPage() {
 
     try {
 
+      const url =
+        JOBS_CONFIG.API_URL +
+        "?feed=" +
+        encodeURIComponent(
+          JOBS_CONFIG.FEED
+        ) +
+        "&page=1" +
+        "&limit=" +
+        JOBS_API_PAGE_SIZE;
+
+
       const response =
         await fetch(
-          JOBS_CONFIG.API_URL +
-          "?feed=" +
-          encodeURIComponent(
-            JOBS_CONFIG.FEED
-          ),
+          url,
           {
             method: "GET",
             cache: "no-store"
@@ -343,7 +377,9 @@ function loadJobsPage() {
 
       if (
         !data ||
-        !Array.isArray(data.items)
+        !Array.isArray(
+          data.items
+        )
       ) {
 
         throw new Error(
@@ -357,7 +393,27 @@ function loadJobsPage() {
         data.items;
 
 
-      saveCachedJobs(jobs);
+      currentApiPage =
+        Number(
+          data.page || 1
+        );
+
+
+      jobsHasMore =
+        Boolean(
+          data.hasMore
+        );
+
+
+      jobsTotal =
+        Number(
+          data.total || jobs.length
+        );
+
+
+      saveCachedJobs(
+        jobs
+      );
 
 
       renderJobs();
@@ -385,6 +441,218 @@ function loadJobsPage() {
 
       }
 
+    } finally {
+
+      jobsLoading = false;
+
+    }
+
+  }
+  
+    /* =======================================================
+     LOAD MORE JOBS
+  ======================================================= */
+
+  async function loadMoreJobs() {
+
+    if (
+      jobsLoading ||
+      !jobsHasMore
+    ) {
+
+      return;
+
+    }
+
+
+    jobsLoading = true;
+
+
+    const nextPage =
+      currentApiPage + 1;
+
+
+    const loadMoreButton =
+      document.getElementById(
+        "jobs-load-more"
+      );
+
+
+    if (loadMoreButton) {
+
+      loadMoreButton.disabled =
+        true;
+
+
+      loadMoreButton.innerHTML = `
+
+        <i class="fa-solid fa-spinner fa-spin"></i>
+
+        Loading more jobs...
+
+      `;
+
+    }
+
+
+    try {
+
+      const url =
+        JOBS_CONFIG.API_URL +
+        "?feed=" +
+        encodeURIComponent(
+          JOBS_CONFIG.FEED
+        ) +
+        "&page=" +
+        nextPage +
+        "&limit=" +
+        JOBS_API_PAGE_SIZE;
+
+
+      const response =
+        await fetch(
+          url,
+          {
+            method: "GET",
+            cache: "no-store"
+          }
+        );
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          "HTTP " +
+          response.status
+        );
+
+      }
+
+
+      const data =
+        await response.json();
+
+
+      if (
+        !data ||
+        !Array.isArray(
+          data.items
+        )
+      ) {
+
+        throw new Error(
+          "Invalid Jobs pagination response."
+        );
+
+      }
+
+
+      /*
+       * Append new jobs instead of replacing
+       * the jobs already displayed.
+       */
+
+      const existingIds =
+        new Set(
+          jobs.map(
+            function(job) {
+              return String(
+                job.id || ""
+              );
+            }
+          )
+        );
+
+
+      data.items.forEach(
+        function(job) {
+
+          const id =
+            String(
+              job.id || ""
+            );
+
+
+          if (
+            !existingIds.has(id)
+          ) {
+
+            jobs.push(
+              job
+            );
+
+            existingIds.add(
+              id
+            );
+
+          }
+
+        }
+      );
+
+
+      currentApiPage =
+        Number(
+          data.page ||
+          nextPage
+        );
+
+
+      jobsHasMore =
+        Boolean(
+          data.hasMore
+        );
+
+
+      jobsTotal =
+        Number(
+          data.total ||
+          jobsTotal
+        );
+
+
+      /*
+       * Save the accumulated jobs.
+       * This gives the next visit a useful
+       * cached starting point.
+       */
+
+      saveCachedJobs(
+        jobs
+      );
+
+
+      renderJobs();
+
+
+    } catch (error) {
+
+      console.error(
+        "TUPS Jobs: Load more error:",
+        error
+      );
+
+
+      if (loadMoreButton) {
+
+        loadMoreButton.disabled =
+          false;
+
+
+        loadMoreButton.innerHTML = `
+
+          Load More Jobs
+
+          <i class="fa-solid fa-chevron-down"></i>
+
+        `;
+
+      }
+
+    } finally {
+
+      jobsLoading = false;
+
     }
 
   }
@@ -401,14 +669,17 @@ function renderJobs() {
       "jobs-content"
     );
 
+
   if (!container) {
     return;
   }
+
 
   const loading =
     document.getElementById(
       "jobs-loading"
     );
+
 
   if (loading) {
 
@@ -444,31 +715,8 @@ function renderJobs() {
     `;
 
     return;
+
   }
-
-
-  const totalPages =
-    Math.ceil(
-      filteredJobs.length /
-      JOBS_PER_PAGE
-    );
-
-
-  if (currentPage > totalPages) {
-    currentPage = totalPages;
-  }
-
-
-  const start =
-    (currentPage - 1) *
-    JOBS_PER_PAGE;
-
-
-  const pageJobs =
-    filteredJobs.slice(
-      start,
-      start + JOBS_PER_PAGE
-    );
 
 
   let html = `
@@ -479,7 +727,30 @@ function renderJobs() {
         ${filteredJobs.length}
       </strong>
 
-      matching vacancies
+      ${
+
+        currentJobSearch ||
+        currentJobFilter !== "all"
+
+          ? "matching vacancies"
+
+          : (
+              jobsTotal
+                ? "vacancies available"
+                : "vacancies"
+            )
+
+      }
+
+      ${
+        jobsTotal > jobs.length
+          ? `
+            <span class="jobs-loaded-count">
+              • ${jobs.length} loaded
+            </span>
+          `
+          : ""
+      }
 
     </div>
 
@@ -489,7 +760,7 @@ function renderJobs() {
   `;
 
 
-  pageJobs.forEach(
+  filteredJobs.forEach(
     function (job) {
 
       html +=
@@ -506,10 +777,39 @@ function renderJobs() {
   `;
 
 
-  html +=
-    createFilteredPagination(
-      totalPages
-    );
+  /*
+   * Server-side pagination:
+   * show Load More only when the API
+   * reports another page exists.
+   */
+
+  if (
+    jobsHasMore &&
+    !currentJobSearch &&
+    currentJobFilter === "all"
+  ) {
+
+    html += `
+
+      <div class="jobs-load-more-wrap">
+
+        <button
+          type="button"
+          id="jobs-load-more"
+          class="jobs-load-more-button"
+        >
+
+          Load More Jobs
+
+          <i class="fa-solid fa-chevron-down"></i>
+
+        </button>
+
+      </div>
+
+    `;
+
+  }
 
 
   container.innerHTML =
@@ -930,7 +1230,6 @@ function attachJobsSearchEvents() {
         currentJobSearch =
           searchInput.value;
 
-        currentPage = 1;
 
         renderJobs();
 
@@ -955,8 +1254,6 @@ function attachJobsSearchEvents() {
 
           currentJobFilter =
             button.dataset.jobFilter;
-
-          currentPage = 1;
 
 
           filters.forEach(
@@ -986,61 +1283,7 @@ function attachJobsSearchEvents() {
 }
 
 
-function createFilteredPagination(
-  totalPages
-) {
 
-  if (totalPages <= 1) {
-    return "";
-  }
-
-
-  return `
-
-    <div class="jobs-pagination">
-
-      <button
-        type="button"
-        class="jobs-page-button"
-        data-job-page="previous"
-        ${currentPage === 1 ? "disabled" : ""}
-      >
-
-        <i class="fa-solid fa-chevron-left"></i>
-
-        Previous
-
-      </button>
-
-
-      <span class="jobs-page-number">
-
-        Page
-        ${currentPage}
-        of
-        ${totalPages}
-
-      </span>
-
-
-      <button
-        type="button"
-        class="jobs-page-button"
-        data-job-page="next"
-        ${currentPage === totalPages ? "disabled" : ""}
-      >
-
-        Next
-
-        <i class="fa-solid fa-chevron-right"></i>
-
-      </button>
-
-    </div>
-
-  `;
-
-}
 
   /* =======================================================
      CREATE JOB CARD
@@ -1232,137 +1475,31 @@ function createFilteredPagination(
 
 
   /* =======================================================
-     PAGINATION
-  ======================================================= */
-
-  function createPagination() {
-
-    const totalPages =
-  Math.ceil(
-    getFilteredJobs().length /
-    JOBS_PER_PAGE
-  );
-
-
-    if (totalPages <= 1) {
-
-      return "";
-
-    }
-
-
-    return `
-
-      <div class="jobs-pagination">
-
-        <button
-          type="button"
-          class="jobs-page-button"
-          data-job-page="previous"
-          ${currentPage === 1 ? "disabled" : ""}
-        >
-
-          <i class="fa-solid fa-chevron-left"></i>
-
-          Previous
-
-        </button>
-
-
-        <span class="jobs-page-number">
-
-          Page
-          ${currentPage}
-          of
-          ${totalPages}
-
-        </span>
-
-
-        <button
-          type="button"
-          class="jobs-page-button"
-          data-job-page="next"
-          ${currentPage === totalPages ? "disabled" : ""}
-        >
-
-          Next
-
-          <i class="fa-solid fa-chevron-right"></i>
-
-        </button>
-
-      </div>
-
-    `;
-
-  }
-
-
-  /* =======================================================
      PAGINATION EVENTS
   ======================================================= */
 
-  function attachJobEvents() {
+ function attachJobEvents() {
 
-    const buttons =
-      document.querySelectorAll(
-        "[data-job-page]"
-      );
-
-
-    buttons.forEach(
-      function (button) {
-
-        button.addEventListener(
-          "click",
-          function () {
-
-            const action =
-              button.dataset.jobPage;
+  const loadMoreButton =
+    document.getElementById(
+      "jobs-load-more"
+    );
 
 
-            const filteredJobs = getFilteredJobs();
+  if (loadMoreButton) {
 
-			const totalPages = Math.ceil(
-			filteredJobs.length / JOBS_PER_PAGE
-		);
+    loadMoreButton.addEventListener(
+      "click",
+      function () {
 
-
-            if (
-              action === "previous" &&
-              currentPage > 1
-            ) {
-
-              currentPage--;
-
-              renderJobs();
-
-              scrollJobsToTop();
-
-            }
-
-
-            if (
-              action === "next" &&
-              currentPage < totalPages
-            ) {
-
-              currentPage++;
-
-              renderJobs();
-
-              scrollJobsToTop();
-
-            }
-
-          }
-        );
+        loadMoreJobs();
 
       }
     );
 
   }
+
+}
 
 
   /* =======================================================
@@ -1428,6 +1565,19 @@ function createFilteredPagination(
 
     try {
 
+      const cacheLimit =
+        JOBS_API_PAGE_SIZE * 3;
+
+
+      const cacheItems =
+        Array.isArray(data)
+          ? data.slice(
+              0,
+              cacheLimit
+            )
+          : [];
+
+
       localStorage.setItem(
         JOBS_CONFIG.CACHE_KEY,
 
@@ -1437,7 +1587,7 @@ function createFilteredPagination(
             Date.now(),
 
           items:
-            data
+            cacheItems
 
         })
 
