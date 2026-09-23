@@ -1493,7 +1493,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/parents_info_access.jpg"
+                src="images/parents_info_access.jpeg"
                 alt="TUPS Parent School Information Access"
                 loading="lazy"
                 decoding="async"
