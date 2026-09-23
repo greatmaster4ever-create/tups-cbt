@@ -42,6 +42,8 @@
   let currentJobFilter = "all";
 
   let currentJobSearch = "";
+  
+  let jobsSearchTimer = null;
 
   let jobsHasMore = false;
 
@@ -243,6 +245,22 @@ function loadJobsPage() {
           >
             Sales &amp; Marketing
           </button>
+		  
+		  <button
+  type="button"
+  class="jobs-filter"
+  data-job-filter="customer-service"
+>
+  Customer Service
+</button>
+
+<button
+  type="button"
+  class="jobs-filter"
+  data-job-filter="ngo_development"
+>
+  NGO &amp; Development
+</button>
 
           <button
             type="button"
@@ -300,7 +318,67 @@ function loadJobsPage() {
 
 }
 
+  /* =======================================================
+     BUILD JOBS API URL
+  ======================================================= */
 
+  function buildJobsApiUrl(
+    page
+  ) {
+
+    const params =
+      new URLSearchParams();
+
+
+    params.set(
+      "feed",
+      JOBS_CONFIG.FEED
+    );
+
+
+    params.set(
+      "page",
+      page
+    );
+
+
+    params.set(
+      "limit",
+      JOBS_API_PAGE_SIZE
+    );
+
+
+    if (
+      currentJobSearch.trim()
+    ) {
+
+      params.set(
+        "search",
+        currentJobSearch.trim()
+      );
+
+    }
+
+
+    if (
+      currentJobFilter !== "all"
+    ) {
+
+      params.set(
+        "filter",
+        currentJobFilter
+      );
+
+    }
+
+
+    return (
+      JOBS_CONFIG.API_URL +
+      "?" +
+      params.toString()
+    );
+
+  }
   /* =======================================================
      LOAD DATA
   ======================================================= */
@@ -341,14 +419,9 @@ function loadJobsPage() {
     try {
 
       const url =
-        JOBS_CONFIG.API_URL +
-        "?feed=" +
-        encodeURIComponent(
-          JOBS_CONFIG.FEED
-        ) +
-        "&page=1" +
-        "&limit=" +
-        JOBS_API_PAGE_SIZE;
+  buildJobsApiUrl(
+    1
+  );
 
 
       const response =
@@ -453,6 +526,10 @@ function loadJobsPage() {
      LOAD MORE JOBS
   ======================================================= */
 
+  /* =======================================================
+     LOAD NEXT JOBS PAGE
+  ======================================================= */
+
   async function loadMoreJobs() {
 
     if (
@@ -488,7 +565,7 @@ function loadJobsPage() {
 
         <i class="fa-solid fa-spinner fa-spin"></i>
 
-        Loading more jobs...
+        Loading jobs...
 
       `;
 
@@ -498,15 +575,9 @@ function loadJobsPage() {
     try {
 
       const url =
-        JOBS_CONFIG.API_URL +
-        "?feed=" +
-        encodeURIComponent(
-          JOBS_CONFIG.FEED
-        ) +
-        "&page=" +
-        nextPage +
-        "&limit=" +
-        JOBS_API_PAGE_SIZE;
+        buildJobsApiUrl(
+          nextPage
+        );
 
 
       const response =
@@ -548,47 +619,13 @@ function loadJobsPage() {
 
 
       /*
-       * Append new jobs instead of replacing
-       * the jobs already displayed.
+       * IMPORTANT:
+       * Replace the current page.
+       * Do NOT append the new jobs.
        */
 
-      const existingIds =
-        new Set(
-          jobs.map(
-            function(job) {
-              return String(
-                job.id || ""
-              );
-            }
-          )
-        );
-
-
-      data.items.forEach(
-        function(job) {
-
-          const id =
-            String(
-              job.id || ""
-            );
-
-
-          if (
-            !existingIds.has(id)
-          ) {
-
-            jobs.push(
-              job
-            );
-
-            existingIds.add(
-              id
-            );
-
-          }
-
-        }
-      );
+      jobs =
+        data.items;
 
 
       currentApiPage =
@@ -607,28 +644,20 @@ function loadJobsPage() {
       jobsTotal =
         Number(
           data.total ||
-          jobsTotal
+          jobs.length
         );
-
-
-      /*
-       * Save the accumulated jobs.
-       * This gives the next visit a useful
-       * cached starting point.
-       */
-
-      saveCachedJobs(
-        jobs
-      );
 
 
       renderJobs();
 
 
+      scrollJobsToTop();
+
+
     } catch (error) {
 
       console.error(
-        "TUPS Jobs: Load more error:",
+        "TUPS Jobs: Load next page error:",
         error
       );
 
@@ -656,7 +685,6 @@ function loadJobsPage() {
     }
 
   }
-
 
   /* =======================================================
      RENDER JOBS
@@ -690,7 +718,7 @@ function renderJobs() {
 
 
   const filteredJobs =
-    getFilteredJobs();
+    jobs;
 
 
   if (!filteredJobs.length) {
@@ -723,36 +751,18 @@ function renderJobs() {
 
     <div class="jobs-summary">
 
-      <strong>
-        ${filteredJobs.length}
-      </strong>
+  <strong>
+    ${jobsTotal}
+  </strong>
 
-      ${
+  ${
+    currentJobSearch ||
+    currentJobFilter !== "all"
+      ? "matching vacancies"
+      : "vacancies available"
+  }
 
-        currentJobSearch ||
-        currentJobFilter !== "all"
-
-          ? "matching vacancies"
-
-          : (
-              jobsTotal
-                ? "vacancies available"
-                : "vacancies"
-            )
-
-      }
-
-      ${
-        jobsTotal > jobs.length
-          ? `
-            <span class="jobs-loaded-count">
-              • ${jobs.length} loaded
-            </span>
-          `
-          : ""
-      }
-
-    </div>
+</div>
 
 
     <div class="jobs-list">
@@ -824,393 +834,8 @@ function renderJobs() {
    SEARCH & CATEGORY FILTERING
 ======================================================= */
 
-function getFilteredJobs() {
 
-  const search =
-    currentJobSearch
-      .trim()
-      .toLowerCase();
 
-
-  return jobs.filter(
-    function (job) {
-
-      const searchableText = [
-
-        job.title,
-        job.company,
-        job.location,
-        job.area,
-        job.state,
-        job.category,
-        job.sector,
-        job.employmentType,
-        job.source
-
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-
-
-      if (
-        search &&
-        !searchableText.includes(search)
-      ) {
-
-        return false;
-
-      }
-
-
-      return matchesJobFilter(
-        job,
-        currentJobFilter
-      );
-
-    }
-  );
-
-}
-
-
-function matchesJobFilter(job, filter) {
-
-  if (filter === "all") {
-    return true;
-  }
-
-  const title =
-    String(job.title || "").toLowerCase();
-
-  const company =
-    String(job.company || "").toLowerCase();
-
-  const location =
-    String(job.location || "").toLowerCase();
-
-  const area =
-    String(job.area || "").toLowerCase();
-
-  const state =
-    String(job.state || "").toLowerCase();
-
-  const category =
-    String(job.category || "").toLowerCase();
-
-  const sector =
-    String(job.sector || "").toLowerCase();
-
-  const employmentType =
-    String(job.employmentType || "").toLowerCase();
-
-  const text = [
-    title,
-    company,
-    location,
-    area,
-    state,
-    category,
-    sector,
-    employmentType
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  /*
-   * NIGERIA FILTER
-   */
-
-  if (filter === "nigeria") {
-
-    const nigeriaKeywords = [
-
-      "nigeria",
-      "abuja",
-      "fct",
-      "lagos",
-      "kano",
-      "kaduna",
-      "rivers",
-      "port harcourt",
-      "oyo",
-      "ibadan",
-      "enugu",
-      "anambra",
-      "delta",
-      "kwara",
-      "plateau",
-      "benue",
-      "osun",
-      "ogun",
-      "ondo",
-      "ekiti",
-      "imo",
-      "abia",
-      "cross river",
-      "akwa ibom",
-      "bayelsa",
-      "nasarawa",
-      "kogi",
-      "sokoto",
-      "katsina",
-      "jigawa",
-      "borno",
-      "yobe",
-      "zamfara",
-      "gombe",
-      "taraba",
-      "bauchi",
-      "ebonyi",
-      "edo",
-      "ondo"
-    ];
-
-    return nigeriaKeywords.some(function(keyword) {
-
-      return text.includes(keyword);
-
-    });
-
-  }
-
-
-  /*
-   * ABUJA / FCT FILTER
-   */
-
-  if (filter === "abuja") {
-
-    const abujaKeywords = [
-
-      "abuja",
-      "fct",
-      "federal capital territory",
-
-      // Abuja districts and areas
-      "gwarinpa",
-      "kubwa",
-      "jabi",
-      "wuse",
-      "wuse 2",
-      "maitama",
-      "asokoro",
-      "utako",
-      "lugbe",
-      "lokogoma",
-      "galadimawa",
-      "life camp",
-      "lifecamp",
-      "karsana",
-      "katampe",
-      "jikwoyi",
-      "nyanya",
-      "karu",
-      "kurudu",
-      "apo",
-      "garki",
-      "gudu",
-      "durumi",
-      "dakibiyu",
-      "wuye",
-      "airport road",
-      " kubwa"
-    ];
-
-    return abujaKeywords.some(function(keyword) {
-
-      return text.includes(keyword.trim());
-
-    });
-
-  }
-
-
-  /*
-   * CATEGORY FILTERS
-   */
-
-  const filterMap = {
-
-    education: [
-
-      "education",
-      "teacher",
-      "teaching",
-      "school",
-      "lecturer",
-      "academic",
-      "tutor",
-      "principal",
-      "head teacher",
-      "school administrator",
-      "early years",
-      "primary education",
-      "secondary education"
-
-    ],
-
-    technology: [
-
-      "technology",
-      "software",
-      "developer",
-      "programmer",
-      "programming",
-      "web development",
-      "mobile development",
-      "ict",
-      "information technology",
-      "cybersecurity",
-      "cyber security",
-      "network administrator",
-      "cloud",
-      "database",
-      "data analyst",
-      "data science",
-      "artificial intelligence",
-      "machine learning",
-      "devops",
-      "technical support"
-
-    ],
-
-    finance: [
-
-      "finance",
-      "accounting",
-      "accountant",
-      "bank",
-      "banking",
-      "audit",
-      "auditor",
-      "financial",
-      "treasury",
-      "tax",
-      "payroll",
-      "investment"
-
-    ],
-
-    healthcare: [
-
-      "health",
-      "healthcare",
-      "medical",
-      "nurse",
-      "nursing",
-      "doctor",
-      "pharmacy",
-      "pharmacist",
-      "hospital",
-      "clinical",
-      "laboratory",
-      "health officer"
-
-    ],
-
-    engineering: [
-
-      "engineering",
-      "engineer",
-      "mechanical",
-      "electrical",
-      "civil engineer",
-      "chemical engineer",
-      "construction",
-      "structural",
-      "maintenance engineer",
-      "project engineer"
-
-    ],
-
-    administration: [
-
-      "administration",
-      "administrative",
-      "office",
-      "secretary",
-      "receptionist",
-      "operations",
-      "human resources",
-      "hr officer",
-      "personal assistant",
-      "executive assistant",
-      "front desk"
-
-    ],
-
-    sales: [
-
-      "sales",
-      "marketing",
-      "business development",
-      "commercial",
-      "customer service",
-      "account manager",
-      "brand manager",
-      "sales representative",
-      "business development officer"
-
-    ],
-
-    creative: [
-
-      "creative",
-      "media",
-      "content",
-      "designer",
-      "design",
-      "graphics",
-      "graphic designer",
-      "video",
-      "photographer",
-      "writer",
-      "copywriter",
-      "animation",
-      "public relations"
-
-    ],
-
-    internship: [
-
-      "internship",
-      "intern",
-      "graduate",
-      "graduate trainee",
-      "trainee",
-      "entry level",
-      "entry-level",
-      "nysc",
-      "national youth service"
-
-    ],
-
-    remote: [
-
-      "remote",
-      "work from home",
-      "work-from-home",
-      "worldwide",
-      "anywhere",
-      "distributed team"
-
-    ]
-
-  };
-
-
-  const keywords =
-    filterMap[filter] || [];
-
-
-  return keywords.some(function(keyword) {
-
-    return text.includes(keyword);
-
-  });
-
-}
 
 
 function attachJobsSearchEvents() {
@@ -1231,7 +856,43 @@ function attachJobsSearchEvents() {
           searchInput.value;
 
 
-        renderJobs();
+        /*
+         * Prevent an API request for
+         * every individual keystroke.
+         *
+         * Example:
+         * c
+         * cu
+         * cus
+         * cust
+         * customer
+         *
+         * Only the final search is sent
+         * after the user pauses typing.
+         */
+
+        clearTimeout(
+          jobsSearchTimer
+        );
+
+
+        jobsSearchTimer =
+          setTimeout(
+            function () {
+
+              currentApiPage =
+                1;
+
+
+              jobsHasMore =
+                false;
+
+
+              loadJobsData();
+
+            },
+            450
+          );
 
       }
     );
@@ -1270,9 +931,23 @@ function attachJobsSearchEvents() {
           button.classList.add(
             "active"
           );
+        
+		
+
+          /*
+           * Start the selected filter
+           * from page 1.
+           */
+
+          currentApiPage =
+            1;
 
 
-          renderJobs();
+          jobsHasMore =
+            false;
+
+
+          loadJobsData();
 
         }
       );
@@ -1281,7 +956,6 @@ function attachJobsSearchEvents() {
   );
 
 }
-
 
 
 
