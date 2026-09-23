@@ -274,7 +274,7 @@ const pages = {
                 <div class="partner-school-image">
 
                   <img
-                    src="angelite.jpg"
+                    src="images/angelite.jpg"
                     alt="Angelite International School"
                     loading="lazy"
                     decoding="async"
@@ -1237,7 +1237,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/admin.jpg"
+                src="images/admin.JPG"
                 alt="TUPS Teacher and Administrative Access"
                 loading="lazy"
                 decoding="async"
@@ -1269,7 +1269,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/studednt_fees.jpg"
+                src="images/studednt_fees.JPG"
                 alt="TUPS School Fees Management"
                 loading="lazy"
                 decoding="async"
@@ -1301,7 +1301,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/fin_analytics.jpg"
+                src="images/fin_analytics.JPG"
                 alt="TUPS Financial Analytics and Monitoring"
                 loading="lazy"
                 decoding="async"
@@ -1333,7 +1333,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/result template.jpg"
+                src="images/result template.JPG"
                 alt="TUPS Report Card Template System"
                 loading="lazy"
                 decoding="async"
@@ -1365,7 +1365,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/computations.jpg"
+                src="images/computations.JPG"
                 alt="TUPS Automated Result Computation"
                 loading="lazy"
                 decoding="async"
@@ -1430,7 +1430,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/pta_communication.jpg"
+                src="images/pta_communication.JPG"
                 alt="TUPS Parent Teacher Communication"
                 loading="lazy"
                 decoding="async"
@@ -1493,7 +1493,7 @@ const pages = {
             <div class="tups-app-image">
 
               <img
-                src="images/parents_info_access.jpeg"
+                src="images/Parents_info_access.jpg"
                 alt="TUPS Parent School Information Access"
                 loading="lazy"
                 decoding="async"
