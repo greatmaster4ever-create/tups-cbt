@@ -2585,7 +2585,8 @@ document.addEventListener(
 
 if (
   hubName !== "news" &&
-  hubName !== "gist"
+  hubName !== "gist" &&
+  hubName !== "timetable"
 ) return;
 
     event.preventDefault();
@@ -2612,6 +2613,17 @@ if (hubName === "gist") {
     );
 
   module.loadSchoolGist();
+
+}
+
+if (hubName === "timetable") {
+
+  const module =
+    await import(
+      "./timetable.js"
+    );
+
+  module.loadTimetableGenerator();
 
 }
 
