@@ -1965,3 +1965,113 @@
     }
 
 }
+
+/* =========================================================
+   TIMETABLE CLASSES
+========================================================= */
+
+.timetable-class-list {
+    display: grid;
+
+    gap: 8px;
+
+    margin-top: 18px;
+}
+
+
+.timetable-class-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 11px 13px;
+
+    background: #fafcfd;
+
+    border: 1px solid #dfe6ea;
+    border-radius: 7px;
+}
+
+
+.timetable-class-item > div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+
+    min-width: 0;
+}
+
+
+.timetable-class-item strong {
+    color: #27333a;
+
+    font-size: 0.82rem;
+}
+
+
+.timetable-class-item span {
+    color: #707b83;
+
+    font-size: 0.72rem;
+}
+
+
+.timetable-remove-class {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 30px;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    background: transparent;
+
+    color: #68737b;
+
+    border: 1px solid #d6dee3;
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+
+.timetable-remove-class:hover {
+    background: #f1f3f4;
+    color: #20252a;
+}
+
+
+.timetable-empty-state {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 13px 14px;
+
+    background: #f5f7f8;
+
+    border: 1px dashed #d5dde1;
+    border-radius: 7px;
+
+    color: #727d84;
+}
+
+
+.timetable-empty-state i {
+    font-size: 0.8rem;
+}
+
+
+.timetable-empty-state p {
+    margin: 0;
+
+    font-size: 0.76rem;
+}
