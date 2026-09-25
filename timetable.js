@@ -1657,57 +1657,83 @@ function initializeTimetableShell() {
   );
 
 
+/* =========================================================
+   TEACHERS → SUBJECTS
+========================================================= */
 
-  /* =========================================================
-     TEACHERS → SUBJECTS
-  ========================================================= */
+continueTeachersButton?.addEventListener(
+  "click",
+  function (event) {
 
-  continueTeachersButton?.addEventListener(
-    "click",
-    function () {
-
-
-      if (
-        timetableState.teachers.length ===
-        0
-      ) {
-
-        return;
-
-      }
+    event.preventDefault();
 
 
+    /* -----------------------------------------------------
+       VERIFY TEACHERS
+    ----------------------------------------------------- */
 
-      teachersStep.hidden =
-        true;
+    if (
+      !timetableState.teachers ||
+      timetableState.teachers.length === 0
+    ) {
 
-
-      teachersStep.classList.remove(
-        "active"
+      console.warn(
+        "TUPS Timetable: No teachers have been added."
       );
 
-
-      subjectsStep.hidden =
-        false;
-
-
-      subjectsStep.classList.add(
-        "active"
-      );
-
-
-      subjectNameInput?.focus();
-
-
-
-      console.log(
-        "TUPS Timetable: Teachers setup accepted.",
-        timetableState.teachers
-      );
+      return;
 
     }
-  );
 
+
+    /* -----------------------------------------------------
+       HIDE TEACHERS
+    ----------------------------------------------------- */
+
+    teachersStep.hidden = true;
+
+    teachersStep.classList.remove(
+      "active"
+    );
+
+
+    /* -----------------------------------------------------
+       SHOW SUBJECTS
+    ----------------------------------------------------- */
+
+    subjectsStep.hidden = false;
+
+    subjectsStep.classList.add(
+      "active"
+    );
+
+
+    /* -----------------------------------------------------
+       MOVE FOCUS
+    ----------------------------------------------------- */
+
+    if (subjectNameInput) {
+
+      subjectNameInput.focus();
+
+    }
+
+
+    /* -----------------------------------------------------
+       DEBUG CONFIRMATION
+    ----------------------------------------------------- */
+
+    console.log(
+      "TUPS Timetable: Teachers → Subjects"
+    );
+
+    console.log(
+      "Teachers:",
+      timetableState.teachers
+    );
+
+  }
+);
 
 
   /* =========================================================
