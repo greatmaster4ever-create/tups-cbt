@@ -1630,57 +1630,95 @@
 
 /* =========================================================
    TUPS TIMETABLE GENERATOR
-   PHASE 1 — CONTENT AREA MODULE
+   CONSOLIDATED TIMETABLE MODULE
+   PHASES 1 — 2F + GENERATE
    ---------------------------------------------------------
-   Uses the existing .main-content,
-   .content-area and .content-page framework
-   from style.css.
+   IMPORTANT:
+   .main-content
+   .content-area
+   .content-page
+
+   are inherited from style.css.
+========================================================= */
+
+
+/* =========================================================
+   MAIN TIMETABLE PAGE
 ========================================================= */
 
 .timetable-page {
+
     width: 100%;
+    max-width: 1150px;
+    margin: 0 auto;
+
+}
+
+
+.timetable-page * {
+
+    box-sizing: border-box;
+
 }
 
 
 /* =========================================================
-   TIMETABLE HEADER
+   PAGE HEADER
 ========================================================= */
 
 .timetable-page-header {
+
     display: flex;
     align-items: flex-start;
+
     gap: 14px;
-    margin-bottom: 22px;
+
+    margin-bottom: 26px;
+
 }
 
+
 .timetable-page-icon {
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    flex: 0 0 42px;
+    flex: 0 0 44px;
 
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
 
     margin-top: 2px;
 
     background: #eef3f6;
+
     color: #343a40;
 
-    border: 1px solid #dce4e9;
-    border-radius: 8px;
+    border:
+        1px solid
+        #dce4e9;
 
-    font-size: 1rem;
+    border-radius: 9px;
+
+    font-size: 17px;
+
 }
+
 
 .timetable-page-header h2 {
-    margin-bottom: 10px;
+
+    margin: 0 0 9px;
+
 }
 
+
 .timetable-page-header p {
-    max-width: 720px;
-    margin-bottom: 0;
+
+    max-width: 760px;
+
+    margin: 0;
+
 }
 
 
@@ -1689,69 +1727,324 @@
 ========================================================= */
 
 .timetable-shell {
+
     width: 100%;
+
 }
 
 
 /* =========================================================
-   TIMETABLE STEP
+   STEP NAVIGATION
 ========================================================= */
 
-.timetable-step {
-    padding: 22px;
+.timetable-stepper {
+
+    display: flex;
+
+    align-items: stretch;
+
+    width: 100%;
+
+    margin-bottom: 22px;
+
+    padding: 7px;
 
     background: #ffffff;
 
-    border: 1px solid #dfe7eb;
-    border-radius: 10px;
+    border:
+        1px solid
+        #dfe7eb;
+
+    border-radius: 11px;
 
     box-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.035);
+        0 5px 18px
+        rgba(0, 0, 0, 0.035);
+
+    overflow-x: auto;
+
+    scrollbar-width: thin;
+
 }
 
-.timetable-step-heading {
+
+.timetable-step {
+
+    position: relative;
+
     display: flex;
     align-items: center;
-    gap: 11px;
 
-    margin-bottom: 20px;
+    gap: 8px;
+
+    flex: 1 1 0;
+
+    min-width: 105px;
+
+    min-height: 46px;
+
+    padding: 7px 10px;
+
+    background: transparent;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    color: #68737b;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    font-family: inherit;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease;
+
 }
 
+
+.timetable-step:hover {
+
+    background: #f4f7f9;
+
+}
+
+
+.timetable-step.active {
+
+    background:
+        rgba(0, 245, 255, 0.10);
+
+    color:
+        #000066;
+
+}
+
+
+.timetable-step.completed {
+
+    color:
+        #39454d;
+
+}
+
+
 .timetable-step-number {
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    flex: 0 0 28px;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    background: #e7ecef;
+
+    color: #59646b;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+}
+
+
+.timetable-step.active
+.timetable-step-number {
+
+    background:
+        var(--tups-blue);
+
+    color:
+        #000066;
+
+}
+
+
+.timetable-step.completed
+.timetable-step-number {
+
+    background:
+        #343a40;
+
+    color:
+        #ffffff;
+
+}
+
+
+.timetable-step span:last-child {
+
+    min-width: 0;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    line-height: 1.25;
+
+}
+
+
+/* =========================================================
+   PANELS
+========================================================= */
+
+.timetable-panels {
+
+    width: 100%;
+
+}
+
+
+.timetable-panel {
+
+    display: none;
+
+    width: 100%;
+
+    animation:
+        timetablePanelEnter
+        0.25s ease;
+
+}
+
+
+.timetable-panel.active {
+
+    display: block;
+
+}
+
+
+@keyframes timetablePanelEnter {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(7px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   STEP CONTENT CARD
+========================================================= */
+
+.timetable-panel > .timetable-step {
+
+    display: block;
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding: 24px;
+
+    background: #ffffff;
+
+    border:
+        1px solid
+        #dfe7eb;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(0, 0, 0, 0.035);
+
+}
+
+
+/* =========================================================
+   PANEL HEADING
+========================================================= */
+
+.timetable-step-heading {
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 11px;
+
+    margin-bottom: 22px;
+
+}
+
+
+.timetable-step-heading
+.timetable-step-number {
 
     flex: 0 0 32px;
 
     width: 32px;
     height: 32px;
 
-    background: #343a40;
-    color: #ffffff;
+    background:
+        #343a40;
+
+    color:
+        #ffffff;
 
     border-radius: 50%;
 
-    font-size: 0.8rem;
-    font-weight: 800;
+    font-size: 11px;
+
 }
+
+
+.timetable-step-heading > div {
+
+    min-width: 0;
+
+}
+
 
 .timetable-step-heading h3 {
+
     margin: 0;
 
-    color: #1f2930;
+    color:
+        #1f2930;
 
-    font-size: 1rem;
+    font-size: 18px;
+
     line-height: 1.3;
+
 }
 
+
 .timetable-step-heading p {
-    margin: 3px 0 0;
 
-    color: #68737b;
+    margin: 4px 0 0;
 
-    font-size: 0.78rem;
-    line-height: 1.5;
+    color:
+        #68737b;
+
+    font-size: 13px;
+
+    line-height: 1.55;
+
 }
 
 
@@ -1760,73 +2053,184 @@
 ========================================================= */
 
 .timetable-form-grid {
+
     display: grid;
 
     grid-template-columns:
         repeat(3, minmax(0, 1fr));
 
-    gap: 14px;
+    gap: 17px;
+
+    width: 100%;
+
 }
 
-.timetable-field {
+
+.timetable-form-group {
+
     display: flex;
+
     flex-direction: column;
 
-    gap: 6px;
+    min-width: 0;
+
+    gap: 7px;
+
 }
 
-.timetable-field span {
-    color: #39454d;
 
-    font-size: 0.76rem;
+.timetable-form-group label,
+.timetable-form-group > span {
+
+    display: block;
+
+    color:
+        #39454d;
+
+    font-size: 12px;
+
     font-weight: 800;
+
+    line-height: 1.4;
+
 }
 
-.timetable-field input,
-.timetable-field select {
+
+.timetable-form-group input,
+.timetable-form-group select,
+.timetable-form-group textarea {
+
+    display: block;
+
     width: 100%;
+
+    min-width: 0;
 
     min-height: 42px;
 
-    padding: 9px 11px;
+    padding:
+        9px 11px;
 
     box-sizing: border-box;
 
-    background: #fafcfd;
+    background:
+        #fafcfd;
 
-    border: 1px solid #d6dee3;
+    color:
+        #26323a;
+
+    border:
+        1px solid
+        #d6dee3;
+
     border-radius: 7px;
 
-    color: #26323a;
-
     font-family: inherit;
-    font-size: 0.82rem;
+
+    font-size: 13px;
+
 }
 
-.timetable-field input:focus,
-.timetable-field select:focus {
+
+.timetable-form-group textarea {
+
+    min-height: 100px;
+
+    resize: vertical;
+
+}
+
+
+.timetable-form-group input:focus,
+.timetable-form-group select:focus,
+.timetable-form-group textarea:focus {
+
     outline: none;
 
-    border-color: #343a40;
+    border-color:
+        var(--tups-blue);
 
     box-shadow:
-        0 0 0 2px rgba(52, 58, 64, 0.10);
+        0 0 0 2px
+        rgba(0, 245, 255, 0.12);
+
+}
+
+
+.timetable-form-group small {
+
+    display: block;
+
+    color:
+        #707b83;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+
 }
 
 
 /* =========================================================
-   ACTIONS
-========================================================= */
+   ACTION ROW
+   ALL BACK / CONTINUE / ADD BUTTONS
+   ========================================================= */
 
-.timetable-actions {
+.timetable-action-row {
+
     display: flex;
-    justify-content: flex-end;
 
-    margin-top: 20px;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    width: 100%;
+
+    margin-top: 26px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid
+        #e5eaed;
+
 }
 
-.timetable-primary-button {
+
+.timetable-action-row > div {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.timetable-actions {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    width: 100%;
+
+    margin-top: 24px;
+
+}
+
+
+.timetable-primary-button,
+.timetable-secondary-button,
+.timetable-back-button {
+
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
@@ -1834,117 +2238,1841 @@
 
     min-height: 40px;
 
-    padding: 9px 16px;
+    padding:
+        9px 17px;
 
-    background: #343a40;
-    color: #ffffff;
-
-    border: 1px solid #343a40;
     border-radius: 7px;
 
     font-family: inherit;
-    font-size: 0.78rem;
+
+    font-size: 12px;
+
     font-weight: 800;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+
+}
+
+
+.timetable-primary-button {
+
+    background:
+        #343a40;
+
+    color:
+        #ffffff;
+
+    border:
+        1px solid
+        #343a40;
+
+}
+
+
+.timetable-primary-button:hover {
+
+    background:
+        #20252a;
+
+    border-color:
+        #20252a;
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.timetable-secondary-button {
+
+    background:
+        var(--tups-blue);
+
+    color:
+        #000066;
+
+    border:
+        1px solid
+        var(--tups-blue);
+
+}
+
+
+.timetable-secondary-button:hover {
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.timetable-back-button {
+
+    background:
+        #ffffff;
+
+    color:
+        #39454d;
+
+    border:
+        1px solid
+        #d6dee3;
+
+}
+
+
+.timetable-back-button:hover {
+
+    background:
+        #f5f7f8;
+
+    border-color:
+        #bfc9ce;
+
+}
+
+
+.timetable-primary-button:disabled,
+.timetable-secondary-button:disabled,
+.timetable-back-button:disabled {
+
+    opacity: 0.55;
+
+    cursor:
+        not-allowed;
+
+    transform:
+        none;
+
+}
+
+
+/* =========================================================
+   GENERIC ITEM LIST
+========================================================= */
+
+.timetable-item-list {
+
+    display: grid;
+
+    gap: 10px;
+
+    width: 100%;
+
+    margin-top: 20px;
+
+}
+
+
+.timetable-item {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding:
+        13px 15px;
+
+    background:
+        #fafcfd;
+
+    border:
+        1px solid
+        #dfe6ea;
+
+    border-radius: 8px;
+
+}
+
+
+.timetable-item > div {
+
+    min-width: 0;
+
+}
+
+
+.timetable-item strong {
+
+    display: block;
+
+    color:
+        #27333a;
+
+    font-size: 13px;
+
+}
+
+
+.timetable-item span {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color:
+        #707b83;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   CLASSES
+========================================================= */
+
+.timetable-class-list,
+.timetable-teacher-list {
+
+    display: grid;
+
+    gap: 9px;
+
+    width: 100%;
+
+    margin-top: 20px;
+
+}
+
+
+.timetable-class-item,
+.timetable-teacher-item {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding:
+        12px 14px;
+
+    background:
+        #fafcfd;
+
+    border:
+        1px solid
+        #dfe6ea;
+
+    border-radius: 8px;
+
+}
+
+
+.timetable-class-item > div,
+.timetable-teacher-item > div {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+
+    min-width: 0;
+
+}
+
+
+.timetable-class-item strong,
+.timetable-teacher-item strong {
+
+    color:
+        #27333a;
+
+    font-size: 13px;
+
+}
+
+
+.timetable-class-item span,
+.timetable-teacher-item span {
+
+    color:
+        #707b83;
+
+    font-size: 11px;
+
+}
+
+
+.timetable-remove-class,
+.timetable-remove-teacher,
+.timetable-remove-assignment {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 30px;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    background:
+        transparent;
+
+    color:
+        #68737b;
+
+    border:
+        1px solid
+        #d6dee3;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+}
+
+
+.timetable-remove-class:hover,
+.timetable-remove-teacher:hover,
+.timetable-remove-assignment:hover {
+
+    background:
+        #f1f3f4;
+
+    color:
+        #c00;
+
+}
+
+
+/* =========================================================
+   SUBJECTS
+========================================================= */
+
+.timetable-subject-list {
+
+    display: grid;
+
+    gap: 9px;
+
+    width: 100%;
+
+    margin-top: 20px;
+
+}
+
+
+.timetable-subject-item {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    width: 100%;
+
+    padding:
+        12px 14px;
+
+    background:
+        #fafcfd;
+
+    border:
+        1px solid
+        #dfe6ea;
+
+    border-radius: 8px;
+
+}
+
+
+.timetable-subject-item > div {
+
+    min-width: 0;
+
+}
+
+
+.timetable-subject-item strong {
+
+    display: block;
+
+    color:
+        #27333a;
+
+    font-size: 13px;
+
+}
+
+
+.timetable-subject-item span {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color:
+        #707b83;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.timetable-empty-state {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding:
+        13px 14px;
+
+    background:
+        #f5f7f8;
+
+    border:
+        1px dashed
+        #d5dde1;
+
+    border-radius: 7px;
+
+    color:
+        #727d84;
+
+}
+
+
+.timetable-empty-state i {
+
+    flex: 0 0 auto;
+
+    font-size: 13px;
+
+}
+
+
+.timetable-empty-state p {
+
+    margin: 0;
+
+    font-size: 12px;
+
+}
+
+
+/* =========================================================
+   TEACHER ASSIGNMENTS
+========================================================= */
+
+.timetable-assignment-teacher {
+
+    width: 100%;
+
+    max-width: 520px;
+
+    margin-bottom: 26px;
+
+}
+
+
+.timetable-multi-select-section {
+
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding-top: 22px;
+
+    border-top:
+        1px solid
+        rgba(0, 0, 102, 0.10);
+
+}
+
+
+.timetable-multi-select-section h4 {
+
+    margin: 0 0 12px;
+
+    color:
+        #27333a;
+
+    font-size: 14px;
+
+}
+
+
+.timetable-checkbox-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 11px;
+
+    width: 100%;
+
+}
+
+
+.timetable-checkbox-option {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 0;
+
+    min-height: 56px;
+
+    padding:
+        11px 13px;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid
+        rgba(0, 0, 102, 0.13);
+
+    border-radius: 9px;
 
     cursor: pointer;
 
     transition:
+        border-color 0.18s ease,
         background 0.18s ease,
-        transform 0.18s ease;
+        box-shadow 0.18s ease;
+
 }
 
-.timetable-primary-button:hover {
-    background: #20252a;
 
-    transform:
-        translateY(-1px);
+.timetable-checkbox-option:hover {
+
+    border-color:
+        var(--tups-blue);
+
+}
+
+
+.timetable-checkbox-option input {
+
+    flex: 0 0 auto;
+
+    width: 17px;
+    height: 17px;
+
+    margin: 0;
+
+    accent-color:
+        var(--tups-blue);
+
+}
+
+
+.timetable-checkbox-option span {
+
+    min-width: 0;
+
+}
+
+
+.timetable-checkbox-option strong {
+
+    display: block;
+
+    color:
+        #27333a;
+
+    font-size: 13px;
+
+}
+
+
+.timetable-checkbox-option small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color:
+        #707b83;
+
+    font-size: 10px;
+
+}
+
+
+.timetable-checkbox-option:has(input:checked) {
+
+    background:
+        rgba(0, 245, 255, 0.08);
+
+    border-color:
+        var(--tups-blue);
+
+    box-shadow:
+        0 4px 12px
+        rgba(0, 0, 102, 0.06);
+
+}
+
+
+.timetable-assignment-summary {
+
+    width: 100%;
+
+    margin-top: 28px;
+
+}
+
+
+.timetable-assignment-list {
+
+    display: grid;
+
+    gap: 10px;
+
+    width: 100%;
+
+}
+
+
+.timetable-assignment-item {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    width: 100%;
+
+    padding:
+        14px 16px;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid
+        rgba(0, 0, 102, 0.12);
+
+    border-radius: 9px;
+
 }
 
 
 /* =========================================================
-   FUTURE STEPS NOTICE
+   PERIOD STRUCTURE
+========================================================= */
+
+.timetable-period-days {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 10px;
+
+    width: 100%;
+
+    margin-bottom: 22px;
+
+}
+
+
+.timetable-period-day {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    min-height: 42px;
+
+    padding:
+        9px 11px;
+
+    background:
+        #fafcfd;
+
+    border:
+        1px solid
+        #dfe6ea;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+}
+
+
+.timetable-period-day input {
+
+    flex: 0 0 auto;
+
+}
+
+
+.timetable-period-day span {
+
+    min-width: 0;
+
+    color:
+        #39454d;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+}
+
+
+.timetable-period-list {
+
+    display: grid;
+
+    gap: 9px;
+
+    width: 100%;
+
+    margin-top: 20px;
+
+}
+
+
+.timetable-period-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    width: 100%;
+
+    padding:
+        13px 15px;
+
+    background:
+        #fafcfd;
+
+    border:
+        1px solid
+        #dfe6ea;
+
+    border-radius: 8px;
+
+}
+
+
+.timetable-period-item > div {
+
+    min-width: 0;
+
+}
+
+
+.timetable-period-item strong {
+
+    display: block;
+
+    color:
+        #27333a;
+
+    font-size: 13px;
+
+}
+
+
+.timetable-period-item span {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color:
+        #707b83;
+
+    font-size: 11px;
+
+}
+
+
+.timetable-period-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin-left: auto;
+
+}
+
+
+.timetable-period-actions button {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    background:
+        #ffffff;
+
+    color:
+        #59646b;
+
+    border:
+        1px solid
+        #d6dee3;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+}
+
+
+.timetable-period-actions button:hover {
+
+    background:
+        #f1f3f4;
+
+}
+
+
+/* =========================================================
+   PHASE 2F — SUBJECT REQUIREMENTS
+========================================================= */
+
+.timetable-info-box {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    width: 100%;
+
+    margin:
+        0 0 25px;
+
+    padding:
+        16px 18px;
+
+    background:
+        rgba(0, 245, 255, 0.06);
+
+    border:
+        1px solid
+        rgba(0, 245, 255, 0.45);
+
+    border-left:
+        4px solid
+        var(--tups-blue);
+
+    border-radius: 9px;
+
+}
+
+
+.timetable-info-box > i {
+
+    flex: 0 0 auto;
+
+    margin-top: 2px;
+
+    color:
+        var(--tups-blue);
+
+    font-size: 17px;
+
+}
+
+
+.timetable-info-box strong {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color:
+        #27333a;
+
+    font-size: 13px;
+
+}
+
+
+.timetable-info-box p {
+
+    margin: 0;
+
+    color:
+        #68737b;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================================
+   REQUIREMENT LIST
+========================================================= */
+
+.timetable-requirements-list {
+
+    display: grid;
+
+    gap: 15px;
+
+    width: 100%;
+
+}
+
+
+.timetable-requirement-card {
+
+    width: 100%;
+
+    padding:
+        19px;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid
+        rgba(0, 0, 102, 0.12);
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0, 0, 102, 0.04);
+
+}
+
+
+.timetable-requirement-heading {
+
+    margin-bottom: 18px;
+
+}
+
+
+.timetable-requirement-heading > div {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.timetable-requirement-number {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 30px;
+
+    width: 30px;
+    height: 30px;
+
+    background:
+        #343a40;
+
+    color:
+        #ffffff;
+
+    border-radius: 50%;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+}
+
+
+.timetable-requirement-heading h4 {
+
+    margin: 0;
+
+    color:
+        #27333a;
+
+    font-size: 15px;
+
+}
+
+
+.timetable-requirement-heading p {
+
+    margin: 3px 0 0;
+
+    color:
+        #707b83;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   REQUIREMENT FIELDS
+========================================================= */
+
+.timetable-requirement-fields {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+
+    width: 100%;
+
+}
+
+
+.timetable-requirement-fields
+.timetable-form-group {
+
+    min-width: 0;
+
+}
+
+
+.timetable-requirement-fields
+.timetable-form-group small {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color:
+        #707b83;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   REQUIREMENT TOGGLE
+========================================================= */
+
+.timetable-requirement-toggle {
+
+    grid-column:
+        1 / -1;
+
+    padding-top: 2px;
+
+}
+
+
+.timetable-switch-option {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    cursor: pointer;
+
+}
+
+
+.timetable-switch-option input {
+
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+}
+
+
+.timetable-switch {
+
+    position: relative;
+
+    display: inline-block;
+
+    flex: 0 0 42px;
+
+    width: 42px;
+    height: 23px;
+
+    border-radius: 30px;
+
+    background:
+        #cbd1d8;
+
+    transition:
+        background 0.2s ease;
+
+}
+
+
+.timetable-switch::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 3px;
+    left: 3px;
+
+    width: 17px;
+    height: 17px;
+
+    border-radius: 50%;
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 2px 5px
+        rgba(0, 0, 0, 0.18);
+
+    transition:
+        transform 0.2s ease;
+
+}
+
+
+.timetable-switch-option
+input:checked
++ .timetable-switch {
+
+    background:
+        var(--tups-blue);
+
+}
+
+
+.timetable-switch-option
+input:checked
++ .timetable-switch::after {
+
+    transform:
+        translateX(19px);
+
+}
+
+
+.timetable-switch-option strong {
+
+    display: block;
+
+    color:
+        #27333a;
+
+    font-size: 12px;
+
+}
+
+
+.timetable-switch-option small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color:
+        #707b83;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   REQUIREMENT SUMMARY
+========================================================= */
+
+.timetable-requirements-summary {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 12px;
+
+    width: 100%;
+
+    margin-top: 22px;
+
+}
+
+
+.timetable-summary-card {
+
+    min-width: 0;
+
+    padding:
+        14px;
+
+    background:
+        #fafcfd;
+
+    border:
+        1px solid
+        #dfe6ea;
+
+    border-radius: 8px;
+
+}
+
+
+.timetable-summary-card span {
+
+    display: block;
+
+    color:
+        #707b83;
+
+    font-size: 10px;
+
+}
+
+
+.timetable-summary-card strong {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color:
+        #27333a;
+
+    font-size: 16px;
+
+}
+
+
+/* =========================================================
+   GENERATE SUMMARY
+========================================================= */
+
+.timetable-generate-summary {
+
+    width: 100%;
+
+    margin-bottom: 26px;
+
+}
+
+
+.timetable-generate-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 13px;
+
+    width: 100%;
+
+}
+
+
+.timetable-generate-card {
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 0;
+
+    padding:
+        15px;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid
+        rgba(0, 0, 102, 0.12);
+
+    border-radius: 9px;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0, 0, 102, 0.04);
+
+}
+
+
+.timetable-generate-card i {
+
+    margin-bottom: 9px;
+
+    color:
+        var(--tups-blue);
+
+    font-size: 17px;
+
+}
+
+
+.timetable-generate-card span {
+
+    color:
+        #707b83;
+
+    font-size: 10px;
+
+}
+
+
+.timetable-generate-card strong {
+
+    margin-top: 4px;
+
+    color:
+        #27333a;
+
+    font-size: 14px;
+
+    line-height: 1.4;
+
+}
+
+
+/* =========================================================
+   COMING SOON / INFORMATION
 ========================================================= */
 
 .timetable-coming-soon {
+
     display: flex;
+
     align-items: flex-start;
 
     gap: 10px;
 
-    margin-top: 14px;
-    padding: 14px 16px;
+    width: 100%;
 
-    background: #f5f7f8;
+    margin-top: 15px;
 
-    border: 1px solid #e0e5e8;
+    padding:
+        13px 15px;
+
+    background:
+        #f5f7f8;
+
+    border:
+        1px solid
+        #e0e5e8;
+
     border-radius: 8px;
 
-    color: #5d6871;
+    color:
+        #5d6871;
 
-    font-size: 0.76rem;
+    font-size: 11px;
+
     line-height: 1.55;
+
 }
+
 
 .timetable-coming-soon > i {
+
+    flex: 0 0 auto;
+
     margin-top: 2px;
 
-    color: #343a40;
+    color:
+        #343a40;
+
 }
+
 
 .timetable-coming-soon strong {
+
     display: block;
 
-    color: #39454d;
+    color:
+        #39454d;
 
-    font-size: 0.78rem;
+    font-size: 12px;
+
 }
 
+
 .timetable-coming-soon p {
+
     margin: 3px 0 0;
+
 }
 
 
 /* =========================================================
-   MOBILE
+   RESPONSIVE — TABLET
 ========================================================= */
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
 
-    .timetable-page-header {
-        gap: 11px;
-        margin-bottom: 18px;
+    .timetable-stepper {
+
+        align-items: stretch;
+
     }
 
+
+    .timetable-step {
+
+        min-width: 120px;
+
+    }
+
+
+    .timetable-form-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    .timetable-checkbox-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    .timetable-period-days {
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+    }
+
+
+    .timetable-requirements-summary {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    .timetable-generate-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .timetable-page-header {
+
+        gap: 11px;
+
+        margin-bottom: 19px;
+
+    }
+
+
     .timetable-page-icon {
+
         flex-basis: 38px;
 
         width: 38px;
         height: 38px;
+
     }
+
 
     .timetable-page-header h2 {
-        font-size: 1.45rem;
+
+        font-size: 24px;
+
     }
+
 
     .timetable-page-header p {
-        font-size: 0.88rem;
+
+        font-size: 13px;
+
         line-height: 1.65;
+
     }
+
+
+    /* Step navigation becomes a compact horizontal scroller */
+
+    .timetable-stepper {
+
+        justify-content: flex-start;
+
+        margin-bottom: 16px;
+
+        padding: 5px;
+
+        overflow-x: auto;
+
+        -webkit-overflow-scrolling: touch;
+
+    }
+
 
     .timetable-step {
-        padding: 16px;
+
+        flex:
+            0 0 auto;
+
+        min-width: 108px;
+
+        min-height: 42px;
+
+        padding:
+            6px 9px;
+
     }
+
+
+    .timetable-step-number {
+
+        flex-basis: 25px;
+
+        width: 25px;
+        height: 25px;
+
+        font-size: 10px;
+
+    }
+
+
+    .timetable-step span:last-child {
+
+        font-size: 10px;
+
+    }
+
+
+    .timetable-panel > .timetable-step {
+
+        padding: 16px;
+
+    }
+
+
+    .timetable-step-heading {
+
+        gap: 9px;
+
+        margin-bottom: 18px;
+
+    }
+
+
+    .timetable-step-heading
+    .timetable-step-number {
+
+        flex-basis: 29px;
+
+        width: 29px;
+        height: 29px;
+
+    }
+
+
+    .timetable-step-heading h3 {
+
+        font-size: 16px;
+
+    }
+
+
+    .timetable-step-heading p {
+
+        font-size: 11px;
+
+    }
+
 
     .timetable-form-grid {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+            1fr;
+
+        gap: 14px;
+
     }
+
+
+    .timetable-checkbox-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .timetable-period-days {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    .timetable-period-item {
+
+        align-items:
+            flex-start;
+
+        flex-wrap:
+            wrap;
+
+    }
+
+
+    .timetable-period-actions {
+
+        width: 100%;
+
+        margin-left: 0;
+
+    }
+
+
+    .timetable-requirement-card {
+
+        padding:
+            16px;
+
+    }
+
+
+    .timetable-requirement-fields {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .timetable-requirement-toggle {
+
+        grid-column:
+            auto;
+
+    }
+
+
+    .timetable-requirements-summary {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .timetable-generate-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    /* Keep Back / Continue buttons neatly stacked */
+
+    .timetable-action-row {
+
+        flex-direction:
+            column-reverse;
+
+        align-items:
+            stretch;
+
+        gap: 9px;
+
+    }
+
+
+    .timetable-action-row > div {
+
+        width: 100%;
+
+        flex-direction:
+            column;
+
+        gap: 8px;
+
+    }
+
+
+    .timetable-action-row
+    button {
+
+        width: 100%;
+
+    }
+
 
     .timetable-actions {
-        justify-content: stretch;
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
     }
 
-    .timetable-primary-button {
+
+    .timetable-actions button {
+
         width: 100%;
+
+    }
+
+
+    .timetable-class-item,
+    .timetable-teacher-item,
+    .timetable-assignment-item {
+
+        align-items:
+            flex-start;
+
+    }
+
+
+    .timetable-info-box {
+
+        padding:
+            13px 14px;
+
+    }
+
+
+    .timetable-requirement-heading h4 {
+
+        font-size: 14px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .timetable-step {
+
+        min-width: 96px;
+
+    }
+
+
+    .timetable-step span:last-child {
+
+        font-size: 9px;
+
+    }
+
+
+    .timetable-period-days {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .timetable-panel > .timetable-step {
+
+        padding: 13px;
+
     }
 
 }
@@ -1956,1025 +4084,32 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-    .timetable-primary-button {
-        transition: none;
+    .timetable-panel {
+
+        animation:
+            none;
+
     }
 
-    .timetable-primary-button:hover {
-        transform: none;
+
+    .timetable-primary-button,
+    .timetable-secondary-button,
+    .timetable-back-button,
+    .timetable-checkbox-option,
+    .timetable-switch {
+
+        transition:
+            none;
+
     }
 
-}
 
-/* =========================================================
-   TIMETABLE CLASSES
-========================================================= */
+    .timetable-primary-button:hover,
+    .timetable-secondary-button:hover {
 
-.timetable-class-list {
-    display: grid;
+        transform:
+            none;
 
-    gap: 8px;
-
-    margin-top: 18px;
-}
-
-
-.timetable-class-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 12px;
-
-    padding: 11px 13px;
-
-    background: #fafcfd;
-
-    border: 1px solid #dfe6ea;
-    border-radius: 7px;
-}
-
-
-.timetable-class-item > div {
-    display: flex;
-    flex-direction: column;
-
-    gap: 2px;
-
-    min-width: 0;
-}
-
-
-.timetable-class-item strong {
-    color: #27333a;
-
-    font-size: 0.82rem;
-}
-
-
-.timetable-class-item span {
-    color: #707b83;
-
-    font-size: 0.72rem;
-}
-
-
-.timetable-remove-class {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex: 0 0 30px;
-
-    width: 30px;
-    height: 30px;
-
-    padding: 0;
-
-    background: transparent;
-
-    color: #68737b;
-
-    border: 1px solid #d6dee3;
-    border-radius: 6px;
-
-    cursor: pointer;
-}
-
-
-.timetable-remove-class:hover {
-    background: #f1f3f4;
-    color: #20252a;
-}
-
-
-.timetable-empty-state {
-    display: flex;
-    align-items: center;
-
-    gap: 9px;
-
-    padding: 13px 14px;
-
-    background: #f5f7f8;
-
-    border: 1px dashed #d5dde1;
-    border-radius: 7px;
-
-    color: #727d84;
-}
-
-
-.timetable-empty-state i {
-    font-size: 0.8rem;
-}
-
-
-.timetable-empty-state p {
-    margin: 0;
-
-    font-size: 0.76rem;
-}
-
-/* =========================================================
-   TIMETABLE TEACHERS
-========================================================= */
-
-.timetable-teacher-list {
-    display: grid;
-
-    gap: 8px;
-
-    margin-top: 18px;
-}
-
-
-.timetable-teacher-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 12px;
-
-    padding: 11px 13px;
-
-    background: #fafcfd;
-
-    border: 1px solid #dfe6ea;
-    border-radius: 7px;
-}
-
-
-.timetable-teacher-item > div {
-    display: flex;
-    flex-direction: column;
-
-    gap: 2px;
-
-    min-width: 0;
-}
-
-
-.timetable-teacher-item strong {
-    color: #27333a;
-
-    font-size: 0.82rem;
-}
-
-
-.timetable-teacher-item span {
-    color: #707b83;
-
-    font-size: 0.72rem;
-}
-
-
-.timetable-remove-teacher {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex: 0 0 30px;
-
-    width: 30px;
-    height: 30px;
-
-    padding: 0;
-
-    background: transparent;
-
-    color: #68737b;
-
-    border: 1px solid #d6dee3;
-    border-radius: 6px;
-
-    cursor: pointer;
-}
-
-
-.timetable-remove-teacher:hover {
-    background: #f1f3f4;
-    color: #20252a;
-}
-
-/* =========================================================
-   TIMETABLE — TEACHER ASSIGNMENTS
-========================================================= */
-
-.timetable-assignment-form {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
-  gap: 18px;
-
-  margin-bottom: 20px;
-
-}
-
-
-.timetable-assignment-list {
-
-  display: grid;
-
-  gap: 12px;
-
-}
-
-
-.timetable-assignment-item {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  gap: 15px;
-
-  padding: 16px 18px;
-
-  border: 1px solid rgba(0, 0, 102, 0.12);
-
-  border-radius: 10px;
-
-  background: #ffffff;
-
-}
-
-
-.timetable-assignment-item strong {
-
-  display: block;
-
-}
-
-
-.timetable-assignment-item span {
-
-  display: block;
-
-  margin-top: 5px;
-
-  font-size: 13px;
-
-  color: var(--muted);
-
-}
-
-
-.timetable-remove-assignment {
-
-  flex: 0 0 auto;
-
-  border: 0;
-
-  background: transparent;
-
-  cursor: pointer;
-
-  font-size: 18px;
-
-  color: #c00;
-
-}
-
-
-@media (max-width: 760px) {
-
-  .timetable-assignment-form {
-
-    grid-template-columns: 1fr;
-
-  }
-
-
-  .timetable-assignment-item {
-
-    align-items: flex-start;
-
-  }
-
-}
-
-/* =========================================================
-   TIMETABLE — MULTI-SELECTION ASSIGNMENTS
-========================================================= */
-
-.timetable-assignment-teacher {
-
-  max-width: 520px;
-
-  margin-bottom: 28px;
-
-}
-
-
-.timetable-multi-select-section {
-
-  margin-top: 26px;
-
-  padding-top: 22px;
-
-  border-top:
-    1px solid
-    rgba(0, 0, 102, 0.10);
-
-}
-
-
-.timetable-checkbox-grid {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
-  gap: 12px;
-
-}
-
-
-.timetable-checkbox-option {
-
-  position: relative;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-
-  min-height: 58px;
-
-  padding: 12px 14px;
-
-  border:
-    1px solid
-    rgba(0, 0, 102, 0.13);
-
-  border-radius: 10px;
-
-  background: #ffffff;
-
-  cursor: pointer;
-
-  transition:
-    border-color 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
-
-}
-
-
-.timetable-checkbox-option:hover {
-
-  border-color:
-    var(--tups-blue);
-
-}
-
-
-.timetable-checkbox-option input {
-
-  width: 18px;
-
-  height: 18px;
-
-  flex: 0 0 auto;
-
-  accent-color:
-    var(--tups-blue);
-
-  cursor: pointer;
-
-}
-
-
-.timetable-checkbox-option span {
-
-  min-width: 0;
-
-}
-
-
-.timetable-checkbox-option strong {
-
-  display: block;
-
-  font-size: 14px;
-
-  color:
-    var(--tups-black);
-
-}
-
-
-.timetable-checkbox-option small {
-
-  display: block;
-
-  margin-top: 3px;
-
-  font-size: 11px;
-
-  color:
-    var(--muted);
-
-}
-
-
-.timetable-checkbox-option:has(
-  input:checked
-) {
-
-  border-color:
-    var(--tups-blue);
-
-  background:
-    rgba(0, 245, 255, 0.08);
-
-  box-shadow:
-    0 4px 12px
-    rgba(0, 0, 102, 0.06);
-
-}
-
-
-.timetable-assignment-summary {
-
-  margin-top: 30px;
-
-}
-
-
-@media (max-width: 900px) {
-
-  .timetable-checkbox-grid {
-
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-
-  }
-
-}
-
-
-@media (max-width: 600px) {
-
-  .timetable-checkbox-grid {
-
-    grid-template-columns: 1fr;
-
-  }
-
-
-  .timetable-assignment-teacher {
-
-    max-width: none;
-
-  }
-
-
-  .timetable-checkbox-option {
-
-    min-height: 54px;
-
-  }
-
-}
-/* =========================================================
-   TIMETABLE — PHASE 2F
-   SUBJECT REQUIREMENTS
-========================================================= */
-
-.timetable-info-box {
-
-  display: flex;
-
-  align-items: flex-start;
-
-  gap: 14px;
-
-  margin: 24px 0 28px;
-
-  padding: 17px 19px;
-
-  border:
-    1px solid
-    rgba(0, 245, 255, 0.45);
-
-  border-left:
-    4px solid
-    var(--tups-blue);
-
-  border-radius: 10px;
-
-  background:
-    rgba(0, 245, 255, 0.06);
-
-}
-
-
-.timetable-info-box > i {
-
-  flex: 0 0 auto;
-
-  margin-top: 2px;
-
-  color:
-    var(--tups-blue);
-
-  font-size: 18px;
-
-}
-
-
-.timetable-info-box strong {
-
-  display: block;
-
-  margin-bottom: 5px;
-
-  color:
-    var(--tups-black);
-
-  font-size: 14px;
-
-}
-
-
-.timetable-info-box p {
-
-  margin: 0;
-
-  color:
-    var(--muted);
-
-  font-size: 13px;
-
-  line-height: 1.65;
-
-}
-
-
-/* =========================================================
-   REQUIREMENT LIST
-========================================================= */
-
-.timetable-requirements-list {
-
-  display: grid;
-
-  gap: 18px;
-
-}
-
-
-.timetable-requirement-card {
-
-  padding: 20px;
-
-  border:
-    1px solid
-    rgba(0, 0, 102, 0.12);
-
-  border-radius: 12px;
-
-  background: #ffffff;
-
-  box-shadow:
-    0 5px 18px
-    rgba(0, 0, 102, 0.05);
-
-}
-
-
-.timetable-requirement-heading {
-
-  margin-bottom: 20px;
-
-}
-
-
-.timetable-requirement-heading > div {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 13px;
-
-}
-
-
-.timetable-requirement-number {
-
-  display: inline-flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  width: 32px;
-
-  height: 32px;
-
-  flex: 0 0 auto;
-
-  border-radius: 50%;
-
-  background:
-    var(--tups-black);
-
-  color: #ffffff;
-
-  font-size: 12px;
-
-  font-weight: 700;
-
-}
-
-
-.timetable-requirement-heading h4 {
-
-  margin: 0;
-
-  color:
-    var(--tups-black);
-
-  font-size: 17px;
-
-}
-
-
-.timetable-requirement-heading p {
-
-  margin: 4px 0 0;
-
-  color:
-    var(--muted);
-
-  font-size: 12px;
-
-}
-
-
-/* =========================================================
-   REQUIREMENT FIELDS
-========================================================= */
-
-.timetable-requirement-fields {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  gap: 18px;
-
-}
-
-
-.timetable-requirement-fields
-.timetable-form-group {
-
-  min-width: 0;
-
-}
-
-
-.timetable-requirement-fields
-.timetable-form-group small {
-
-  display: block;
-
-  margin-top: 6px;
-
-  color:
-    var(--muted);
-
-  font-size: 11px;
-
-  line-height: 1.5;
-
-}
-
-
-/* =========================================================
-   REQUIREMENT TOGGLE
-========================================================= */
-
-.timetable-requirement-toggle {
-
-  grid-column:
-    1 / -1;
-
-  padding-top: 3px;
-
-}
-
-
-.timetable-switch-option {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-
-  cursor: pointer;
-
-}
-
-
-.timetable-switch-option input {
-
-  position: absolute;
-
-  opacity: 0;
-
-  pointer-events: none;
-
-}
-
-
-.timetable-switch {
-
-  position: relative;
-
-  display: inline-block;
-
-  width: 42px;
-
-  height: 23px;
-
-  flex: 0 0 auto;
-
-  border-radius: 30px;
-
-  background:
-    #cbd1d8;
-
-  transition:
-    background 0.2s ease;
-
-}
-
-
-.timetable-switch::after {
-
-  content: "";
-
-  position: absolute;
-
-  top: 3px;
-
-  left: 3px;
-
-  width: 17px;
-
-  height: 17px;
-
-  border-radius: 50%;
-
-  background: #ffffff;
-
-  box-shadow:
-    0 2px 5px
-    rgba(0, 0, 0, 0.18);
-
-  transition:
-    transform 0.2s ease;
-
-}
-
-
-.timetable-switch-option
-input:checked
-+ .timetable-switch {
-
-  background:
-    var(--tups-blue);
-
-}
-
-
-.timetable-switch-option
-input:checked
-+ .timetable-switch::after {
-
-  transform:
-    translateX(19px);
-
-}
-
-
-.timetable-switch-option strong {
-
-  display: block;
-
-  color:
-    var(--tups-black);
-
-  font-size: 13px;
-
-}
-
-
-.timetable-switch-option small {
-
-  display: block;
-
-  margin-top: 3px;
-
-  color:
-    var(--muted);
-
-  font-size: 11px;
-
-  line-height: 1.5;
-
-}
-
-
-/* =========================================================
-   REQUIREMENT SUMMARY
-========================================================= */
-
-.timetable-requirements-summary {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
-  gap: 14px;
-
-  margin-top: 24px;
-
-}
-
-
-/* =========================================================
-   GENERATE SUMMARY
-========================================================= */
-
-.timetable-generate-summary {
-
-  margin-bottom: 28px;
-
-}
-
-
-.timetable-generate-grid {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
-
-  gap: 15px;
-
-}
-
-
-.timetable-generate-card {
-
-  display: flex;
-
-  flex-direction: column;
-
-  min-width: 0;
-
-  padding: 17px;
-
-  border:
-    1px solid
-    rgba(0, 0, 102, 0.12);
-
-  border-radius: 10px;
-
-  background: #ffffff;
-
-  box-shadow:
-    0 4px 15px
-    rgba(0, 0, 102, 0.04);
-
-}
-
-
-.timetable-generate-card i {
-
-  margin-bottom: 11px;
-
-  color:
-    var(--tups-blue);
-
-  font-size: 18px;
-
-}
-
-
-.timetable-generate-card span {
-
-  color:
-    var(--muted);
-
-  font-size: 11px;
-
-}
-
-
-.timetable-generate-card strong {
-
-  margin-top: 5px;
-
-  color:
-    var(--tups-black);
-
-  font-size: 15px;
-
-  line-height: 1.4;
-
-}
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media (max-width: 900px) {
-
-  .timetable-requirement-fields {
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-
-  .timetable-requirements-summary {
-
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-
-  }
-
-
-  .timetable-generate-grid {
-
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-
-  }
-
-}
-
-
-@media (max-width: 600px) {
-
-  .timetable-info-box {
-
-    padding: 14px;
-
-  }
-
-
-  .timetable-requirement-card {
-
-    padding: 16px;
-
-  }
-
-
-  .timetable-requirement-heading h4 {
-
-    font-size: 15px;
-
-  }
-
-
-  .timetable-requirements-summary {
-
-    grid-template-columns: 1fr;
-
-  }
-
-
-  .timetable-generate-grid {
-
-    grid-template-columns: 1fr;
-
-  }
-
-
-  .timetable-generate-card {
-
-    padding: 15px;
-
-  }
+    }
 
 }
