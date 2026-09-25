@@ -2445,3 +2445,536 @@
   }
 
 }
+/* =========================================================
+   TIMETABLE — PHASE 2F
+   SUBJECT REQUIREMENTS
+========================================================= */
+
+.timetable-info-box {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 14px;
+
+  margin: 24px 0 28px;
+
+  padding: 17px 19px;
+
+  border:
+    1px solid
+    rgba(0, 245, 255, 0.45);
+
+  border-left:
+    4px solid
+    var(--tups-blue);
+
+  border-radius: 10px;
+
+  background:
+    rgba(0, 245, 255, 0.06);
+
+}
+
+
+.timetable-info-box > i {
+
+  flex: 0 0 auto;
+
+  margin-top: 2px;
+
+  color:
+    var(--tups-blue);
+
+  font-size: 18px;
+
+}
+
+
+.timetable-info-box strong {
+
+  display: block;
+
+  margin-bottom: 5px;
+
+  color:
+    var(--tups-black);
+
+  font-size: 14px;
+
+}
+
+
+.timetable-info-box p {
+
+  margin: 0;
+
+  color:
+    var(--muted);
+
+  font-size: 13px;
+
+  line-height: 1.65;
+
+}
+
+
+/* =========================================================
+   REQUIREMENT LIST
+========================================================= */
+
+.timetable-requirements-list {
+
+  display: grid;
+
+  gap: 18px;
+
+}
+
+
+.timetable-requirement-card {
+
+  padding: 20px;
+
+  border:
+    1px solid
+    rgba(0, 0, 102, 0.12);
+
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 5px 18px
+    rgba(0, 0, 102, 0.05);
+
+}
+
+
+.timetable-requirement-heading {
+
+  margin-bottom: 20px;
+
+}
+
+
+.timetable-requirement-heading > div {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+}
+
+
+.timetable-requirement-number {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 32px;
+
+  height: 32px;
+
+  flex: 0 0 auto;
+
+  border-radius: 50%;
+
+  background:
+    var(--tups-black);
+
+  color: #ffffff;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+}
+
+
+.timetable-requirement-heading h4 {
+
+  margin: 0;
+
+  color:
+    var(--tups-black);
+
+  font-size: 17px;
+
+}
+
+
+.timetable-requirement-heading p {
+
+  margin: 4px 0 0;
+
+  color:
+    var(--muted);
+
+  font-size: 12px;
+
+}
+
+
+/* =========================================================
+   REQUIREMENT FIELDS
+========================================================= */
+
+.timetable-requirement-fields {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+
+}
+
+
+.timetable-requirement-fields
+.timetable-form-group {
+
+  min-width: 0;
+
+}
+
+
+.timetable-requirement-fields
+.timetable-form-group small {
+
+  display: block;
+
+  margin-top: 6px;
+
+  color:
+    var(--muted);
+
+  font-size: 11px;
+
+  line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   REQUIREMENT TOGGLE
+========================================================= */
+
+.timetable-requirement-toggle {
+
+  grid-column:
+    1 / -1;
+
+  padding-top: 3px;
+
+}
+
+
+.timetable-switch-option {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  cursor: pointer;
+
+}
+
+
+.timetable-switch-option input {
+
+  position: absolute;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+}
+
+
+.timetable-switch {
+
+  position: relative;
+
+  display: inline-block;
+
+  width: 42px;
+
+  height: 23px;
+
+  flex: 0 0 auto;
+
+  border-radius: 30px;
+
+  background:
+    #cbd1d8;
+
+  transition:
+    background 0.2s ease;
+
+}
+
+
+.timetable-switch::after {
+
+  content: "";
+
+  position: absolute;
+
+  top: 3px;
+
+  left: 3px;
+
+  width: 17px;
+
+  height: 17px;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 2px 5px
+    rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 0.2s ease;
+
+}
+
+
+.timetable-switch-option
+input:checked
++ .timetable-switch {
+
+  background:
+    var(--tups-blue);
+
+}
+
+
+.timetable-switch-option
+input:checked
++ .timetable-switch::after {
+
+  transform:
+    translateX(19px);
+
+}
+
+
+.timetable-switch-option strong {
+
+  display: block;
+
+  color:
+    var(--tups-black);
+
+  font-size: 13px;
+
+}
+
+
+.timetable-switch-option small {
+
+  display: block;
+
+  margin-top: 3px;
+
+  color:
+    var(--muted);
+
+  font-size: 11px;
+
+  line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   REQUIREMENT SUMMARY
+========================================================= */
+
+.timetable-requirements-summary {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-top: 24px;
+
+}
+
+
+/* =========================================================
+   GENERATE SUMMARY
+========================================================= */
+
+.timetable-generate-summary {
+
+  margin-bottom: 28px;
+
+}
+
+
+.timetable-generate-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 15px;
+
+}
+
+
+.timetable-generate-card {
+
+  display: flex;
+
+  flex-direction: column;
+
+  min-width: 0;
+
+  padding: 17px;
+
+  border:
+    1px solid
+    rgba(0, 0, 102, 0.12);
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 15px
+    rgba(0, 0, 102, 0.04);
+
+}
+
+
+.timetable-generate-card i {
+
+  margin-bottom: 11px;
+
+  color:
+    var(--tups-blue);
+
+  font-size: 18px;
+
+}
+
+
+.timetable-generate-card span {
+
+  color:
+    var(--muted);
+
+  font-size: 11px;
+
+}
+
+
+.timetable-generate-card strong {
+
+  margin-top: 5px;
+
+  color:
+    var(--tups-black);
+
+  font-size: 15px;
+
+  line-height: 1.4;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .timetable-requirement-fields {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+
+  .timetable-requirements-summary {
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+  }
+
+
+  .timetable-generate-grid {
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .timetable-info-box {
+
+    padding: 14px;
+
+  }
+
+
+  .timetable-requirement-card {
+
+    padding: 16px;
+
+  }
+
+
+  .timetable-requirement-heading h4 {
+
+    font-size: 15px;
+
+  }
+
+
+  .timetable-requirements-summary {
+
+    grid-template-columns: 1fr;
+
+  }
+
+
+  .timetable-generate-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+
+  .timetable-generate-card {
+
+    padding: 15px;
+
+  }
+
+}
