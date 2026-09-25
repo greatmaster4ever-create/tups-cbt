@@ -2258,3 +2258,190 @@
   }
 
 }
+
+/* =========================================================
+   TIMETABLE — MULTI-SELECTION ASSIGNMENTS
+========================================================= */
+
+.timetable-assignment-teacher {
+
+  max-width: 520px;
+
+  margin-bottom: 28px;
+
+}
+
+
+.timetable-multi-select-section {
+
+  margin-top: 26px;
+
+  padding-top: 22px;
+
+  border-top:
+    1px solid
+    rgba(0, 0, 102, 0.10);
+
+}
+
+
+.timetable-checkbox-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+
+}
+
+
+.timetable-checkbox-option {
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-height: 58px;
+
+  padding: 12px 14px;
+
+  border:
+    1px solid
+    rgba(0, 0, 102, 0.13);
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+
+}
+
+
+.timetable-checkbox-option:hover {
+
+  border-color:
+    var(--tups-blue);
+
+}
+
+
+.timetable-checkbox-option input {
+
+  width: 18px;
+
+  height: 18px;
+
+  flex: 0 0 auto;
+
+  accent-color:
+    var(--tups-blue);
+
+  cursor: pointer;
+
+}
+
+
+.timetable-checkbox-option span {
+
+  min-width: 0;
+
+}
+
+
+.timetable-checkbox-option strong {
+
+  display: block;
+
+  font-size: 14px;
+
+  color:
+    var(--tups-black);
+
+}
+
+
+.timetable-checkbox-option small {
+
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+
+  color:
+    var(--muted);
+
+}
+
+
+.timetable-checkbox-option:has(
+  input:checked
+) {
+
+  border-color:
+    var(--tups-blue);
+
+  background:
+    rgba(0, 245, 255, 0.08);
+
+  box-shadow:
+    0 4px 12px
+    rgba(0, 0, 102, 0.06);
+
+}
+
+
+.timetable-assignment-summary {
+
+  margin-top: 30px;
+
+}
+
+
+@media (max-width: 900px) {
+
+  .timetable-checkbox-grid {
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .timetable-checkbox-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+
+  .timetable-assignment-teacher {
+
+    max-width: none;
+
+  }
+
+
+  .timetable-checkbox-option {
+
+    min-height: 54px;
+
+  }
+
+}

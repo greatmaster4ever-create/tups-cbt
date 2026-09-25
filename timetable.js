@@ -1,6 +1,7 @@
 /* =========================================================
    TUPS TIMETABLE GENERATOR
-   PHASE 2E — PERIOD STRUCTURE
+   PHASE 2E
+   MULTI-SELECTION TEACHER ASSIGNMENTS
 ========================================================= */
 
 
@@ -112,7 +113,6 @@ const PERIOD_TYPES = [
   {
     value: "other",
     label: "Other"
-
   }
 
 ];
@@ -751,8 +751,9 @@ function initializeTimetableShell(
               </h3>
 
               <p>
-                Connect teachers with the subjects
-                and classes they teach.
+                Select a teacher, then choose all
+                subjects and classes that the teacher
+                can teach.
               </p>
 
             </div>
@@ -760,8 +761,10 @@ function initializeTimetableShell(
           </div>
 
 
+          <!-- TEACHER -->
+
           <div
-            class="timetable-assignment-form"
+            class="timetable-assignment-teacher"
           >
 
             <div
@@ -786,51 +789,65 @@ function initializeTimetableShell(
 
             </div>
 
+          </div>
+
+
+          <!-- MULTI SUBJECT SELECTION -->
+
+          <div
+            class="timetable-multi-select-section"
+          >
 
             <div
-              class="timetable-form-group"
+              class="timetable-section-title"
             >
 
-              <label
-                for="timetable-assignment-subject"
-              >
-                Subject
-              </label>
+              <h4>
+                Subjects
+              </h4>
 
-              <select
-                id="timetable-assignment-subject"
-              >
-
-                <option value="">
-                  Select subject
-                </option>
-
-              </select>
+              <p>
+                Tick all subjects this teacher
+                can teach.
+              </p>
 
             </div>
 
 
             <div
-              class="timetable-form-group"
+              id="timetable-assignment-subjects"
+              class="timetable-checkbox-grid"
+            ></div>
+
+          </div>
+
+
+          <!-- MULTI CLASS SELECTION -->
+
+          <div
+            class="timetable-multi-select-section"
+          >
+
+            <div
+              class="timetable-section-title"
             >
 
-              <label
-                for="timetable-assignment-class"
-              >
-                Class
-              </label>
+              <h4>
+                Classes
+              </h4>
 
-              <select
-                id="timetable-assignment-class"
-              >
-
-                <option value="">
-                  Select class
-                </option>
-
-              </select>
+              <p>
+                Tick all classes this teacher
+                teaches.
+              </p>
 
             </div>
+
+
+            <div
+              id="timetable-assignment-classes"
+              class="timetable-checkbox-grid"
+            ></div>
 
           </div>
 
@@ -840,9 +857,36 @@ function initializeTimetableShell(
             id="timetable-add-assignment"
             class="timetable-secondary-button"
           >
+
             <i class="fa-solid fa-plus"></i>
-            Add Assignment
+
+            Add Selected Assignments
+
           </button>
+
+
+          <!-- ASSIGNMENT SUMMARY -->
+
+          <div
+            class="timetable-assignment-summary"
+          >
+
+            <div
+              class="timetable-section-title"
+            >
+
+              <h4>
+                Current Assignments
+              </h4>
+
+              <p>
+                These are the teacher, subject and
+                class combinations currently registered.
+              </p>
+
+            </div>
+
+          </div>
 
 
           <div
@@ -1161,9 +1205,8 @@ function initializeTimetableShell(
               </h3>
 
               <p>
-                This stage will define how frequently
-                each subject should appear in the
-                timetable.
+                Define how frequently each assigned
+                subject should appear during the week.
               </p>
 
             </div>
@@ -1248,6 +1291,7 @@ function bindTimetableEvents() {
 
       event.preventDefault();
 
+
       const name =
         document.querySelector(
           "#timetable-school-name"
@@ -1268,7 +1312,11 @@ function bindTimetableEvents() {
         );
 
 
-      if (!name || !title || !days) {
+      if (
+        !name ||
+        !title ||
+        !days
+      ) {
 
         return;
 
@@ -1313,6 +1361,7 @@ function bindTimetableEvents() {
     function (event) {
 
       event.preventDefault();
+
 
       const input =
         document.querySelector(
@@ -1365,7 +1414,9 @@ function bindTimetableEvents() {
 
       input.value = "";
 
+
       renderClasses();
+
 
       input.focus();
 
@@ -1398,6 +1449,7 @@ function bindTimetableEvents() {
       function (event) {
 
         event.preventDefault();
+
 
         if (
           timetableState.classes.length ===
@@ -1432,6 +1484,7 @@ function bindTimetableEvents() {
     function (event) {
 
       event.preventDefault();
+
 
       const input =
         document.querySelector(
@@ -1492,7 +1545,9 @@ function bindTimetableEvents() {
 
       input.value = "";
 
+
       renderTeachers();
+
 
       input.focus();
 
@@ -1525,6 +1580,7 @@ function bindTimetableEvents() {
       function (event) {
 
         event.preventDefault();
+
 
         if (
           timetableState.teachers.length ===
@@ -1559,6 +1615,7 @@ function bindTimetableEvents() {
     function (event) {
 
       event.preventDefault();
+
 
       const nameInput =
         document.querySelector(
@@ -1648,6 +1705,7 @@ function bindTimetableEvents() {
 
       renderSubjects();
 
+
       nameInput.focus();
 
     }
@@ -1680,6 +1738,7 @@ function bindTimetableEvents() {
 
         event.preventDefault();
 
+
         if (
           timetableState.subjects.length ===
           0
@@ -1690,7 +1749,8 @@ function bindTimetableEvents() {
         }
 
 
-        populateAssignmentSelects();
+        populateAssignmentSelections();
+
 
         showTimetablePanel(
           "assignments"
@@ -1721,75 +1781,22 @@ function bindTimetableEvents() {
 
         event.preventDefault();
 
-        const teacherId =
-          document.querySelector(
-            "#timetable-assignment-teacher"
-          )?.value;
+
+        addSelectedAssignments();
+
+      }
+    );
 
 
-        const subjectId =
-          document.querySelector(
-            "#timetable-assignment-subject"
-          )?.value;
+  document
+    .querySelector(
+      "#timetable-assignment-teacher"
+    )
+    ?.addEventListener(
+      "change",
+      function () {
 
-
-        const classId =
-          document.querySelector(
-            "#timetable-assignment-class"
-          )?.value;
-
-
-        if (
-          !teacherId ||
-          !subjectId ||
-          !classId
-        ) {
-
-          return;
-
-        }
-
-
-        const duplicate =
-          timetableState.assignments.some(
-            function (item) {
-
-              return (
-                item.teacherId === teacherId &&
-                item.subjectId === subjectId &&
-                item.classId === classId
-              );
-
-            }
-          );
-
-
-        if (duplicate) {
-
-          return;
-
-        }
-
-
-        timetableState.assignments.push({
-
-          id:
-            "assignment_" +
-            Date.now(),
-
-          teacherId:
-            teacherId,
-
-          subjectId:
-            subjectId,
-
-          classId:
-            classId
-
-        });
-
-
-        renderAssignments();
+        clearAssignmentSelections();
 
       }
     );
@@ -1821,6 +1828,7 @@ function bindTimetableEvents() {
 
         event.preventDefault();
 
+
         if (
           timetableState.assignments.length ===
           0
@@ -1834,6 +1842,7 @@ function bindTimetableEvents() {
         renderTimetableDays();
 
         renderPeriods();
+
 
         showTimetablePanel(
           "periods"
@@ -1858,6 +1867,7 @@ function bindTimetableEvents() {
     function (event) {
 
       event.preventDefault();
+
 
       addPeriodEntry();
 
@@ -1890,6 +1900,7 @@ function bindTimetableEvents() {
       function (event) {
 
         event.preventDefault();
+
 
         if (
           timetableState.periodStructure
@@ -2158,6 +2169,602 @@ function renderTimetableDays() {
               .activeDays =
               selectedDays;
 
+
+            renderPeriods();
+
+          }
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   ASSIGNMENT SELECTIONS
+========================================================= */
+
+function populateAssignmentSelections() {
+
+  populateAssignmentTeacher();
+
+  populateAssignmentSubjects();
+
+  populateAssignmentClasses();
+
+  renderAssignments();
+
+}
+
+
+/* =========================================================
+   TEACHER SELECT
+========================================================= */
+
+function populateAssignmentTeacher() {
+
+  const select =
+    document.querySelector(
+      "#timetable-assignment-teacher"
+    );
+
+
+  if (!select) {
+
+    return;
+
+  }
+
+
+  select.innerHTML = `
+
+    <option value="">
+      Select teacher
+    </option>
+
+    ${
+      timetableState.teachers
+        .map(
+          function (teacher) {
+
+            return `
+
+              <option
+                value="${teacher.id}"
+              >
+                ${escapeTimetableHtml(
+                  teacher.name
+                )}
+              </option>
+
+            `;
+
+          }
+        )
+        .join("")
+    }
+
+  `;
+
+}
+
+
+/* =========================================================
+   SUBJECT CHECKBOXES
+========================================================= */
+
+function populateAssignmentSubjects() {
+
+  const container =
+    document.querySelector(
+      "#timetable-assignment-subjects"
+    );
+
+
+  if (!container) {
+
+    return;
+
+  }
+
+
+  if (
+    timetableState.subjects.length ===
+    0
+  ) {
+
+    container.innerHTML = `
+
+      <div
+        class="timetable-empty-state"
+      >
+        No subjects have been added.
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    timetableState.subjects
+      .map(
+        function (subject) {
+
+          return `
+
+            <label
+              class="timetable-checkbox-option"
+            >
+
+              <input
+                type="checkbox"
+                value="${subject.id}"
+                data-assignment-subject
+              >
+
+              <span>
+
+                <strong>
+                  ${escapeTimetableHtml(
+                    subject.name
+                  )}
+                </strong>
+
+                <small>
+                  ${escapeTimetableHtml(
+                    subject.code
+                  )}
+                </small>
+
+              </span>
+
+            </label>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+/* =========================================================
+   CLASS CHECKBOXES
+========================================================= */
+
+function populateAssignmentClasses() {
+
+  const container =
+    document.querySelector(
+      "#timetable-assignment-classes"
+    );
+
+
+  if (!container) {
+
+    return;
+
+  }
+
+
+  if (
+    timetableState.classes.length ===
+    0
+  ) {
+
+    container.innerHTML = `
+
+      <div
+        class="timetable-empty-state"
+      >
+        No classes have been added.
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    timetableState.classes
+      .map(
+        function (item) {
+
+          return `
+
+            <label
+              class="timetable-checkbox-option"
+            >
+
+              <input
+                type="checkbox"
+                value="${item.id}"
+                data-assignment-class
+              >
+
+              <span>
+
+                <strong>
+                  ${escapeTimetableHtml(
+                    item.name
+                  )}
+                </strong>
+
+              </span>
+
+            </label>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+/* =========================================================
+   ADD MULTIPLE ASSIGNMENTS
+========================================================= */
+
+function addSelectedAssignments() {
+
+  const teacherSelect =
+    document.querySelector(
+      "#timetable-assignment-teacher"
+    );
+
+
+  const teacherId =
+    teacherSelect?.value;
+
+
+  if (!teacherId) {
+
+    console.warn(
+      "TUPS Timetable: Please select a teacher."
+    );
+
+    return;
+
+  }
+
+
+  const selectedSubjectIds =
+    Array.from(
+      document.querySelectorAll(
+        "[data-assignment-subject]:checked"
+      )
+    ).map(
+      function (checkbox) {
+
+        return checkbox.value;
+
+      }
+    );
+
+
+  const selectedClassIds =
+    Array.from(
+      document.querySelectorAll(
+        "[data-assignment-class]:checked"
+      )
+    ).map(
+      function (checkbox) {
+
+        return checkbox.value;
+
+      }
+    );
+
+
+  if (
+    selectedSubjectIds.length ===
+    0
+  ) {
+
+    console.warn(
+      "TUPS Timetable: Select at least one subject."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    selectedClassIds.length ===
+    0
+  ) {
+
+    console.warn(
+      "TUPS Timetable: Select at least one class."
+    );
+
+    return;
+
+  }
+
+
+  let addedCount =
+    0;
+
+
+  selectedSubjectIds.forEach(
+    function (subjectId) {
+
+      selectedClassIds.forEach(
+        function (classId) {
+
+          const duplicate =
+            timetableState.assignments.some(
+              function (assignment) {
+
+                return (
+                  assignment.teacherId ===
+                    teacherId &&
+
+                  assignment.subjectId ===
+                    subjectId &&
+
+                  assignment.classId ===
+                    classId
+                );
+
+              }
+            );
+
+
+          if (duplicate) {
+
+            return;
+
+          }
+
+
+          timetableState.assignments.push({
+
+            id:
+              "assignment_" +
+              Date.now() +
+              "_" +
+              Math.random()
+                .toString(36)
+                .slice(2, 8),
+
+            teacherId:
+              teacherId,
+
+            subjectId:
+              subjectId,
+
+            classId:
+              classId
+
+          });
+
+
+          addedCount++;
+
+        }
+      );
+
+    }
+  );
+
+
+  renderAssignments();
+
+  clearAssignmentSelections();
+
+
+  console.log(
+    "TUPS Timetable: Added " +
+    addedCount +
+    " teacher assignments."
+  );
+
+}
+
+
+/* =========================================================
+   CLEAR ASSIGNMENT CHECKBOXES
+========================================================= */
+
+function clearAssignmentSelections() {
+
+  document
+    .querySelectorAll(
+      "[data-assignment-subject], [data-assignment-class]"
+    )
+    .forEach(
+      function (checkbox) {
+
+        checkbox.checked =
+          false;
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   RENDER ASSIGNMENTS
+========================================================= */
+
+function renderAssignments() {
+
+  const container =
+    document.querySelector(
+      "#timetable-assignment-list"
+    );
+
+
+  if (!container) {
+
+    return;
+
+  }
+
+
+  if (
+    timetableState.assignments.length ===
+    0
+  ) {
+
+    container.innerHTML = `
+
+      <div
+        class="timetable-empty-state"
+      >
+
+        <i
+          class="fa-solid fa-link"
+        ></i>
+
+        <p>
+          No teacher assignments added yet.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    timetableState.assignments
+      .map(
+        function (assignment) {
+
+          const teacher =
+            timetableState.teachers.find(
+              function (item) {
+
+                return (
+                  item.id ===
+                  assignment.teacherId
+                );
+
+              }
+            );
+
+
+          const subject =
+            timetableState.subjects.find(
+              function (item) {
+
+                return (
+                  item.id ===
+                  assignment.subjectId
+                );
+
+              }
+            );
+
+
+          const classItem =
+            timetableState.classes.find(
+              function (item) {
+
+                return (
+                  item.id ===
+                  assignment.classId
+                );
+
+              }
+            );
+
+
+          return `
+
+            <div
+              class="timetable-assignment-item"
+            >
+
+              <div>
+
+                <strong>
+                  ${escapeTimetableHtml(
+                    teacher?.name || ""
+                  )}
+                </strong>
+
+                <span>
+                  ${escapeTimetableHtml(
+                    subject?.name || ""
+                  )}
+                  —
+                  ${escapeTimetableHtml(
+                    classItem?.name || ""
+                  )}
+                </span>
+
+              </div>
+
+
+              <button
+                type="button"
+                class="timetable-remove-assignment"
+                data-assignment-id="${assignment.id}"
+                aria-label="Remove assignment"
+              >
+
+                <i
+                  class="fa-solid fa-trash"
+                ></i>
+
+              </button>
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+
+  container
+    .querySelectorAll(
+      ".timetable-remove-assignment"
+    )
+    .forEach(
+      function (button) {
+
+        button.addEventListener(
+          "click",
+          function () {
+
+            const id =
+              button.dataset.assignmentId;
+
+
+            timetableState.assignments =
+              timetableState.assignments.filter(
+                function (item) {
+
+                  return (
+                    item.id !== id
+                  );
+
+                }
+              );
+
+
+            renderAssignments();
+
           }
         );
 
@@ -2266,7 +2873,11 @@ function addPeriodEntry() {
 
       id:
         "period_" +
-        Date.now(),
+        Date.now() +
+        "_" +
+        Math.random()
+          .toString(36)
+          .slice(2, 8),
 
       label:
         label,
@@ -2510,9 +3121,11 @@ function renderPeriods() {
                 aria-label="Move up"
                 ${index === 0 ? "disabled" : ""}
               >
+
                 <i
                   class="fa-solid fa-chevron-up"
                 ></i>
+
               </button>
 
 
@@ -2524,9 +3137,11 @@ function renderPeriods() {
                 aria-label="Move down"
                 ${index === entries.length - 1 ? "disabled" : ""}
               >
+
                 <i
                   class="fa-solid fa-chevron-down"
                 ></i>
+
               </button>
 
 
@@ -2537,9 +3152,11 @@ function renderPeriods() {
                 data-period-id="${entry.id}"
                 aria-label="Remove period"
               >
+
                 <i
                   class="fa-solid fa-trash"
                 ></i>
+
               </button>
 
             </div>
@@ -2683,7 +3300,10 @@ function bindPeriodActions() {
             }
 
 
-            if (action === "remove") {
+            if (
+              action ===
+              "remove"
+            ) {
 
               timetableState
                 .periodStructure
@@ -2749,303 +3369,6 @@ function bindPeriodActions() {
 
 
             renderPeriods();
-
-          }
-        );
-
-      }
-    );
-
-}
-
-
-/* =========================================================
-   ASSIGNMENT SELECTS
-========================================================= */
-
-function populateAssignmentSelects() {
-
-  const teacherSelect =
-    document.querySelector(
-      "#timetable-assignment-teacher"
-    );
-
-
-  const subjectSelect =
-    document.querySelector(
-      "#timetable-assignment-subject"
-    );
-
-
-  const classSelect =
-    document.querySelector(
-      "#timetable-assignment-class"
-    );
-
-
-  if (teacherSelect) {
-
-    teacherSelect.innerHTML = `
-
-      <option value="">
-        Select teacher
-      </option>
-
-      ${
-        timetableState.teachers
-          .map(
-            function (teacher) {
-
-              return `
-
-                <option
-                  value="${teacher.id}"
-                >
-                  ${escapeTimetableHtml(
-                    teacher.name
-                  )}
-                </option>
-
-              `;
-
-            }
-          )
-          .join("")
-      }
-
-    `;
-
-  }
-
-
-  if (subjectSelect) {
-
-    subjectSelect.innerHTML = `
-
-      <option value="">
-        Select subject
-      </option>
-
-      ${
-        timetableState.subjects
-          .map(
-            function (subject) {
-
-              return `
-
-                <option
-                  value="${subject.id}"
-                >
-                  ${escapeTimetableHtml(
-                    subject.name
-                  )}
-                </option>
-
-              `;
-
-            }
-          )
-          .join("")
-      }
-
-    `;
-
-  }
-
-
-  if (classSelect) {
-
-    classSelect.innerHTML = `
-
-      <option value="">
-        Select class
-      </option>
-
-      ${
-        timetableState.classes
-          .map(
-            function (item) {
-
-              return `
-
-                <option
-                  value="${item.id}"
-                >
-                  ${escapeTimetableHtml(
-                    item.name
-                  )}
-                </option>
-
-              `;
-
-            }
-          )
-          .join("")
-      }
-
-    `;
-
-  }
-
-}
-
-
-/* =========================================================
-   RENDER ASSIGNMENTS
-========================================================= */
-
-function renderAssignments() {
-
-  const container =
-    document.querySelector(
-      "#timetable-assignment-list"
-    );
-
-
-  if (!container) {
-
-    return;
-
-  }
-
-
-  if (
-    timetableState.assignments.length ===
-    0
-  ) {
-
-    container.innerHTML = "";
-
-    return;
-
-  }
-
-
-  container.innerHTML =
-    timetableState.assignments
-      .map(
-        function (assignment) {
-
-          const teacher =
-            timetableState.teachers.find(
-              function (item) {
-
-                return (
-                  item.id ===
-                  assignment.teacherId
-                );
-
-              }
-            );
-
-
-          const subject =
-            timetableState.subjects.find(
-              function (item) {
-
-                return (
-                  item.id ===
-                  assignment.subjectId
-                );
-
-              }
-            );
-
-
-          const classItem =
-            timetableState.classes.find(
-              function (item) {
-
-                return (
-                  item.id ===
-                  assignment.classId
-                );
-
-              }
-            );
-
-
-          return `
-
-            <div
-              class="timetable-assignment-item"
-            >
-
-              <div>
-
-                <strong>
-                  ${escapeTimetableHtml(
-                    subject?.name || ""
-                  )}
-                </strong>
-
-                <span>
-                  ${
-                    escapeTimetableHtml(
-                      teacher?.name || ""
-                    )
-                  }
-                  —
-                  ${
-                    escapeTimetableHtml(
-                      classItem?.name || ""
-                    )
-                  }
-                </span>
-
-              </div>
-
-
-              <button
-                type="button"
-                class="timetable-remove-assignment"
-                data-assignment-id="${assignment.id}"
-                aria-label="Remove assignment"
-              >
-
-                <i
-                  class="fa-solid fa-trash"
-                ></i>
-
-              </button>
-
-            </div>
-
-          `;
-
-        }
-      )
-      .join("");
-
-
-  container
-    .querySelectorAll(
-      ".timetable-remove-assignment"
-    )
-    .forEach(
-      function (button) {
-
-        button.addEventListener(
-          "click",
-          function () {
-
-            const id =
-              button.dataset.assignmentId;
-
-
-            timetableState.assignments =
-              timetableState.assignments.filter(
-                function (item) {
-
-                  return (
-                    item.id !== id
-                  );
-
-                }
-              );
-
-
-            renderAssignments();
 
           }
         );
