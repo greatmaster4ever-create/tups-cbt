@@ -2156,3 +2156,105 @@
     background: #f1f3f4;
     color: #20252a;
 }
+
+/* =========================================================
+   TIMETABLE — TEACHER ASSIGNMENTS
+========================================================= */
+
+.timetable-assignment-form {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 20px;
+
+}
+
+
+.timetable-assignment-list {
+
+  display: grid;
+
+  gap: 12px;
+
+}
+
+
+.timetable-assignment-item {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 16px 18px;
+
+  border: 1px solid rgba(0, 0, 102, 0.12);
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+}
+
+
+.timetable-assignment-item strong {
+
+  display: block;
+
+}
+
+
+.timetable-assignment-item span {
+
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 13px;
+
+  color: var(--muted);
+
+}
+
+
+.timetable-remove-assignment {
+
+  flex: 0 0 auto;
+
+  border: 0;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  font-size: 18px;
+
+  color: #c00;
+
+}
+
+
+@media (max-width: 760px) {
+
+  .timetable-assignment-form {
+
+    grid-template-columns: 1fr;
+
+  }
+
+
+  .timetable-assignment-item {
+
+    align-items: flex-start;
+
+  }
+
+}

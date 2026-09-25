@@ -1,7 +1,6 @@
-
 /* =========================================================
    TUPS TIMETABLE GENERATOR
-   PHASE 2C — SUBJECTS
+   PHASE 2D — TEACHER ASSIGNMENTS
    ---------------------------------------------------------
    Performance rule:
    This file contains only the timetable setup interface.
@@ -15,10 +14,10 @@
    2. Classes
    3. Teachers
    4. Subjects
+   5. Teacher Assignments
 
    Future stages:
 
-   5. Teacher Assignments
    6. Period Structure
    7. Subject Requirements
    8. Review / Generate
@@ -697,6 +696,184 @@ export function loadTimetableGenerator() {
         </section>
 
 
+
+        <!-- ===================================================
+             STEP 5 — TEACHER ASSIGNMENTS
+        ==================================================== -->
+
+        <section
+          class="timetable-step"
+          id="timetable-assignments-step"
+          hidden
+        >
+
+          <div class="timetable-step-heading">
+
+            <span class="timetable-step-number">
+              5
+            </span>
+
+
+            <div>
+
+              <h3>
+                Teacher Assignments
+              </h3>
+
+              <p>
+                Connect each teacher with the subjects
+                and classes they teach.
+              </p>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="timetable-assignment-form">
+
+
+            <label class="timetable-field">
+
+              <span>
+                Teacher
+              </span>
+
+
+              <select
+                id="timetable-assignment-teacher"
+              >
+
+                <option value="">
+                  Select teacher
+                </option>
+
+              </select>
+
+            </label>
+
+
+
+            <label class="timetable-field">
+
+              <span>
+                Subject
+              </span>
+
+
+              <select
+                id="timetable-assignment-subject"
+              >
+
+                <option value="">
+                  Select subject
+                </option>
+
+              </select>
+
+            </label>
+
+
+
+            <label class="timetable-field">
+
+              <span>
+                Class
+              </span>
+
+
+              <select
+                id="timetable-assignment-class"
+              >
+
+                <option value="">
+                  Select class
+                </option>
+
+              </select>
+
+            </label>
+
+
+          </div>
+
+
+
+          <div class="timetable-actions">
+
+            <button
+              type="button"
+              class="timetable-primary-button"
+              id="timetable-add-assignment-button"
+            >
+
+              <i class="fa-solid fa-link"></i>
+
+              Add Assignment
+
+            </button>
+
+          </div>
+
+
+
+          <div
+            class="timetable-assignment-list"
+            id="timetable-assignment-list"
+            aria-live="polite"
+          >
+
+            <div class="timetable-empty-state">
+
+              <i class="fa-solid fa-link"></i>
+
+              <p>
+                No teacher assignments added yet.
+              </p>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="timetable-actions">
+
+
+            <button
+              type="button"
+              class="timetable-secondary-button"
+              id="timetable-back-subjects-button"
+            >
+
+              <i class="fa-solid fa-arrow-left"></i>
+
+              Back
+
+            </button>
+
+
+
+            <button
+              type="button"
+              class="timetable-primary-button"
+              id="timetable-continue-assignments-button"
+              disabled
+            >
+
+              Continue
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+          </div>
+
+        </section>
+
+
       </div>
 
     </section>
@@ -742,6 +919,12 @@ function initializeTimetableShell() {
   const subjectsStep =
     document.getElementById(
       "timetable-subjects-step"
+    );
+
+
+  const assignmentsStep =
+    document.getElementById(
+      "timetable-assignments-step"
     );
 
 
@@ -881,6 +1064,53 @@ function initializeTimetableShell() {
 
 
   /* =======================================================
+     ASSIGNMENT ELEMENTS
+  ====================================================== */
+
+  const assignmentTeacherSelect =
+    document.getElementById(
+      "timetable-assignment-teacher"
+    );
+
+
+  const assignmentSubjectSelect =
+    document.getElementById(
+      "timetable-assignment-subject"
+    );
+
+
+  const assignmentClassSelect =
+    document.getElementById(
+      "timetable-assignment-class"
+    );
+
+
+  const addAssignmentButton =
+    document.getElementById(
+      "timetable-add-assignment-button"
+    );
+
+
+  const backSubjectsButton =
+    document.getElementById(
+      "timetable-back-subjects-button"
+    );
+
+
+  const continueAssignmentsButton =
+    document.getElementById(
+      "timetable-continue-assignments-button"
+    );
+
+
+  const assignmentList =
+    document.getElementById(
+      "timetable-assignment-list"
+    );
+
+
+
+  /* =======================================================
      BASIC SAFETY CHECK
   ====================================================== */
 
@@ -889,6 +1119,7 @@ function initializeTimetableShell() {
     !classesStep ||
     !teachersStep ||
     !subjectsStep ||
+    !assignmentsStep ||
     !startButton
   ) {
 
@@ -928,7 +1159,10 @@ function initializeTimetableShell() {
     teachers: [],
 
 
-    subjects: []
+    subjects: [],
+
+
+    assignments: []
 
   };
 
@@ -1657,83 +1891,62 @@ function initializeTimetableShell() {
   );
 
 
-/* =========================================================
-   TEACHERS → SUBJECTS
-========================================================= */
 
-continueTeachersButton?.addEventListener(
-  "click",
-  function (event) {
+  /* =========================================================
+     TEACHERS → SUBJECTS
+  ========================================================= */
 
-    event.preventDefault();
+  continueTeachersButton?.addEventListener(
+    "click",
+    function (event) {
+
+      event.preventDefault();
 
 
-    /* -----------------------------------------------------
-       VERIFY TEACHERS
-    ----------------------------------------------------- */
+      if (
+        !timetableState.teachers ||
+        timetableState.teachers.length === 0
+      ) {
 
-    if (
-      !timetableState.teachers ||
-      timetableState.teachers.length === 0
-    ) {
+        console.warn(
+          "TUPS Timetable: No teachers have been added."
+        );
 
-      console.warn(
-        "TUPS Timetable: No teachers have been added."
+        return;
+
+      }
+
+
+
+      teachersStep.hidden =
+        true;
+
+
+      teachersStep.classList.remove(
+        "active"
       );
 
-      return;
+
+      subjectsStep.hidden =
+        false;
+
+
+      subjectsStep.classList.add(
+        "active"
+      );
+
+
+      subjectNameInput?.focus();
+
+
+
+      console.log(
+        "TUPS Timetable: Teachers → Subjects"
+      );
 
     }
+  );
 
-
-    /* -----------------------------------------------------
-       HIDE TEACHERS
-    ----------------------------------------------------- */
-
-    teachersStep.hidden = true;
-
-    teachersStep.classList.remove(
-      "active"
-    );
-
-
-    /* -----------------------------------------------------
-       SHOW SUBJECTS
-    ----------------------------------------------------- */
-
-    subjectsStep.hidden = false;
-
-    subjectsStep.classList.add(
-      "active"
-    );
-
-
-    /* -----------------------------------------------------
-       MOVE FOCUS
-    ----------------------------------------------------- */
-
-    if (subjectNameInput) {
-
-      subjectNameInput.focus();
-
-    }
-
-
-    /* -----------------------------------------------------
-       DEBUG CONFIRMATION
-    ----------------------------------------------------- */
-
-    console.log(
-      "TUPS Timetable: Teachers → Subjects"
-    );
-
-    console.log(
-      "Teachers:",
-      timetableState.teachers
-    );
-
-  }
-);
 
 
   /* =========================================================
@@ -1765,10 +1978,6 @@ continueTeachersButton?.addEventListener(
 
 
 
-      /* -----------------------------------------------------
-         SUBJECT NAME IS REQUIRED
-      ----------------------------------------------------- */
-
       if (!subjectName) {
 
         subjectNameInput?.focus();
@@ -1778,10 +1987,6 @@ continueTeachersButton?.addEventListener(
       }
 
 
-
-      /* -----------------------------------------------------
-         PREVENT DUPLICATE SUBJECT NAMES
-      ----------------------------------------------------- */
 
       const duplicateName =
         timetableState.subjects.some(
@@ -1805,12 +2010,6 @@ continueTeachersButton?.addEventListener(
       }
 
 
-
-      /* -----------------------------------------------------
-         PREVENT DUPLICATE SUBJECT CODES
-
-         Only check codes when the user has entered one.
-      ----------------------------------------------------- */
 
       if (subjectCode) {
 
@@ -1840,10 +2039,6 @@ continueTeachersButton?.addEventListener(
 
 
 
-      /* -----------------------------------------------------
-         CREATE SUBJECT RECORD
-      ----------------------------------------------------- */
-
       const newSubject = {
 
         id:
@@ -1869,17 +2064,12 @@ continueTeachersButton?.addEventListener(
 
 
 
-      /* -----------------------------------------------------
-         CLEAR INPUTS
-      ----------------------------------------------------- */
-
       subjectNameInput.value =
         "";
 
 
       subjectCodeInput.value =
         "";
-
 
 
       renderSubjects();
@@ -1911,10 +2101,6 @@ continueTeachersButton?.addEventListener(
     }
 
 
-
-    /* -----------------------------------------------------
-       EMPTY STATE
-    ----------------------------------------------------- */
 
     if (
       timetableState.subjects.length ===
@@ -1949,10 +2135,6 @@ continueTeachersButton?.addEventListener(
     }
 
 
-
-    /* -----------------------------------------------------
-       SUBJECT LIST
-    ----------------------------------------------------- */
 
     subjectList.innerHTML =
       timetableState.subjects
@@ -2111,19 +2293,594 @@ continueTeachersButton?.addEventListener(
 
 
   /* =========================================================
-     SUBJECTS → NEXT STAGE
-
-     Phase 2D will connect this button to
-     Teacher Assignments.
+     SUBJECTS → TEACHER ASSIGNMENTS
   ========================================================= */
 
   continueSubjectsButton?.addEventListener(
     "click",
-    function () {
+    function (event) {
+
+      event.preventDefault();
 
 
       if (
-        timetableState.subjects.length ===
+        !timetableState.subjects ||
+        timetableState.subjects.length === 0
+      ) {
+
+        console.warn(
+          "TUPS Timetable: No subjects have been added."
+        );
+
+        return;
+
+      }
+
+
+
+      populateAssignmentSelects();
+
+
+
+      subjectsStep.hidden =
+        true;
+
+
+      subjectsStep.classList.remove(
+        "active"
+      );
+
+
+      assignmentsStep.hidden =
+        false;
+
+
+      assignmentsStep.classList.add(
+        "active"
+      );
+
+
+
+      assignmentTeacherSelect?.focus();
+
+
+
+      console.log(
+        "TUPS Timetable: Subjects → Teacher Assignments"
+      );
+
+    }
+  );
+
+
+
+  /* =========================================================
+     POPULATE ASSIGNMENT DROPDOWNS
+  ========================================================= */
+
+  function populateAssignmentSelects() {
+
+
+    if (assignmentTeacherSelect) {
+
+      assignmentTeacherSelect.innerHTML = `
+
+        <option value="">
+          Select teacher
+        </option>
+
+        ${
+          timetableState.teachers
+            .map(
+              function (teacher) {
+
+                return `
+
+                  <option
+                    value="${teacher.id}"
+                  >
+                    ${escapeTimetableText(
+                      teacher.name
+                    )}
+                  </option>
+
+                `;
+
+              }
+            )
+            .join("")
+        }
+
+      `;
+
+    }
+
+
+
+    if (assignmentSubjectSelect) {
+
+      assignmentSubjectSelect.innerHTML = `
+
+        <option value="">
+          Select subject
+        </option>
+
+        ${
+          timetableState.subjects
+            .map(
+              function (subject) {
+
+                return `
+
+                  <option
+                    value="${subject.id}"
+                  >
+                    ${escapeTimetableText(
+                      subject.name
+                    )}
+
+                    ${
+                      subject.code
+                        ? " (" +
+                          escapeTimetableText(
+                            subject.code
+                          ) +
+                          ")"
+                        : ""
+                    }
+
+                  </option>
+
+                `;
+
+              }
+            )
+            .join("")
+        }
+
+      `;
+
+    }
+
+
+
+    if (assignmentClassSelect) {
+
+      assignmentClassSelect.innerHTML = `
+
+        <option value="">
+          Select class
+        </option>
+
+        ${
+          timetableState.classes
+            .map(
+              function (item) {
+
+                return `
+
+                  <option
+                    value="${item.id}"
+                  >
+                    ${escapeTimetableText(
+                      item.name
+                    )}
+
+                  </option>
+
+                `;
+
+              }
+            )
+            .join("")
+        }
+
+      `;
+
+    }
+
+  }
+
+
+
+  /* =========================================================
+     ADD TEACHER ASSIGNMENT
+  ========================================================= */
+
+  addAssignmentButton?.addEventListener(
+    "click",
+    function () {
+
+
+      const teacherId =
+        assignmentTeacherSelect
+          ?.value;
+
+
+      const subjectId =
+        assignmentSubjectSelect
+          ?.value;
+
+
+      const classId =
+        assignmentClassSelect
+          ?.value;
+
+
+
+      /* -----------------------------------------------------
+         ALL THREE ARE REQUIRED
+      ----------------------------------------------------- */
+
+      if (
+        !teacherId ||
+        !subjectId ||
+        !classId
+      ) {
+
+        return;
+
+      }
+
+
+
+      /* -----------------------------------------------------
+         PREVENT DUPLICATE ASSIGNMENTS
+      ----------------------------------------------------- */
+
+      const duplicate =
+        timetableState.assignments.some(
+          function (assignment) {
+
+            return (
+
+              assignment.teacherId ===
+              teacherId &&
+
+              assignment.subjectId ===
+              subjectId &&
+
+              assignment.classId ===
+              classId
+
+            );
+
+          }
+        );
+
+
+      if (duplicate) {
+
+        return;
+
+      }
+
+
+
+      /* -----------------------------------------------------
+         CREATE ASSIGNMENT RECORD
+      ----------------------------------------------------- */
+
+      const newAssignment = {
+
+        id:
+          "assignment_" +
+          Date.now(),
+
+        teacherId:
+          teacherId,
+
+        subjectId:
+          subjectId,
+
+        classId:
+          classId
+
+      };
+
+
+
+      timetableState.assignments.push(
+        newAssignment
+      );
+
+
+
+      renderAssignments();
+
+
+
+      /* -----------------------------------------------------
+         RESET DROPDOWNS
+      ----------------------------------------------------- */
+
+      assignmentTeacherSelect.value =
+        "";
+
+
+      assignmentSubjectSelect.value =
+        "";
+
+
+      assignmentClassSelect.value =
+        "";
+
+
+      assignmentTeacherSelect.focus();
+
+
+
+      console.log(
+        "TUPS Timetable: Assignment added.",
+        newAssignment
+      );
+
+    }
+  );
+
+
+
+  /* =========================================================
+     RENDER ASSIGNMENTS
+  ========================================================= */
+
+  function renderAssignments() {
+
+
+    if (!assignmentList) {
+      return;
+    }
+
+
+
+    if (
+      timetableState.assignments.length ===
+      0
+    ) {
+
+      assignmentList.innerHTML = `
+
+        <div class="timetable-empty-state">
+
+          <i class="fa-solid fa-link"></i>
+
+          <p>
+            No teacher assignments added yet.
+          </p>
+
+        </div>
+
+      `;
+
+
+      if (continueAssignmentsButton) {
+
+        continueAssignmentsButton.disabled =
+          true;
+
+      }
+
+
+      return;
+
+    }
+
+
+
+    assignmentList.innerHTML =
+      timetableState.assignments
+        .map(
+          function (assignment) {
+
+
+            const teacher =
+              timetableState.teachers.find(
+                function (item) {
+
+                  return (
+                    item.id ===
+                    assignment.teacherId
+                  );
+
+                }
+              );
+
+
+            const subject =
+              timetableState.subjects.find(
+                function (item) {
+
+                  return (
+                    item.id ===
+                    assignment.subjectId
+                  );
+
+                }
+              );
+
+
+            const classItem =
+              timetableState.classes.find(
+                function (item) {
+
+                  return (
+                    item.id ===
+                    assignment.classId
+                  );
+
+                }
+              );
+
+
+
+            return `
+
+              <div
+                class="timetable-assignment-item"
+                data-assignment-id="${assignment.id}"
+              >
+
+                <div>
+
+                  <strong>
+
+                    ${escapeTimetableText(
+                      teacher?.name ||
+                      "Unknown teacher"
+                    )}
+
+                  </strong>
+
+
+                  <span>
+
+                    ${escapeTimetableText(
+                      subject?.name ||
+                      "Unknown subject"
+                    )}
+
+                    →
+
+                    ${escapeTimetableText(
+                      classItem?.name ||
+                      "Unknown class"
+                    )}
+
+                  </span>
+
+                </div>
+
+
+                <button
+                  type="button"
+                  class="timetable-remove-assignment"
+                  data-assignment-id="${assignment.id}"
+                  aria-label="Remove assignment"
+                >
+
+                  <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+              </div>
+
+            `;
+
+          }
+        )
+        .join("");
+
+
+
+    if (continueAssignmentsButton) {
+
+      continueAssignmentsButton.disabled =
+        false;
+
+    }
+
+  }
+
+
+
+  /* =========================================================
+     REMOVE ASSIGNMENT
+  ========================================================= */
+
+  assignmentList?.addEventListener(
+    "click",
+    function (event) {
+
+
+      const removeButton =
+        event.target.closest(
+          ".timetable-remove-assignment"
+        );
+
+
+      if (!removeButton) {
+        return;
+
+      }
+
+
+
+      const assignmentId =
+        removeButton.dataset.assignmentId;
+
+
+
+      timetableState.assignments =
+        timetableState.assignments.filter(
+          function (assignment) {
+
+            return (
+              assignment.id !==
+              assignmentId
+            );
+
+          }
+        );
+
+
+
+      renderAssignments();
+
+    }
+  );
+
+
+
+  /* =========================================================
+     ASSIGNMENTS → SUBJECTS
+  ========================================================= */
+
+  backSubjectsButton?.addEventListener(
+    "click",
+    function () {
+
+
+      assignmentsStep.hidden =
+        true;
+
+
+      assignmentsStep.classList.remove(
+        "active"
+      );
+
+
+      subjectsStep.hidden =
+        false;
+
+
+      subjectsStep.classList.add(
+        "active"
+      );
+
+
+      subjectNameInput?.focus();
+
+    }
+  );
+
+
+
+  /* =========================================================
+     ASSIGNMENTS → NEXT STAGE
+     
+     Phase 2E will connect this button to
+     Period Structure.
+  ========================================================= */
+
+  continueAssignmentsButton?.addEventListener(
+    "click",
+    function (event) {
+
+      event.preventDefault();
+
+
+      if (
+        timetableState.assignments.length ===
         0
       ) {
 
@@ -2134,8 +2891,13 @@ continueTeachersButton?.addEventListener(
 
 
       console.log(
-        "TUPS Timetable: Subjects setup accepted.",
-        timetableState.subjects
+        "TUPS Timetable: Teacher assignments accepted.",
+        timetableState.assignments
+      );
+
+
+      console.log(
+        "TUPS Timetable: Phase 2E will connect this stage to Period Structure."
       );
 
     }
