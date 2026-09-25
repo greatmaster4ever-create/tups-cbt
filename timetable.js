@@ -1,7 +1,7 @@
 
 /* =========================================================
    TUPS TIMETABLE GENERATOR
-   PHASE 2B — TIMETABLE SETUP
+   PHASE 2C — SUBJECTS
    ---------------------------------------------------------
    Performance rule:
    This file contains only the timetable setup interface.
@@ -14,10 +14,10 @@
    1. School Setup
    2. Classes
    3. Teachers
+   4. Subjects
 
    Future stages:
 
-   4. Subjects
    5. Teacher Assignments
    6. Period Structure
    7. Subject Requirements
@@ -502,6 +502,201 @@ export function loadTimetableGenerator() {
         </section>
 
 
+
+        <!-- ===================================================
+             STEP 4 — SUBJECTS
+        ==================================================== -->
+
+        <section
+          class="timetable-step"
+          id="timetable-subjects-step"
+          hidden
+        >
+
+          <div class="timetable-step-heading">
+
+            <span class="timetable-step-number">
+              4
+            </span>
+
+
+            <div>
+
+              <h3>
+                Subjects
+              </h3>
+
+              <p>
+                Add the subjects that will be placed
+                on the timetable.
+              </p>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="timetable-form-grid">
+
+
+            <label class="timetable-field">
+
+              <span>
+                Subject Name
+              </span>
+
+
+              <input
+                type="text"
+                id="timetable-subject-name"
+                placeholder="e.g. Mathematics"
+                autocomplete="off"
+              >
+
+            </label>
+
+
+
+            <label class="timetable-field">
+
+              <span>
+                Subject Code
+              </span>
+
+
+              <input
+                type="text"
+                id="timetable-subject-code"
+                placeholder="e.g. MTH"
+                autocomplete="off"
+                maxlength="12"
+              >
+
+            </label>
+
+
+
+            <label class="timetable-field">
+
+              <span>
+                Subject Category
+              </span>
+
+
+              <select id="timetable-subject-category">
+
+                <option value="Core">
+                  Core
+                </option>
+
+                <option value="Science">
+                  Science
+                </option>
+
+                <option value="Arts">
+                  Arts
+                </option>
+
+                <option value="Commercial">
+                  Commercial
+                </option>
+
+                <option value="Language">
+                  Language
+                </option>
+
+                <option value="Practical">
+                  Practical
+                </option>
+
+                <option value="Other">
+                  Other
+                </option>
+
+              </select>
+
+            </label>
+
+
+          </div>
+
+
+
+          <div class="timetable-actions">
+
+            <button
+              type="button"
+              class="timetable-primary-button"
+              id="timetable-add-subject-button"
+            >
+
+              <i class="fa-solid fa-plus"></i>
+
+              Add Subject
+
+            </button>
+
+          </div>
+
+
+
+          <div
+            class="timetable-subject-list"
+            id="timetable-subject-list"
+            aria-live="polite"
+          >
+
+            <div class="timetable-empty-state">
+
+              <i class="fa-solid fa-book"></i>
+
+              <p>
+                No subjects added yet.
+              </p>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="timetable-actions">
+
+
+            <button
+              type="button"
+              class="timetable-secondary-button"
+              id="timetable-back-teachers-button"
+            >
+
+              <i class="fa-solid fa-arrow-left"></i>
+
+              Back
+
+            </button>
+
+
+
+            <button
+              type="button"
+              class="timetable-primary-button"
+              id="timetable-continue-subjects-button"
+              disabled
+            >
+
+              Continue
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+          </div>
+
+        </section>
+
+
       </div>
 
     </section>
@@ -541,6 +736,12 @@ function initializeTimetableShell() {
   const teachersStep =
     document.getElementById(
       "timetable-teachers-step"
+    );
+
+
+  const subjectsStep =
+    document.getElementById(
+      "timetable-subjects-step"
     );
 
 
@@ -633,6 +834,53 @@ function initializeTimetableShell() {
 
 
   /* =======================================================
+     SUBJECT ELEMENTS
+  ====================================================== */
+
+  const addSubjectButton =
+    document.getElementById(
+      "timetable-add-subject-button"
+    );
+
+
+  const backTeachersButton =
+    document.getElementById(
+      "timetable-back-teachers-button"
+    );
+
+
+  const continueSubjectsButton =
+    document.getElementById(
+      "timetable-continue-subjects-button"
+    );
+
+
+  const subjectNameInput =
+    document.getElementById(
+      "timetable-subject-name"
+    );
+
+
+  const subjectCodeInput =
+    document.getElementById(
+      "timetable-subject-code"
+    );
+
+
+  const subjectCategorySelect =
+    document.getElementById(
+      "timetable-subject-category"
+    );
+
+
+  const subjectList =
+    document.getElementById(
+      "timetable-subject-list"
+    );
+
+
+
+  /* =======================================================
      BASIC SAFETY CHECK
   ====================================================== */
 
@@ -640,6 +888,7 @@ function initializeTimetableShell() {
     !schoolSetup ||
     !classesStep ||
     !teachersStep ||
+    !subjectsStep ||
     !startButton
   ) {
 
@@ -656,11 +905,8 @@ function initializeTimetableShell() {
   /* =========================================================
      TIMETABLE STATE
 
-     This object holds the information collected during
-     setup. It remains in memory while the generator is open.
-
-     Later, this same structure can be passed to the
-     scheduling engine.
+     This object holds all information collected during
+     setup. Later stages will use this same structure.
   ========================================================= */
 
   const timetableState = {
@@ -679,7 +925,10 @@ function initializeTimetableShell() {
     classes: [],
 
 
-    teachers: []
+    teachers: [],
+
+
+    subjects: []
 
   };
 
@@ -716,10 +965,6 @@ function initializeTimetableShell() {
 
 
 
-      /* -----------------------------------------------------
-         SCHOOL NAME IS REQUIRED
-      ----------------------------------------------------- */
-
       if (!schoolName) {
 
         document
@@ -734,10 +979,6 @@ function initializeTimetableShell() {
 
 
 
-      /* -----------------------------------------------------
-         SAVE SCHOOL INFORMATION
-      ----------------------------------------------------- */
-
       timetableState.school.name =
         schoolName;
 
@@ -751,10 +992,6 @@ function initializeTimetableShell() {
         schoolDays;
 
 
-
-      /* -----------------------------------------------------
-         MOVE TO CLASSES
-      ----------------------------------------------------- */
 
       schoolSetup.hidden =
         true;
@@ -811,10 +1048,6 @@ function initializeTimetableShell() {
 
 
 
-      /* -----------------------------------------------------
-         CLASS NAME IS REQUIRED
-      ----------------------------------------------------- */
-
       if (!className) {
 
         classNameInput?.focus();
@@ -824,10 +1057,6 @@ function initializeTimetableShell() {
       }
 
 
-
-      /* -----------------------------------------------------
-         PREVENT DUPLICATE CLASS NAMES
-      ----------------------------------------------------- */
 
       const duplicate =
         timetableState.classes.some(
@@ -852,10 +1081,6 @@ function initializeTimetableShell() {
 
 
 
-      /* -----------------------------------------------------
-         CREATE CLASS RECORD
-      ----------------------------------------------------- */
-
       const newClass = {
 
         id:
@@ -878,13 +1103,8 @@ function initializeTimetableShell() {
 
 
 
-      /* -----------------------------------------------------
-         CLEAR INPUT
-      ----------------------------------------------------- */
-
       classNameInput.value =
         "";
-
 
 
       renderClasses();
@@ -916,10 +1136,6 @@ function initializeTimetableShell() {
     }
 
 
-
-    /* -----------------------------------------------------
-       EMPTY STATE
-    ----------------------------------------------------- */
 
     if (
       timetableState.classes.length ===
@@ -954,10 +1170,6 @@ function initializeTimetableShell() {
     }
 
 
-
-    /* -----------------------------------------------------
-       CLASS LIST
-    ----------------------------------------------------- */
 
     classList.innerHTML =
       timetableState.classes
@@ -1176,10 +1388,6 @@ function initializeTimetableShell() {
 
 
 
-      /* -----------------------------------------------------
-         TEACHER NAME IS REQUIRED
-      ----------------------------------------------------- */
-
       if (!teacherName) {
 
         teacherNameInput?.focus();
@@ -1189,10 +1397,6 @@ function initializeTimetableShell() {
       }
 
 
-
-      /* -----------------------------------------------------
-         PREVENT DUPLICATE TEACHER NAMES
-      ----------------------------------------------------- */
 
       const duplicate =
         timetableState.teachers.some(
@@ -1216,14 +1420,6 @@ function initializeTimetableShell() {
       }
 
 
-
-      /* -----------------------------------------------------
-         CREATE TEACHER RECORD
-
-         Availability is prepared now but will be
-         configured properly in the later availability
-         stage after the period structure is known.
-      ----------------------------------------------------- */
 
       const newTeacher = {
 
@@ -1252,13 +1448,8 @@ function initializeTimetableShell() {
 
 
 
-      /* -----------------------------------------------------
-         CLEAR INPUT
-      ----------------------------------------------------- */
-
       teacherNameInput.value =
         "";
-
 
 
       renderTeachers();
@@ -1290,10 +1481,6 @@ function initializeTimetableShell() {
     }
 
 
-
-    /* -----------------------------------------------------
-       EMPTY STATE
-    ----------------------------------------------------- */
 
     if (
       timetableState.teachers.length ===
@@ -1328,10 +1515,6 @@ function initializeTimetableShell() {
     }
 
 
-
-    /* -----------------------------------------------------
-       TEACHER LIST
-    ----------------------------------------------------- */
 
     teacherList.innerHTML =
       timetableState.teachers
@@ -1476,9 +1659,7 @@ function initializeTimetableShell() {
 
 
   /* =========================================================
-     TEACHERS → NEXT STAGE
-
-     Phase 2C will connect this button to Subjects.
+     TEACHERS → SUBJECTS
   ========================================================= */
 
   continueTeachersButton?.addEventListener(
@@ -1497,9 +1678,438 @@ function initializeTimetableShell() {
 
 
 
+      teachersStep.hidden =
+        true;
+
+
+      teachersStep.classList.remove(
+        "active"
+      );
+
+
+      subjectsStep.hidden =
+        false;
+
+
+      subjectsStep.classList.add(
+        "active"
+      );
+
+
+      subjectNameInput?.focus();
+
+
+
       console.log(
         "TUPS Timetable: Teachers setup accepted.",
         timetableState.teachers
+      );
+
+    }
+  );
+
+
+
+  /* =========================================================
+     STEP 4
+     ADD SUBJECT
+  ========================================================= */
+
+  addSubjectButton?.addEventListener(
+    "click",
+    function () {
+
+
+      const subjectName =
+        subjectNameInput
+          ?.value
+          .trim();
+
+
+      const subjectCode =
+        subjectCodeInput
+          ?.value
+          .trim();
+
+
+      const category =
+        subjectCategorySelect
+          ?.value ||
+        "Other";
+
+
+
+      /* -----------------------------------------------------
+         SUBJECT NAME IS REQUIRED
+      ----------------------------------------------------- */
+
+      if (!subjectName) {
+
+        subjectNameInput?.focus();
+
+        return;
+
+      }
+
+
+
+      /* -----------------------------------------------------
+         PREVENT DUPLICATE SUBJECT NAMES
+      ----------------------------------------------------- */
+
+      const duplicateName =
+        timetableState.subjects.some(
+          function (subject) {
+
+            return (
+              subject.name.toLowerCase() ===
+              subjectName.toLowerCase()
+            );
+
+          }
+        );
+
+
+      if (duplicateName) {
+
+        subjectNameInput.focus();
+
+        return;
+
+      }
+
+
+
+      /* -----------------------------------------------------
+         PREVENT DUPLICATE SUBJECT CODES
+
+         Only check codes when the user has entered one.
+      ----------------------------------------------------- */
+
+      if (subjectCode) {
+
+        const duplicateCode =
+          timetableState.subjects.some(
+            function (subject) {
+
+              return (
+                subject.code &&
+                subject.code.toLowerCase() ===
+                subjectCode.toLowerCase()
+              );
+
+            }
+          );
+
+
+        if (duplicateCode) {
+
+          subjectCodeInput.focus();
+
+          return;
+
+        }
+
+      }
+
+
+
+      /* -----------------------------------------------------
+         CREATE SUBJECT RECORD
+      ----------------------------------------------------- */
+
+      const newSubject = {
+
+        id:
+          "subject_" +
+          Date.now(),
+
+        name:
+          subjectName,
+
+        code:
+          subjectCode,
+
+        category:
+          category
+
+      };
+
+
+
+      timetableState.subjects.push(
+        newSubject
+      );
+
+
+
+      /* -----------------------------------------------------
+         CLEAR INPUTS
+      ----------------------------------------------------- */
+
+      subjectNameInput.value =
+        "";
+
+
+      subjectCodeInput.value =
+        "";
+
+
+
+      renderSubjects();
+
+
+      subjectNameInput.focus();
+
+
+
+      console.log(
+        "TUPS Timetable: Subject added.",
+        newSubject
+      );
+
+    }
+  );
+
+
+
+  /* =========================================================
+     RENDER SUBJECTS
+  ========================================================= */
+
+  function renderSubjects() {
+
+
+    if (!subjectList) {
+      return;
+    }
+
+
+
+    /* -----------------------------------------------------
+       EMPTY STATE
+    ----------------------------------------------------- */
+
+    if (
+      timetableState.subjects.length ===
+      0
+    ) {
+
+      subjectList.innerHTML = `
+
+        <div class="timetable-empty-state">
+
+          <i class="fa-solid fa-book"></i>
+
+          <p>
+            No subjects added yet.
+          </p>
+
+        </div>
+
+      `;
+
+
+      if (continueSubjectsButton) {
+
+        continueSubjectsButton.disabled =
+          true;
+
+      }
+
+
+      return;
+
+    }
+
+
+
+    /* -----------------------------------------------------
+       SUBJECT LIST
+    ----------------------------------------------------- */
+
+    subjectList.innerHTML =
+      timetableState.subjects
+        .map(
+          function (subject) {
+
+            return `
+
+              <div
+                class="timetable-subject-item"
+                data-subject-id="${subject.id}"
+              >
+
+                <div>
+
+                  <strong>
+                    ${escapeTimetableText(
+                      subject.name
+                    )}
+                  </strong>
+
+
+                  <span>
+
+                    ${
+                      subject.code
+                        ? escapeTimetableText(
+                            subject.code
+                          ) +
+                          " • "
+                        : ""
+                    }
+
+                    ${escapeTimetableText(
+                      subject.category
+                    )}
+
+                  </span>
+
+                </div>
+
+
+                <button
+                  type="button"
+                  class="timetable-remove-subject"
+                  data-subject-id="${subject.id}"
+                  aria-label="Remove ${escapeTimetableText(
+                    subject.name
+                  )}"
+                >
+
+                  <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+              </div>
+
+            `;
+
+          }
+        )
+        .join("");
+
+
+
+    if (continueSubjectsButton) {
+
+      continueSubjectsButton.disabled =
+        false;
+
+    }
+
+  }
+
+
+
+  /* =========================================================
+     REMOVE SUBJECT
+  ========================================================= */
+
+  subjectList?.addEventListener(
+    "click",
+    function (event) {
+
+
+      const removeButton =
+        event.target.closest(
+          ".timetable-remove-subject"
+        );
+
+
+      if (!removeButton) {
+        return;
+      }
+
+
+
+      const subjectId =
+        removeButton.dataset.subjectId;
+
+
+
+      timetableState.subjects =
+        timetableState.subjects.filter(
+          function (subject) {
+
+            return (
+              subject.id !==
+              subjectId
+            );
+
+          }
+        );
+
+
+
+      renderSubjects();
+
+    }
+  );
+
+
+
+  /* =========================================================
+     SUBJECTS → TEACHERS
+  ========================================================= */
+
+  backTeachersButton?.addEventListener(
+    "click",
+    function () {
+
+
+      subjectsStep.hidden =
+        true;
+
+
+      subjectsStep.classList.remove(
+        "active"
+      );
+
+
+      teachersStep.hidden =
+        false;
+
+
+      teachersStep.classList.add(
+        "active"
+      );
+
+
+      teacherNameInput?.focus();
+
+    }
+  );
+
+
+
+  /* =========================================================
+     SUBJECTS → NEXT STAGE
+
+     Phase 2D will connect this button to
+     Teacher Assignments.
+  ========================================================= */
+
+  continueSubjectsButton?.addEventListener(
+    "click",
+    function () {
+
+
+      if (
+        timetableState.subjects.length ===
+        0
+      ) {
+
+        return;
+
+      }
+
+
+
+      console.log(
+        "TUPS Timetable: Subjects setup accepted.",
+        timetableState.subjects
       );
 
     }
