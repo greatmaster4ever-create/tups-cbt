@@ -2075,3 +2075,84 @@
 
     font-size: 0.76rem;
 }
+
+/* =========================================================
+   TIMETABLE TEACHERS
+========================================================= */
+
+.timetable-teacher-list {
+    display: grid;
+
+    gap: 8px;
+
+    margin-top: 18px;
+}
+
+
+.timetable-teacher-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 11px 13px;
+
+    background: #fafcfd;
+
+    border: 1px solid #dfe6ea;
+    border-radius: 7px;
+}
+
+
+.timetable-teacher-item > div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+
+    min-width: 0;
+}
+
+
+.timetable-teacher-item strong {
+    color: #27333a;
+
+    font-size: 0.82rem;
+}
+
+
+.timetable-teacher-item span {
+    color: #707b83;
+
+    font-size: 0.72rem;
+}
+
+
+.timetable-remove-teacher {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 30px;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    background: transparent;
+
+    color: #68737b;
+
+    border: 1px solid #d6dee3;
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+
+.timetable-remove-teacher:hover {
+    background: #f1f3f4;
+    color: #20252a;
+}

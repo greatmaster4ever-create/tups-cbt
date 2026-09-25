@@ -1,25 +1,44 @@
+
 /* =========================================================
    TUPS TIMETABLE GENERATOR
-   PHASE 1 — LIGHTWEIGHT MODULE SHELL
+   PHASE 2B — TIMETABLE SETUP
    ---------------------------------------------------------
    Performance rule:
-   This file contains only the timetable interface shell.
+   This file contains only the timetable setup interface.
 
    Scheduling engine will be added later and loaded only
    when the user actually starts timetable generation.
+
+   Current setup stages:
+
+   1. School Setup
+   2. Classes
+   3. Teachers
+
+   Future stages:
+
+   4. Subjects
+   5. Teacher Assignments
+   6. Period Structure
+   7. Subject Requirements
+   8. Review / Generate
 ========================================================= */
+
 
 export function loadTimetableGenerator() {
 
   const contentArea =
     document.getElementById("content-area");
 
+
   if (!contentArea) {
+
     console.error(
       "TUPS Timetable: content-area was not found."
     );
 
     return;
+
   }
 
 
@@ -27,11 +46,19 @@ export function loadTimetableGenerator() {
 
     <section class="content-page timetable-page">
 
+
+      <!-- =====================================================
+           PAGE HEADER
+      ====================================================== -->
+
       <div class="timetable-page-header">
 
         <div class="timetable-page-icon">
+
           <i class="fa-solid fa-calendar-days"></i>
+
         </div>
+
 
         <div>
 
@@ -50,18 +77,25 @@ export function loadTimetableGenerator() {
       </div>
 
 
+
       <div class="timetable-shell">
 
 
-        <!-- STEP 1 -->
+        <!-- ===================================================
+             STEP 1 — SCHOOL SETUP
+        ==================================================== -->
 
-        <section class="timetable-step active">
+        <section
+          class="timetable-step active"
+          id="timetable-school-step"
+        >
 
           <div class="timetable-step-heading">
 
             <span class="timetable-step-number">
               1
             </span>
+
 
             <div>
 
@@ -79,13 +113,16 @@ export function loadTimetableGenerator() {
           </div>
 
 
+
           <div class="timetable-form-grid">
+
 
             <label class="timetable-field">
 
               <span>
                 School Name
               </span>
+
 
               <input
                 type="text"
@@ -97,11 +134,13 @@ export function loadTimetableGenerator() {
             </label>
 
 
+
             <label class="timetable-field">
 
               <span>
                 Timetable Title
               </span>
+
 
               <input
                 type="text"
@@ -112,11 +151,13 @@ export function loadTimetableGenerator() {
             </label>
 
 
+
             <label class="timetable-field">
 
               <span>
                 Number of School Days
               </span>
+
 
               <select id="timetable-school-days">
 
@@ -140,6 +181,7 @@ export function loadTimetableGenerator() {
           </div>
 
 
+
           <div class="timetable-actions">
 
             <button
@@ -159,9 +201,10 @@ export function loadTimetableGenerator() {
         </section>
 
 
-        <!-- FUTURE STEPS -->
 
-               <!-- STEP 2 -->
+        <!-- ===================================================
+             STEP 2 — CLASSES
+        ==================================================== -->
 
         <section
           class="timetable-step"
@@ -174,6 +217,7 @@ export function loadTimetableGenerator() {
             <span class="timetable-step-number">
               2
             </span>
+
 
             <div>
 
@@ -191,13 +235,16 @@ export function loadTimetableGenerator() {
           </div>
 
 
+
           <div class="timetable-form-grid">
+
 
             <label class="timetable-field">
 
               <span>
                 Class Name
               </span>
+
 
               <input
                 type="text"
@@ -209,11 +256,13 @@ export function loadTimetableGenerator() {
             </label>
 
 
+
             <label class="timetable-field">
 
               <span>
                 Level / Section
               </span>
+
 
               <select id="timetable-class-section">
 
@@ -241,7 +290,9 @@ export function loadTimetableGenerator() {
 
             </label>
 
+
           </div>
+
 
 
           <div class="timetable-actions">
@@ -259,6 +310,7 @@ export function loadTimetableGenerator() {
             </button>
 
           </div>
+
 
 
           <div
@@ -280,7 +332,9 @@ export function loadTimetableGenerator() {
           </div>
 
 
+
           <div class="timetable-actions">
+
 
             <button
               type="button"
@@ -295,6 +349,7 @@ export function loadTimetableGenerator() {
             </button>
 
 
+
             <button
               type="button"
               class="timetable-primary-button"
@@ -307,6 +362,140 @@ export function loadTimetableGenerator() {
               <i class="fa-solid fa-arrow-right"></i>
 
             </button>
+
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ===================================================
+             STEP 3 — TEACHERS
+        ==================================================== -->
+
+        <section
+          class="timetable-step"
+          id="timetable-teachers-step"
+          hidden
+        >
+
+          <div class="timetable-step-heading">
+
+            <span class="timetable-step-number">
+              3
+            </span>
+
+
+            <div>
+
+              <h3>
+                Teachers
+              </h3>
+
+              <p>
+                Add the teachers who will be assigned
+                to subjects and classes.
+              </p>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="timetable-form-grid">
+
+
+            <label class="timetable-field">
+
+              <span>
+                Teacher Name
+              </span>
+
+
+              <input
+                type="text"
+                id="timetable-teacher-name"
+                placeholder="e.g. Mr John Smith"
+                autocomplete="name"
+              >
+
+            </label>
+
+
+          </div>
+
+
+
+          <div class="timetable-actions">
+
+            <button
+              type="button"
+              class="timetable-primary-button"
+              id="timetable-add-teacher-button"
+            >
+
+              <i class="fa-solid fa-plus"></i>
+
+              Add Teacher
+
+            </button>
+
+          </div>
+
+
+
+          <div
+            class="timetable-teacher-list"
+            id="timetable-teacher-list"
+            aria-live="polite"
+          >
+
+            <div class="timetable-empty-state">
+
+              <i class="fa-solid fa-chalkboard-user"></i>
+
+              <p>
+                No teachers added yet.
+              </p>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="timetable-actions">
+
+
+            <button
+              type="button"
+              class="timetable-secondary-button"
+              id="timetable-back-classes-button"
+            >
+
+              <i class="fa-solid fa-arrow-left"></i>
+
+              Back
+
+            </button>
+
+
+
+            <button
+              type="button"
+              class="timetable-primary-button"
+              id="timetable-continue-teachers-button"
+              disabled
+            >
+
+              Continue
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
 
           </div>
 
@@ -325,25 +514,21 @@ export function loadTimetableGenerator() {
 }
 
 
-/* =========================================================
-   INITIAL SHELL
-========================================================= */
 
 /* =========================================================
-   INITIAL SHELL
+   INITIAL TIMETABLE SETUP
 ========================================================= */
 
 function initializeTimetableShell() {
 
-  const startButton =
-    document.getElementById(
-      "timetable-start-button"
-    );
 
+  /* =======================================================
+     STEP ELEMENTS
+  ====================================================== */
 
   const schoolSetup =
-    document.querySelector(
-      ".timetable-step.active"
+    document.getElementById(
+      "timetable-school-step"
     );
 
 
@@ -352,6 +537,28 @@ function initializeTimetableShell() {
       "timetable-classes-step"
     );
 
+
+  const teachersStep =
+    document.getElementById(
+      "timetable-teachers-step"
+    );
+
+
+
+  /* =======================================================
+     SCHOOL SETUP ELEMENTS
+  ====================================================== */
+
+  const startButton =
+    document.getElementById(
+      "timetable-start-button"
+    );
+
+
+
+  /* =======================================================
+     CLASS ELEMENTS
+  ====================================================== */
 
   const addClassButton =
     document.getElementById(
@@ -389,39 +596,104 @@ function initializeTimetableShell() {
     );
 
 
+
+  /* =======================================================
+     TEACHER ELEMENTS
+  ====================================================== */
+
+  const addTeacherButton =
+    document.getElementById(
+      "timetable-add-teacher-button"
+    );
+
+
+  const backClassesButton =
+    document.getElementById(
+      "timetable-back-classes-button"
+    );
+
+
+  const continueTeachersButton =
+    document.getElementById(
+      "timetable-continue-teachers-button"
+    );
+
+
+  const teacherNameInput =
+    document.getElementById(
+      "timetable-teacher-name"
+    );
+
+
+  const teacherList =
+    document.getElementById(
+      "timetable-teacher-list"
+    );
+
+
+
+  /* =======================================================
+     BASIC SAFETY CHECK
+  ====================================================== */
+
   if (
-    !startButton ||
     !schoolSetup ||
-    !classesStep
+    !classesStep ||
+    !teachersStep ||
+    !startButton
   ) {
+
+    console.error(
+      "TUPS Timetable: Required setup elements were not found."
+    );
+
     return;
+
   }
 
 
-  /* ---------------------------------------------------------
+
+  /* =========================================================
      TIMETABLE STATE
-  --------------------------------------------------------- */
+
+     This object holds the information collected during
+     setup. It remains in memory while the generator is open.
+
+     Later, this same structure can be passed to the
+     scheduling engine.
+  ========================================================= */
 
   const timetableState = {
 
     school: {
+
       name: "",
+
       title: "",
+
       days: 5
+
     },
 
-    classes: []
+
+    classes: [],
+
+
+    teachers: []
 
   };
 
 
-  /* ---------------------------------------------------------
+
+  /* =========================================================
+     STEP 1
      SCHOOL SETUP → CLASSES
-  --------------------------------------------------------- */
+  ========================================================= */
 
   startButton.addEventListener(
     "click",
     function () {
+
 
       const schoolName =
         document.getElementById(
@@ -443,6 +715,11 @@ function initializeTimetableShell() {
         );
 
 
+
+      /* -----------------------------------------------------
+         SCHOOL NAME IS REQUIRED
+      ----------------------------------------------------- */
+
       if (!schoolName) {
 
         document
@@ -452,8 +729,14 @@ function initializeTimetableShell() {
           ?.focus();
 
         return;
+
       }
 
+
+
+      /* -----------------------------------------------------
+         SAVE SCHOOL INFORMATION
+      ----------------------------------------------------- */
 
       timetableState.school.name =
         schoolName;
@@ -467,6 +750,11 @@ function initializeTimetableShell() {
       timetableState.school.days =
         schoolDays;
 
+
+
+      /* -----------------------------------------------------
+         MOVE TO CLASSES
+      ----------------------------------------------------- */
 
       schoolSetup.hidden =
         true;
@@ -489,6 +777,7 @@ function initializeTimetableShell() {
       classNameInput?.focus();
 
 
+
       console.log(
         "TUPS Timetable: School setup saved.",
         timetableState.school
@@ -498,13 +787,16 @@ function initializeTimetableShell() {
   );
 
 
-  /* ---------------------------------------------------------
+
+  /* =========================================================
+     STEP 2
      ADD CLASS
-  --------------------------------------------------------- */
+  ========================================================= */
 
   addClassButton?.addEventListener(
     "click",
     function () {
+
 
       const className =
         classNameInput
@@ -518,15 +810,24 @@ function initializeTimetableShell() {
         "Other";
 
 
+
+      /* -----------------------------------------------------
+         CLASS NAME IS REQUIRED
+      ----------------------------------------------------- */
+
       if (!className) {
 
         classNameInput?.focus();
 
         return;
+
       }
 
 
-      /* Prevent duplicate class names */
+
+      /* -----------------------------------------------------
+         PREVENT DUPLICATE CLASS NAMES
+      ----------------------------------------------------- */
 
       const duplicate =
         timetableState.classes.some(
@@ -546,8 +847,14 @@ function initializeTimetableShell() {
         classNameInput.focus();
 
         return;
+
       }
 
+
+
+      /* -----------------------------------------------------
+         CREATE CLASS RECORD
+      ----------------------------------------------------- */
 
       const newClass = {
 
@@ -564,19 +871,27 @@ function initializeTimetableShell() {
       };
 
 
+
       timetableState.classes.push(
         newClass
       );
 
 
+
+      /* -----------------------------------------------------
+         CLEAR INPUT
+      ----------------------------------------------------- */
+
       classNameInput.value =
         "";
+
 
 
       renderClasses();
 
 
       classNameInput.focus();
+
 
 
       console.log(
@@ -588,16 +903,23 @@ function initializeTimetableShell() {
   );
 
 
-  /* ---------------------------------------------------------
+
+  /* =========================================================
      RENDER CLASSES
-  --------------------------------------------------------- */
+  ========================================================= */
 
   function renderClasses() {
+
 
     if (!classList) {
       return;
     }
 
+
+
+    /* -----------------------------------------------------
+       EMPTY STATE
+    ----------------------------------------------------- */
 
     if (
       timetableState.classes.length ===
@@ -626,9 +948,16 @@ function initializeTimetableShell() {
 
       }
 
+
       return;
+
     }
 
+
+
+    /* -----------------------------------------------------
+       CLASS LIST
+    ----------------------------------------------------- */
 
     classList.innerHTML =
       timetableState.classes
@@ -681,6 +1010,7 @@ function initializeTimetableShell() {
         .join("");
 
 
+
     if (continueClassesButton) {
 
       continueClassesButton.disabled =
@@ -691,13 +1021,15 @@ function initializeTimetableShell() {
   }
 
 
-  /* ---------------------------------------------------------
+
+  /* =========================================================
      REMOVE CLASS
-  --------------------------------------------------------- */
+  ========================================================= */
 
   classList?.addEventListener(
     "click",
     function (event) {
+
 
       const removeButton =
         event.target.closest(
@@ -710,18 +1042,24 @@ function initializeTimetableShell() {
       }
 
 
+
       const classId =
         removeButton.dataset.classId;
+
 
 
       timetableState.classes =
         timetableState.classes.filter(
           function (item) {
 
-            return item.id !== classId;
+            return (
+              item.id !==
+              classId
+            );
 
           }
         );
+
 
 
       renderClasses();
@@ -730,13 +1068,15 @@ function initializeTimetableShell() {
   );
 
 
-  /* ---------------------------------------------------------
-     BACK TO SCHOOL SETUP
-  --------------------------------------------------------- */
+
+  /* =========================================================
+     CLASSES → SCHOOL SETUP
+  ========================================================= */
 
   backSchoolButton?.addEventListener(
     "click",
     function () {
+
 
       classesStep.hidden =
         true;
@@ -755,27 +1095,58 @@ function initializeTimetableShell() {
         "active"
       );
 
+
+      document
+        .getElementById(
+          "timetable-school-name"
+        )
+        ?.focus();
+
     }
   );
 
 
-  /* ---------------------------------------------------------
-     CONTINUE FROM CLASSES
-     
-     Phase 2B will connect this button
-     to the Teachers step.
-  --------------------------------------------------------- */
+
+  /* =========================================================
+     CLASSES → TEACHERS
+  ========================================================= */
 
   continueClassesButton?.addEventListener(
     "click",
     function () {
 
+
       if (
         timetableState.classes.length ===
         0
       ) {
+
         return;
+
       }
+
+
+
+      classesStep.hidden =
+        true;
+
+
+      classesStep.classList.remove(
+        "active"
+      );
+
+
+      teachersStep.hidden =
+        false;
+
+
+      teachersStep.classList.add(
+        "active"
+      );
+
+
+      teacherNameInput?.focus();
+
 
 
       console.log(
@@ -786,35 +1157,393 @@ function initializeTimetableShell() {
     }
   );
 
+
+
+  /* =========================================================
+     STEP 3
+     ADD TEACHER
+  ========================================================= */
+
+  addTeacherButton?.addEventListener(
+    "click",
+    function () {
+
+
+      const teacherName =
+        teacherNameInput
+          ?.value
+          .trim();
+
+
+
+      /* -----------------------------------------------------
+         TEACHER NAME IS REQUIRED
+      ----------------------------------------------------- */
+
+      if (!teacherName) {
+
+        teacherNameInput?.focus();
+
+        return;
+
+      }
+
+
+
+      /* -----------------------------------------------------
+         PREVENT DUPLICATE TEACHER NAMES
+      ----------------------------------------------------- */
+
+      const duplicate =
+        timetableState.teachers.some(
+          function (teacher) {
+
+            return (
+              teacher.name.toLowerCase() ===
+              teacherName.toLowerCase()
+            );
+
+          }
+        );
+
+
+      if (duplicate) {
+
+        teacherNameInput.focus();
+
+        return;
+
+      }
+
+
+
+      /* -----------------------------------------------------
+         CREATE TEACHER RECORD
+
+         Availability is prepared now but will be
+         configured properly in the later availability
+         stage after the period structure is known.
+      ----------------------------------------------------- */
+
+      const newTeacher = {
+
+        id:
+          "teacher_" +
+          Date.now(),
+
+        name:
+          teacherName,
+
+        availability: {
+
+          days: [],
+
+          periods: []
+
+        }
+
+      };
+
+
+
+      timetableState.teachers.push(
+        newTeacher
+      );
+
+
+
+      /* -----------------------------------------------------
+         CLEAR INPUT
+      ----------------------------------------------------- */
+
+      teacherNameInput.value =
+        "";
+
+
+
+      renderTeachers();
+
+
+      teacherNameInput.focus();
+
+
+
+      console.log(
+        "TUPS Timetable: Teacher added.",
+        newTeacher
+      );
+
+    }
+  );
+
+
+
+  /* =========================================================
+     RENDER TEACHERS
+  ========================================================= */
+
+  function renderTeachers() {
+
+
+    if (!teacherList) {
+      return;
+    }
+
+
+
+    /* -----------------------------------------------------
+       EMPTY STATE
+    ----------------------------------------------------- */
+
+    if (
+      timetableState.teachers.length ===
+      0
+    ) {
+
+      teacherList.innerHTML = `
+
+        <div class="timetable-empty-state">
+
+          <i class="fa-solid fa-chalkboard-user"></i>
+
+          <p>
+            No teachers added yet.
+          </p>
+
+        </div>
+
+      `;
+
+
+      if (continueTeachersButton) {
+
+        continueTeachersButton.disabled =
+          true;
+
+      }
+
+
+      return;
+
+    }
+
+
+
+    /* -----------------------------------------------------
+       TEACHER LIST
+    ----------------------------------------------------- */
+
+    teacherList.innerHTML =
+      timetableState.teachers
+        .map(
+          function (teacher) {
+
+            return `
+
+              <div
+                class="timetable-teacher-item"
+                data-teacher-id="${teacher.id}"
+              >
+
+                <div>
+
+                  <strong>
+                    ${escapeTimetableText(
+                      teacher.name
+                    )}
+                  </strong>
+
+                  <span>
+                    Availability will be configured later
+                  </span>
+
+                </div>
+
+
+                <button
+                  type="button"
+                  class="timetable-remove-teacher"
+                  data-teacher-id="${teacher.id}"
+                  aria-label="Remove ${escapeTimetableText(
+                    teacher.name
+                  )}"
+                >
+
+                  <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+              </div>
+
+            `;
+
+          }
+        )
+        .join("");
+
+
+
+    if (continueTeachersButton) {
+
+      continueTeachersButton.disabled =
+        false;
+
+    }
+
+  }
+
+
+
+  /* =========================================================
+     REMOVE TEACHER
+  ========================================================= */
+
+  teacherList?.addEventListener(
+    "click",
+    function (event) {
+
+
+      const removeButton =
+        event.target.closest(
+          ".timetable-remove-teacher"
+        );
+
+
+      if (!removeButton) {
+        return;
+      }
+
+
+
+      const teacherId =
+        removeButton.dataset.teacherId;
+
+
+
+      timetableState.teachers =
+        timetableState.teachers.filter(
+          function (teacher) {
+
+            return (
+              teacher.id !==
+              teacherId
+            );
+
+          }
+        );
+
+
+
+      renderTeachers();
+
+    }
+  );
+
+
+
+  /* =========================================================
+     TEACHERS → CLASSES
+  ========================================================= */
+
+  backClassesButton?.addEventListener(
+    "click",
+    function () {
+
+
+      teachersStep.hidden =
+        true;
+
+
+      teachersStep.classList.remove(
+        "active"
+      );
+
+
+      classesStep.hidden =
+        false;
+
+
+      classesStep.classList.add(
+        "active"
+      );
+
+
+      classNameInput?.focus();
+
+    }
+  );
+
+
+
+  /* =========================================================
+     TEACHERS → NEXT STAGE
+
+     Phase 2C will connect this button to Subjects.
+  ========================================================= */
+
+  continueTeachersButton?.addEventListener(
+    "click",
+    function () {
+
+
+      if (
+        timetableState.teachers.length ===
+        0
+      ) {
+
+        return;
+
+      }
+
+
+
+      console.log(
+        "TUPS Timetable: Teachers setup accepted.",
+        timetableState.teachers
+      );
+
+    }
+  );
+
 }
+
 
 
 /* =========================================================
    BASIC HTML SAFETY
+   ---------------------------------------------------------
+   User-entered names are escaped before being inserted
+   into dynamically generated HTML.
 ========================================================= */
 
 function escapeTimetableText(value) {
 
   return String(value)
+
     .replace(
       /&/g,
       "&amp;"
     )
+
     .replace(
       /</g,
       "&lt;"
     )
+
     .replace(
       />/g,
       "&gt;"
     )
+
     .replace(
       /"/g,
       "&quot;"
     )
+
     .replace(
       /'/g,
       "&#039;"
     );
 
 }
+
