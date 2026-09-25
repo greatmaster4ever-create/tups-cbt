@@ -505,11 +505,17 @@ function renderTimetableShell(target) {
                 Category
               </label>
 
-              <input
-                type="text"
-                id="timetable-subject-category"
-                placeholder="e.g. Core"
-              >
+              <select id="timetable-subject-category">
+
+    <option value="Core">Core</option>
+    <option value="Science">Science</option>
+    <option value="Arts">Arts</option>
+    <option value="Commercial">Commercial</option>
+    <option value="Language">Language</option>
+    <option value="Practical">Practical</option>
+    <option value="Other">Other</option>
+
+              </select>
 
             </div>
 
