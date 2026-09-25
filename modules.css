@@ -1904,6 +1904,13 @@
 }
 
 
+/* =========================================================
+   TIMETABLE CONTENT PANELS
+   Matches timetable.js:
+   [data-timetable-panel]
+   .timetable-panel.is-active
+========================================================= */
+
 .timetable-panel {
 
     display: none;
@@ -1917,12 +1924,11 @@
 }
 
 
-.timetable-panel.active {
+.timetable-panel.is-active {
 
     display: block;
 
 }
-
 
 @keyframes timetablePanelEnter {
 
