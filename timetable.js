@@ -4387,10 +4387,13 @@ function validateTimetableSetup() {
        5. PERIOD STRUCTURE
     ----------------------------------------------------- */
 
-    const teachingPeriods =
-        (timetableState.periodStructure.entries || [])
-            .filter(period => period.type === "Teaching");
-
+   const teachingPeriods =
+    (timetableState.periodStructure.entries || [])
+        .filter(
+            period =>
+                String(period.type).toLowerCase() === "teaching"
+        );
+		
     if (!teachingPeriods.length) {
 
         errors.push({
