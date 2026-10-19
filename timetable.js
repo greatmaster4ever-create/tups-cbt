@@ -5132,6 +5132,7 @@ function escapeTimetableHtml(value) {
    PHASE 3B — TIMETABLE GENERATION ENGINE
 ========================================================= */
 
+
 function generateTimetable() {
   const output = document.querySelector(
     "#timetable-generation-results"
@@ -5161,15 +5162,18 @@ function generateTimetable() {
     timetableState.periodStructure.activeDays || []
   ).slice();
 
-  const periods = (
+  // Keep ALL periods for the final timetable display.
+  const allPeriods = (
     timetableState.periodStructure.entries || []
   )
-    .filter(
-      period =>
-        String(period.type).toLowerCase() === "teaching"
-    )
     .slice()
     .sort((a, b) => a.start.localeCompare(b.start));
+
+  // Only teaching periods are available for scheduling lessons.
+  const periods = allPeriods.filter(
+    period =>
+      String(period.type).toLowerCase() === "teaching"
+  );
 
   const requirements = (
     timetableState.requirements || []
@@ -5408,11 +5412,13 @@ function generateTimetable() {
     };
 
     schedule.push(lesson);
+
     occupiedClassSlots.add(
       classSlotKey(lesson.classId, slot)
     );
+
     occupiedTeacherSlots.add(
-      teacherSlotKey(teacherId, slot)
+      teacherSlotKey(lesson.teacherId, slot)
     );
 
     return lesson;
@@ -5522,10 +5528,12 @@ function generateTimetable() {
     ({ slotKey, ...lesson }) => lesson
   );
 
+  // Display ALL periods, while scheduled lessons retain
+  // their teaching-period indexes.
   renderGeneratedTimetable(
     timetableState.generatedTimetable,
     days,
-    periods,
+    allPeriods,
     classes,
     subjects,
     teachers
@@ -5555,6 +5563,38 @@ function renderGeneratedTimetable(
   const subjectById = new Map(
     subjects.map(item => [item.id, item])
   );
+
+  const isTeachingPeriod = period =>
+    String(period.type).toLowerCase() === "teaching";
+
+  const isBreakPeriod = period =>
+    String(period.type).toLowerCase() === "break";
+
+  function findLesson(classId, day, period) {
+    return schedule.find(item => {
+      if (item.classId !== classId || item.day !== day) {
+        return false;
+      }
+
+      const lessonPeriod = item.period;
+
+      if (!lessonPeriod) return false;
+
+      if (
+        lessonPeriod.id != null &&
+        period.id != null
+      ) {
+        return String(lessonPeriod.id) === String(period.id);
+      }
+
+      return (
+        lessonPeriod.start === period.start &&
+        lessonPeriod.end === period.end &&
+        String(lessonPeriod.type).toLowerCase() ===
+          String(period.type).toLowerCase()
+      );
+    });
+  }
 
   output.innerHTML = `
     <style>
@@ -5716,6 +5756,34 @@ function renderGeneratedTimetable(
         background: #ffffff;
       }
 
+      /* Vertically merged break column with centered top-to-bottom text */
+      .timetable-generated-table tbody td.timetable-break-cell {
+        width: 45px;
+        min-width: 45px;
+        padding: 8px 4px;
+        background: #fff0cf !important;
+        color: #85500b;
+        text-align: center;
+        vertical-align: middle;
+        border-bottom: 1px solid #e8d2a4;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .timetable-break-label {
+        display: inline-block;
+        max-width: 100%;
+        color: inherit;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        white-space: nowrap;
+        text-align: center;
+      }
+
       .timetable-generated-table tr:last-child th,
       .timetable-generated-table tr:last-child td {
         border-bottom: 0;
@@ -5738,6 +5806,12 @@ function renderGeneratedTimetable(
         .timetable-generated-table th,
         .timetable-generated-table td {
           padding: 10px 8px;
+        }
+
+        .timetable-generated-table tbody td.timetable-break-cell {
+          min-width: 45px;
+          width: 45px;
+          padding: 8px 4px;
         }
       }
 
@@ -5777,7 +5851,6 @@ function renderGeneratedTimetable(
           display: none !important;
         }
 
-        /* Hide other classes when printing one selected class. */
         body.timetable-pdf-printing
         .timetable-generated-class.timetable-print-hidden {
           display: none !important;
@@ -5796,6 +5869,12 @@ function renderGeneratedTimetable(
           page-break-inside: avoid;
           break-after: page;
           page-break-after: always;
+        }
+
+        body.timetable-pdf-printing
+        .timetable-generated-class.timetable-print-target {
+          break-after: auto !important;
+          page-break-after: auto !important;
         }
 
         body.timetable-pdf-printing
@@ -5849,6 +5928,21 @@ function renderGeneratedTimetable(
         body.timetable-pdf-printing
         .timetable-generated-table thead th:first-child {
           width: 85px !important;
+        }
+
+        body.timetable-pdf-printing
+        .timetable-generated-table tbody td.timetable-break-cell {
+          width: 45px !important;
+          min-width: 45px !important;
+          padding: 8px 4px !important;
+        }
+
+        body.timetable-pdf-printing
+        .timetable-break-label {
+          font-size: 10px !important;
+          letter-spacing: 1px !important;
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
         }
       }
     </style>
@@ -5907,15 +6001,54 @@ function renderGeneratedTimetable(
             </thead>
 
             <tbody>
-              ${days.map(day => `
+              ${days.map((day, dayIndex) => `
                 <tr>
                   <th>${escapeTimetableHtml(day)}</th>
 
-                  ${periods.map((period, index) => {
-                    const lesson = schedule.find(item =>
-                      item.classId === classItem.id &&
-                      item.day === day &&
-                      item.periodIndex === index
+                  ${periods.map(period => {
+                    const periodType =
+                      String(period.type).toLowerCase();
+
+                    // Merge break cells vertically across all days.
+                    if (isBreakPeriod(period)) {
+                      if (dayIndex !== 0) return "";
+
+                      return `
+                        <td
+                          class="timetable-break-cell"
+                          rowspan="${days.length}"
+                        >
+                          <span class="timetable-break-label">
+                            ${escapeTimetableHtml(
+                              period.label || "BREAK"
+                            )}
+                          </span>
+                        </td>
+                      `;
+                    }
+
+                    // Display other non-teaching periods without lessons.
+                    if (!isTeachingPeriod(period)) {
+                      if (dayIndex !== 0) return "";
+
+                      return `
+                        <td
+                          class="timetable-break-cell"
+                          rowspan="${days.length}"
+                        >
+                          <span class="timetable-break-label">
+                            ${escapeTimetableHtml(
+                              period.label || periodType.toUpperCase()
+                            )}
+                          </span>
+                        </td>
+                      `;
+                    }
+
+                    const lesson = findLesson(
+                      classItem.id,
+                      day,
+                      period
                     );
 
                     if (!lesson) {
@@ -5951,7 +6084,10 @@ function renderGeneratedTimetable(
     );
 
     allClasses.forEach(section => {
-      section.classList.remove("timetable-print-hidden");
+      section.classList.remove(
+        "timetable-print-hidden",
+        "timetable-print-target"
+      );
     });
 
     if (classIndex !== null) {
@@ -5960,6 +6096,8 @@ function renderGeneratedTimetable(
       );
 
       if (!target) return;
+
+      target.classList.add("timetable-print-target");
 
       allClasses.forEach(section => {
         if (section !== target) {
@@ -5978,7 +6116,10 @@ function renderGeneratedTimetable(
         );
 
         allClasses.forEach(section => {
-          section.classList.remove("timetable-print-hidden");
+          section.classList.remove(
+            "timetable-print-hidden",
+            "timetable-print-target"
+          );
         });
       },
       { once: true }
