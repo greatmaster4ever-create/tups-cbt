@@ -1026,27 +1026,46 @@ function renderTimetableShell(target) {
           </div>
 
 
-          <div
-            id="timetable-generate-summary"
-            class="timetable-generate-summary"
-          ></div>
+         
+<div
+  id="timetable-generate-summary"
+  class="timetable-generate-summary"
+></div>
+
+<div
+  data-timetable-validation
+  class="timetable-validation"
+></div>
 
 
-          <div class="timetable-coming-soon">
 
-            <i class="fa-solid fa-gears"></i>
+          
+<div class="timetable-coming-soon">
+  <i class="fa-solid fa-gears"></i>
 
-            <h4>
-              Scheduling Engine — Phase 3
-            </h4>
+  <h4>Ready to Generate</h4>
 
-            <p>
-              The next phase will use your classes, teachers,
-              subjects, assignments, periods and requirements
-              to automatically create a conflict-aware timetable.
-            </p>
+  <p>
+    Generate a weekly timetable using your configured
+    classes, teachers, subjects, periods and requirements.
+  </p>
 
-          </div>
+  <button
+    type="button"
+    class="timetable-primary-button"
+    id="timetable-run-generation"
+  >
+    <i class="fa-solid fa-wand-magic-sparkles"></i>
+    Generate Timetable
+  </button>
+</div>
+
+<div
+  id="timetable-generation-results"
+  class="timetable-generation-results"
+  aria-live="polite"
+></div>
+
 
 
           <div class="timetable-action-row">
@@ -1421,6 +1440,12 @@ function bindTimetableEvents() {
       continueFromRequirements
     );
 
+document
+  .querySelector("#timetable-run-generation")
+  ?.addEventListener(
+    "click",
+    generateTimetable
+  );
 
   document
     .querySelectorAll(
@@ -5100,6 +5125,535 @@ function escapeTimetableHtml(value) {
       "&#039;"
     );
 
+}
+
+
+/* =========================================================
+   PHASE 3B — TIMETABLE GENERATION ENGINE
+========================================================= */
+
+function generateTimetable() {
+  const output = document.querySelector(
+    "#timetable-generation-results"
+  );
+
+  if (!output) return;
+
+  output.innerHTML = `
+    <p>Checking setup and preparing the timetable...</p>
+  `;
+
+  const validation = validateTimetableSetup();
+
+  renderValidationResults(validation);
+
+  if (!validation.valid) {
+    output.innerHTML = `
+      <div class="timetable-validation-error">
+        <h4>Timetable not generated</h4>
+        <p>Fix the setup errors above, then try again.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const days = (
+    timetableState.periodStructure.activeDays || []
+  ).slice();
+
+  const periods = (
+    timetableState.periodStructure.entries || []
+  )
+    .filter(
+      period =>
+        String(period.type).toLowerCase() === "teaching"
+    )
+    .slice()
+    .sort((a, b) => a.start.localeCompare(b.start));
+
+  const requirements = (
+    timetableState.requirements || []
+  ).map(requirement => ({
+    ...requirement,
+    lessonsPerWeek: Number(requirement.lessonsPerWeek),
+    maxConsecutive: requirement.allowConsecutive
+      ? Number(requirement.maxConsecutive)
+      : 1
+  }));
+
+  const assignments = timetableState.assignments || [];
+  const teachers = timetableState.teachers || [];
+  const classes = timetableState.classes || [];
+  const subjects = timetableState.subjects || [];
+
+  const subjectById = new Map(
+    subjects.map(item => [item.id, item])
+  );
+
+  const classById = new Map(
+    classes.map(item => [item.id, item])
+  );
+
+  const teacherById = new Map(
+    teachers.map(item => [item.id, item])
+  );
+
+  /*
+   * Each requirement becomes one or more individual
+   * lessons that must be placed in the weekly grid.
+   */
+  const tasks = [];
+  const impossible = [];
+
+  requirements.forEach((requirement, requirementIndex) => {
+    const candidates = [
+      ...new Set(
+        assignments
+          .filter(
+            assignment =>
+              assignment.subjectId === requirement.subjectId &&
+              assignment.classId === requirement.classId
+          )
+          .map(assignment => assignment.teacherId)
+          .filter(teacherId => teacherById.has(teacherId))
+      )
+    ];
+
+    const subject = subjectById.get(requirement.subjectId);
+    const classItem = classById.get(requirement.classId);
+
+    if (!candidates.length) {
+      impossible.push(
+        `${subject?.name || "Unknown subject"} — ` +
+        `${classItem?.name || "Unknown class"} has no assigned teacher.`
+      );
+      return;
+    }
+
+    for (
+      let lessonNumber = 1;
+      lessonNumber <= requirement.lessonsPerWeek;
+      lessonNumber++
+    ) {
+      tasks.push({
+        id: `${requirement.id}_${lessonNumber}`,
+        requirement,
+        requirementIndex,
+        lessonNumber,
+        candidateTeacherIds: candidates
+      });
+    }
+  });
+
+  if (impossible.length) {
+    output.innerHTML = `
+      <div class="timetable-validation-error">
+        <h4>Timetable not generated</h4>
+        <ul>
+          ${impossible.map(message =>
+            `<li>${escapeTimetableHtml(message)}</li>`
+          ).join("")}
+        </ul>
+      </div>
+    `;
+    return;
+  }
+
+  /*
+   * Schedule the most constrained requirements first:
+   * fewer teacher choices first, then higher weekly demand.
+   */
+  tasks.sort((a, b) => {
+    const teacherDifference =
+      a.candidateTeacherIds.length -
+      b.candidateTeacherIds.length;
+
+    if (teacherDifference) return teacherDifference;
+
+    return (
+      b.requirement.lessonsPerWeek -
+      a.requirement.lessonsPerWeek
+    );
+  });
+
+  const slots = [];
+
+  days.forEach(day => {
+    periods.forEach((period, periodIndex) => {
+      slots.push({
+        day,
+        period,
+        periodIndex,
+        key: `${day}__${periodIndex}`
+      });
+    });
+  });
+
+  if (tasks.length > slots.length * classes.length) {
+    output.innerHTML = `
+      <div class="timetable-validation-error">
+        <h4>Not enough timetable capacity</h4>
+        <p>
+          The requested lessons exceed the total available
+          class slots. Add teaching periods or reduce weekly
+          lesson requirements.
+        </p>
+      </div>
+    `;
+    return;
+  }
+
+  const schedule = [];
+  const occupiedClassSlots = new Set();
+  const occupiedTeacherSlots = new Set();
+  let searchNodes = 0;
+  let searchLimitReached = false;
+
+  const MAX_SEARCH_NODES = 200000;
+
+  function classSlotKey(classId, slot) {
+    return `${classId}__${slot.key}`;
+  }
+
+  function teacherSlotKey(teacherId, slot) {
+    return `${teacherId}__${slot.key}`;
+  }
+
+  function canPlace(task, teacherId, slot) {
+    const requirement = task.requirement;
+
+    if (
+      occupiedClassSlots.has(
+        classSlotKey(requirement.classId, slot)
+      )
+    ) {
+      return false;
+    }
+
+    if (
+      occupiedTeacherSlots.has(
+        teacherSlotKey(teacherId, slot)
+      )
+    ) {
+      return false;
+    }
+
+    /*
+     * Enforce the consecutive-lesson rule for the same
+     * subject in the same class on the same day.
+     */
+    const sameDayLessons = schedule.filter(
+      item =>
+        item.classId === requirement.classId &&
+        item.day === slot.day &&
+        item.subjectId === requirement.subjectId
+    );
+
+    const adjacent = sameDayLessons.filter(item =>
+      Math.abs(item.periodIndex - slot.periodIndex) === 1
+    );
+
+    if (
+      adjacent.length &&
+      !requirement.allowConsecutive
+    ) {
+      return false;
+    }
+
+    if (adjacent.length) {
+      let left = slot.periodIndex - 1;
+      let right = slot.periodIndex + 1;
+
+      const occupiedSubjectAt = index =>
+        schedule.some(
+          item =>
+            item.classId === requirement.classId &&
+            item.day === slot.day &&
+            item.periodIndex === index &&
+            item.subjectId === requirement.subjectId
+        );
+
+      while (left >= 0 && occupiedSubjectAt(left)) {
+        left--;
+      }
+
+      while (
+        right < periods.length &&
+        occupiedSubjectAt(right)
+      ) {
+        right++;
+      }
+
+      const runLength = right - left - 1;
+
+      if (runLength > requirement.maxConsecutive) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  function placeTask(task, teacherId, slot) {
+    const lesson = {
+      id: task.id,
+      requirementId: task.requirement.id,
+      classId: task.requirement.classId,
+      subjectId: task.requirement.subjectId,
+      teacherId,
+      day: slot.day,
+      periodIndex: slot.periodIndex,
+      period: slot.period,
+      slotKey: slot.key
+    };
+
+    schedule.push(lesson);
+    occupiedClassSlots.add(
+      classSlotKey(lesson.classId, slot)
+    );
+    occupiedTeacherSlots.add(
+      teacherSlotKey(teacherId, slot)
+    );
+
+    return lesson;
+  }
+
+  function removeTask(lesson) {
+    schedule.splice(schedule.indexOf(lesson), 1);
+
+    occupiedClassSlots.delete(
+      classSlotKey(lesson.classId, {
+        key: lesson.slotKey
+      })
+    );
+
+    occupiedTeacherSlots.delete(
+      teacherSlotKey(lesson.teacherId, {
+        key: lesson.slotKey
+      })
+    );
+  }
+
+  function search(index) {
+    if (index >= tasks.length) return true;
+
+    searchNodes++;
+
+    if (searchNodes > MAX_SEARCH_NODES) {
+      searchLimitReached = true;
+      return false;
+    }
+
+    const task = tasks[index];
+
+    /*
+     * Prefer slots with fewer nearby same-subject lessons,
+     * helping spread lessons across the week.
+     */
+    const candidateSlots = slots.slice().sort((a, b) => {
+      function score(slot) {
+        const sameDay = schedule.filter(
+          item =>
+            item.classId === task.requirement.classId &&
+            item.day === slot.day
+        ).length;
+
+        const sameSubject = schedule.filter(
+          item =>
+            item.classId === task.requirement.classId &&
+            item.day === slot.day &&
+            item.subjectId === task.requirement.subjectId
+        ).length;
+
+        return sameDay + sameSubject * 2;
+      }
+
+      return score(a) - score(b);
+    });
+
+    for (const slot of candidateSlots) {
+      for (const teacherId of task.candidateTeacherIds) {
+        if (!canPlace(task, teacherId, slot)) continue;
+
+        const lesson = placeTask(task, teacherId, slot);
+
+        if (search(index + 1)) return true;
+
+        removeTask(lesson);
+
+        if (searchLimitReached) return false;
+      }
+    }
+
+    return false;
+  }
+
+  const completed = search(0);
+
+  if (!completed) {
+    timetableState.generatedTimetable = null;
+
+    output.innerHTML = `
+      <div class="timetable-validation-error">
+        <h4>
+          ${searchLimitReached
+            ? "Search limit reached"
+            : "A complete timetable could not be generated"}
+        </h4>
+
+        <p>
+          No complete timetable was produced. The engine
+          checked ${searchNodes.toLocaleString()} scheduling
+          steps before stopping.
+        </p>
+
+        <p>
+          Try reviewing weekly lesson counts, teacher
+          assignments, available teaching periods and
+          consecutive-lesson limits, then generate again.
+        </p>
+      </div>
+    `;
+
+    return;
+  }
+
+  timetableState.generatedTimetable = schedule.map(
+    ({ slotKey, ...lesson }) => lesson
+  );
+
+  renderGeneratedTimetable(
+    timetableState.generatedTimetable,
+    days,
+    periods,
+    classes,
+    subjects,
+    teachers
+  );
+}
+
+
+/* =========================================================
+   PHASE 3B — GENERATED TIMETABLE DISPLAY
+========================================================= */
+
+function renderGeneratedTimetable(
+  schedule,
+  days,
+  periods,
+  classes,
+  subjects,
+  teachers
+) {
+  const output = document.querySelector(
+    "#timetable-generation-results"
+  );
+
+  if (!output) return;
+
+  const subjectById = new Map(
+    subjects.map(item => [item.id, item])
+  );
+
+  const teacherById = new Map(
+    teachers.map(item => [item.id, item])
+  );
+
+  const classById = new Map(
+    classes.map(item => [item.id, item])
+  );
+
+  const periodIndex = new Map(
+    periods.map((period, index) => [period, index])
+  );
+
+  let html = `
+    <div class="timetable-validation-success">
+      <h4>Timetable generated successfully</h4>
+      <p>
+        ${schedule.length} lessons placed across
+        ${days.length} school days and
+        ${classes.length} classes.
+      </p>
+    </div>
+  `;
+
+  classes.forEach(classItem => {
+    html += `
+      <section class="timetable-generated-class">
+        <h4>
+          ${escapeTimetableHtml(classItem.name)}
+        </h4>
+
+        <div class="timetable-generated-table-wrap">
+          <table class="timetable-generated-table">
+            <thead>
+              <tr>
+                <th>Period</th>
+                ${days.map(day =>
+                  `<th>${escapeTimetableHtml(day)}</th>`
+                ).join("")}
+              </tr>
+            </thead>
+            <tbody>
+    `;
+
+    periods.forEach((period, index) => {
+      html += `
+        <tr>
+          <th>
+            ${escapeTimetableHtml(period.label)}
+            <small>
+              ${escapeTimetableHtml(period.start)} –
+              ${escapeTimetableHtml(period.end)}
+            </small>
+          </th>
+      `;
+
+      days.forEach(day => {
+        const lesson = schedule.find(
+          item =>
+            item.classId === classItem.id &&
+            item.day === day &&
+            item.periodIndex === index
+        );
+
+        if (!lesson) {
+          html += `<td>—</td>`;
+          return;
+        }
+
+        const subject = subjectById.get(lesson.subjectId);
+        const teacher = teacherById.get(lesson.teacherId);
+
+        html += `
+          <td>
+            <strong>
+              ${escapeTimetableHtml(
+                subject?.name || "Unknown subject"
+              )}
+            </strong>
+            <small>
+              ${escapeTimetableHtml(
+                teacher?.name || "Unknown teacher"
+              )}
+            </small>
+          </td>
+        `;
+      });
+
+      html += `</tr>`;
+    });
+
+    html += `
+            </tbody>
+          </table>
+        </div>
+      </section>
+    `;
+  });
+
+  output.innerHTML = html;
 }
 
 
