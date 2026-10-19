@@ -3793,14 +3793,1089 @@ function continueFromRequirements() {
   }
 
 
-  refreshGenerateSummary();
+    refreshGenerateSummary();
 
   showTimetablePanel(
     "generate"
   );
 
+
+  /* -----------------------------------------------------
+     PHASE 3A — PRE-GENERATION VALIDATION
+  ----------------------------------------------------- */
+
+  const setupValidation =
+    validateTimetableSetup();
+
+
+  renderValidationResults(
+    setupValidation
+  );
+
 }
 
+/* =========================================================
+   PHASE 3A — PRE-GENERATION SETUP VALIDATION
+========================================================= */
+
+function validateTimetableSetup() {
+
+  const errors = [];
+  const warnings = [];
+
+
+  /* -------------------------------------------------------
+     SCHOOL
+  ------------------------------------------------------- */
+
+  if (
+    !timetableState.school.name ||
+    !timetableState.school.name.trim()
+  ) {
+
+    errors.push(
+      "School name has not been entered."
+    );
+
+  }
+
+
+  const activeDays =
+    timetableState.periodStructure.activeDays || [];
+
+
+  if (!activeDays.length) {
+
+    errors.push(
+      "No school days are active."
+    );
+
+  }
+
+
+  /* -------------------------------------------------------
+     CLASSES
+  ------------------------------------------------------- */
+
+  if (
+    !timetableState.classes ||
+    !timetableState.classes.length
+  ) {
+
+    errors.push(
+      "No classes have been added."
+    );
+
+  }
+
+
+  /* -------------------------------------------------------
+     TEACHERS
+  ------------------------------------------------------- */
+
+  if (
+    !timetableState.teachers ||
+    !timetableState.teachers.length
+  ) {
+
+    errors.push(
+      "No teachers have been added."
+    );
+
+  }
+
+
+  /* -------------------------------------------------------
+     SUBJECTS
+  ------------------------------------------------------- */
+
+  if (
+    !timetableState.subjects ||
+    !timetableState.subjects.length
+  ) {
+
+    errors.push(
+      "No subjects have been added."
+    );
+
+  }
+
+
+  /* -------------------------------------------------------
+     TEACHING PERIODS
+  ------------------------------------------------------- */
+
+  const periods =
+    timetableState.periodStructure.entries || [];
+
+
+  const teachingPeriods =
+    periods.filter(
+      period =>
+        period.type === "Teaching"
+    );
+
+
+  if (!teachingPeriods.length) {
+
+    errors.push(
+      "No teaching periods have been created."
+    );
+
+  }
+
+
+  /* -------------------------------------------------------
+     REQUIREMENTS
+  ------------------------------------------------------- */
+
+  const requirements =
+    timetableState.requirements || [];
+
+
+  if (!requirements.length) {
+
+    errors.push(
+      "No subject requirements have been configured."
+    );
+
+  }
+
+
+  /* -------------------------------------------------------
+     ASSIGNMENT LOOKUP
+  ------------------------------------------------------- */
+
+  const assignments =
+    timetableState.assignments || [];
+
+
+  const assignmentKeys =
+    new Set();
+
+
+  assignments.forEach(
+    assignment => {
+
+      assignmentKeys.add(
+        `${assignment.subjectId}__${assignment.classId}`
+      );
+
+    }
+  );
+
+
+  /* -------------------------------------------------------
+     CHECK EVERY REQUIREMENT HAS A TEACHER
+  ------------------------------------------------------- */
+
+  requirements.forEach(
+    requirement => {
+
+      const key =
+        `${requirement.subjectId}__${requirement.classId}`;
+
+
+      if (
+        !assignmentKeys.has(key)
+      ) {
+
+        const subject =
+          timetableState.subjects.find(
+            item =>
+              item.id ===
+              requirement.subjectId
+          );
+
+
+        const classItem =
+          timetableState.classes.find(
+            item =>
+              item.id ===
+              requirement.classId
+          );
+
+
+        errors.push(
+          `${subject?.name || "Unknown subject"} — ` +
+          `${classItem?.name || "Unknown class"} ` +
+          `has no teacher assigned.`
+        );
+
+      }
+
+    }
+  );
+
+
+  /* -------------------------------------------------------
+     CHECK REQUIREMENT VALUES
+  ------------------------------------------------------- */
+
+  requirements.forEach(
+    requirement => {
+
+      const subject =
+        timetableState.subjects.find(
+          item =>
+            item.id ===
+            requirement.subjectId
+        );
+
+
+      const classItem =
+        timetableState.classes.find(
+          item =>
+            item.id ===
+            requirement.classId
+        );
+
+
+      const label =
+        `${subject?.name || "Unknown subject"} — ` +
+        `${classItem?.name || "Unknown class"}`;
+
+
+      const lessons =
+        Number(
+          requirement.lessonsPerWeek
+        );
+
+
+      const maxConsecutive =
+        Number(
+          requirement.maxConsecutive
+        );
+
+
+      if (
+        !Number.isFinite(lessons) ||
+        lessons < 1
+      ) {
+
+        errors.push(
+          `${label} must have at least 1 lesson per week.`
+        );
+
+      }
+
+
+      if (
+        requirement.allowConsecutive &&
+        (
+          !Number.isFinite(maxConsecutive) ||
+          maxConsecutive < 1
+        )
+      ) {
+
+        errors.push(
+          `${label} has an invalid maximum consecutive lesson value.`
+        );
+
+      }
+
+    }
+  );
+
+
+  /* -------------------------------------------------------
+     CLASS WEEKLY CAPACITY
+  ------------------------------------------------------- */
+
+  if (
+    teachingPeriods.length &&
+    activeDays.length
+  ) {
+
+    const availableSlotsPerClass =
+      teachingPeriods.length *
+      activeDays.length;
+
+
+    const lessonsByClass = {};
+
+
+    requirements.forEach(
+      requirement => {
+
+        const classId =
+          requirement.classId;
+
+
+        const lessons =
+          Number(
+            requirement.lessonsPerWeek
+          ) || 0;
+
+
+        lessonsByClass[classId] =
+          (
+            lessonsByClass[classId] ||
+            0
+          ) + lessons;
+
+      }
+    );
+
+
+    Object.entries(
+      lessonsByClass
+    ).forEach(
+      ([classId, lessonCount]) => {
+
+        if (
+          lessonCount >
+          availableSlotsPerClass
+        ) {
+
+          const classItem =
+            timetableState.classes.find(
+              item =>
+                item.id === classId
+            );
+
+
+          errors.push(
+            `${classItem?.name || "Unknown class"} ` +
+            `requires ${lessonCount} teaching lessons ` +
+            `per week, but only ` +
+            `${availableSlotsPerClass} teaching slots ` +
+            `are available.`
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* -------------------------------------------------------
+     PERIOD TIME CHECK
+  ------------------------------------------------------- */
+
+  periods.forEach(
+    period => {
+
+      if (
+        !period.start ||
+        !period.end
+      ) {
+
+        errors.push(
+          `${period.label || "A period"} ` +
+          `is missing a start or end time.`
+        );
+
+        return;
+
+      }
+
+
+      if (
+        period.start >=
+        period.end
+      ) {
+
+        errors.push(
+          `${period.label || "A period"} ` +
+          `has an invalid time range.`
+        );
+
+      }
+
+    }
+  );
+
+
+  /* -------------------------------------------------------
+     PERIOD OVERLAP CHECK
+  ------------------------------------------------------- */
+
+  for (
+    let i = 0;
+    i < periods.length;
+    i++
+  ) {
+
+    const current =
+      periods[i];
+
+
+    if (
+      !current.start ||
+      !current.end
+    ) {
+      continue;
+    }
+
+
+    for (
+      let j = i + 1;
+      j < periods.length;
+      j++
+    ) {
+
+      const other =
+        periods[j];
+
+
+      if (
+        !other.start ||
+        !other.end
+      ) {
+        continue;
+      }
+
+
+      const overlaps =
+        current.start < other.end &&
+        current.end > other.start;
+
+
+      if (overlaps) {
+
+        errors.push(
+          `"${current.label}" overlaps with ` +
+          `"${other.label}".`
+        );
+
+      }
+
+    }
+
+  }
+
+
+  /* -------------------------------------------------------
+     CAPACITY WARNING
+  ------------------------------------------------------- */
+
+  if (
+    teachingPeriods.length &&
+    requirements.length &&
+    timetableState.classes.length
+  ) {
+
+    const totalWeeklyLessons =
+      requirements.reduce(
+        (total, requirement) =>
+          total +
+          (
+            Number(
+              requirement.lessonsPerWeek
+            ) || 0
+          ),
+        0
+      );
+
+
+    const totalSchoolSlots =
+      teachingPeriods.length *
+      activeDays.length *
+      timetableState.classes.length;
+
+
+    if (
+      totalWeeklyLessons >
+      totalSchoolSlots
+    ) {
+
+      warnings.push(
+        "The total number of requested lessons " +
+        "is above the school's overall available " +
+        "teaching capacity."
+      );
+
+    }
+
+  }
+
+
+  return {
+
+    valid:
+      errors.length === 0,
+
+    errors,
+
+    warnings
+
+  };
+
+}
+
+/* =========================================================
+   PHASE 3A — PRE-GENERATION VALIDATION
+========================================================= */
+
+function validateTimetableSetup() {
+
+    const errors = [];
+    const warnings = [];
+
+    /* -----------------------------------------------------
+       1. SCHOOL SETUP
+    ----------------------------------------------------- */
+
+    if (!timetableState.school.name.trim()) {
+
+        errors.push({
+            type: "school",
+            message: "School name has not been entered."
+        });
+
+    }
+
+    const activeDays =
+        timetableState.periodStructure.activeDays || [];
+
+    if (!activeDays.length) {
+
+        errors.push({
+            type: "school",
+            message: "No school days are active."
+        });
+
+    }
+
+
+    /* -----------------------------------------------------
+       2. CLASSES
+    ----------------------------------------------------- */
+
+    if (!timetableState.classes.length) {
+
+        errors.push({
+            type: "classes",
+            message: "No classes have been added."
+        });
+
+    }
+
+
+    /* -----------------------------------------------------
+       3. TEACHERS
+    ----------------------------------------------------- */
+
+    if (!timetableState.teachers.length) {
+
+        errors.push({
+            type: "teachers",
+            message: "No teachers have been added."
+        });
+
+    }
+
+
+    /* -----------------------------------------------------
+       4. SUBJECTS
+    ----------------------------------------------------- */
+
+    if (!timetableState.subjects.length) {
+
+        errors.push({
+            type: "subjects",
+            message: "No subjects have been added."
+        });
+
+    }
+
+
+    /* -----------------------------------------------------
+       5. PERIOD STRUCTURE
+    ----------------------------------------------------- */
+
+    const teachingPeriods =
+        (timetableState.periodStructure.entries || [])
+            .filter(period => period.type === "Teaching");
+
+    if (!teachingPeriods.length) {
+
+        errors.push({
+            type: "periods",
+            message: "No teaching periods have been created."
+        });
+
+    }
+
+
+    /* -----------------------------------------------------
+       6. TEACHER ASSIGNMENTS
+    ----------------------------------------------------- */
+
+    const assignments =
+        timetableState.assignments || [];
+
+    const assignmentKeys =
+        new Set(
+            assignments.map(assignment =>
+                `${assignment.subjectId}__${assignment.classId}`
+            )
+        );
+
+
+    /* -----------------------------------------------------
+       7. SUBJECT REQUIREMENTS
+    ----------------------------------------------------- */
+
+    const requirements =
+        timetableState.requirements || [];
+
+    if (!requirements.length) {
+
+        errors.push({
+            type: "requirements",
+            message: "No subject requirements have been configured."
+        });
+
+    }
+
+
+    /*
+       Every requirement must have at least one teacher
+       assigned to that Subject + Class combination.
+    */
+
+    requirements.forEach(requirement => {
+
+        const key =
+            `${requirement.subjectId}__${requirement.classId}`;
+
+        if (!assignmentKeys.has(key)) {
+
+            const subject =
+                timetableState.subjects.find(
+                    item => item.id === requirement.subjectId
+                );
+
+            const classItem =
+                timetableState.classes.find(
+                    item => item.id === requirement.classId
+                );
+
+            errors.push({
+
+                type: "assignment",
+
+                message:
+                    `${subject?.name || "Unknown subject"} — ` +
+                    `${classItem?.name || "Unknown class"} ` +
+                    `has no teacher assigned.`
+
+            });
+
+        }
+
+    });
+
+
+    /* -----------------------------------------------------
+       8. REQUIREMENT VALUES
+    ----------------------------------------------------- */
+
+    requirements.forEach(requirement => {
+
+        const subject =
+            timetableState.subjects.find(
+                item => item.id === requirement.subjectId
+            );
+
+        const classItem =
+            timetableState.classes.find(
+                item => item.id === requirement.classId
+            );
+
+        const label =
+            `${subject?.name || "Unknown subject"} — ` +
+            `${classItem?.name || "Unknown class"}`;
+
+
+        const lessons =
+            Number(requirement.lessonsPerWeek);
+
+
+        const maxConsecutive =
+            Number(requirement.maxConsecutive);
+
+
+        if (!Number.isFinite(lessons) || lessons < 1) {
+
+            errors.push({
+
+                type: "requirement",
+
+                message:
+                    `${label} must have at least 1 lesson per week.`
+
+            });
+
+        }
+
+
+        if (
+            requirement.allowConsecutive &&
+            (
+                !Number.isFinite(maxConsecutive) ||
+                maxConsecutive < 1
+            )
+        ) {
+
+            errors.push({
+
+                type: "requirement",
+
+                message:
+                    `${label} has an invalid maximum consecutive lesson value.`
+
+            });
+
+        }
+
+    });
+
+
+    /* -----------------------------------------------------
+       9. CLASS WEEKLY CAPACITY
+    ----------------------------------------------------- */
+
+    if (teachingPeriods.length && activeDays.length) {
+
+        const availableSlotsPerClass =
+            teachingPeriods.length *
+            activeDays.length;
+
+
+        const lessonsByClass = {};
+
+
+        requirements.forEach(requirement => {
+
+            const classId =
+                requirement.classId;
+
+            const lessons =
+                Number(requirement.lessonsPerWeek) || 0;
+
+            lessonsByClass[classId] =
+                (lessonsByClass[classId] || 0) +
+                lessons;
+
+        });
+
+
+        Object.entries(lessonsByClass).forEach(
+            ([classId, lessonCount]) => {
+
+                if (
+                    lessonCount >
+                    availableSlotsPerClass
+                ) {
+
+                    const classItem =
+                        timetableState.classes.find(
+                            item => item.id === classId
+                        );
+
+                    errors.push({
+
+                        type: "capacity",
+
+                        message:
+                            `${classItem?.name || "Unknown class"} ` +
+                            `requires ${lessonCount} teaching lessons ` +
+                            `per week, but only ` +
+                            `${availableSlotsPerClass} teaching slots ` +
+                            `are available.`
+
+                    });
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* -----------------------------------------------------
+       10. PERIOD OVERLAP CHECK
+    ----------------------------------------------------- */
+
+    const periods =
+        timetableState.periodStructure.entries || [];
+
+
+    for (let i = 0; i < periods.length; i++) {
+
+        const current =
+            periods[i];
+
+        if (!current.start || !current.end) {
+
+            errors.push({
+
+                type: "period",
+
+                message:
+                    `${current.label || "A period"} is missing a start or end time.`
+
+            });
+
+            continue;
+
+        }
+
+
+        if (current.start >= current.end) {
+
+            errors.push({
+
+                type: "period",
+
+                message:
+                    `${current.label || "A period"} has an invalid time range.`
+
+            });
+
+        }
+
+
+        for (let j = i + 1; j < periods.length; j++) {
+
+            const other =
+                periods[j];
+
+            if (!other.start || !other.end) {
+                continue;
+            }
+
+
+            const overlaps =
+                current.start < other.end &&
+                current.end > other.start;
+
+
+            if (overlaps) {
+
+                errors.push({
+
+                    type: "period",
+
+                    message:
+                        `"${current.label}" overlaps with ` +
+                        `"${other.label}".`
+
+                });
+
+            }
+
+        }
+
+    }
+
+
+    /* -----------------------------------------------------
+       11. GENERAL WARNINGS
+    ----------------------------------------------------- */
+
+    if (
+        teachingPeriods.length &&
+        requirements.length
+    ) {
+
+        const totalWeeklyLessons =
+            requirements.reduce(
+                (total, requirement) =>
+                    total +
+                    (Number(requirement.lessonsPerWeek) || 0),
+                0
+            );
+
+
+        const totalSchoolSlots =
+            teachingPeriods.length *
+            activeDays.length *
+            timetableState.classes.length;
+
+
+        if (
+            totalWeeklyLessons >
+            totalSchoolSlots
+        ) {
+
+            warnings.push(
+                "The total number of requested lessons is " +
+                "very close to or above the school's overall " +
+                "available teaching capacity."
+            );
+
+        }
+
+    }
+
+
+    return {
+
+        valid:
+            errors.length === 0,
+
+        errors,
+
+        warnings
+
+    };
+
+}
+
+/* =========================================================
+   PHASE 3A — VALIDATION RESULT DISPLAY
+========================================================= */
+
+function renderValidationResults(validation) {
+
+    const container =
+        document.querySelector(
+            "[data-timetable-validation]"
+        );
+
+    if (!container) {
+        return;
+    }
+
+
+    if (validation.valid) {
+
+        container.innerHTML = `
+
+            <div class="timetable-validation-success">
+
+                <div class="timetable-validation-icon">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+
+                <div>
+
+                    <strong>
+                        Setup validation passed
+                    </strong>
+
+                    <p>
+                        Your timetable setup is ready
+                        for scheduling.
+                    </p>
+
+                </div>
+
+            </div>
+
+            ${
+                validation.warnings.length
+                    ? `
+                        <div class="timetable-validation-warnings">
+
+                            <strong>
+                                Please note
+                            </strong>
+
+                            <ul>
+                                ${validation.warnings.map(
+                                    warning =>
+                                        `<li>${escapeHtml(warning)}</li>`
+                                ).join("")}
+                            </ul>
+
+                        </div>
+                    `
+                    : ""
+            }
+
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML = `
+
+        <div class="timetable-validation-error">
+
+            <div class="timetable-validation-icon">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+            </div>
+
+            <div>
+
+                <strong>
+                    Setup needs attention
+                </strong>
+
+                <p>
+                    ${validation.errors.length}
+                    issue${validation.errors.length === 1 ? "" : "s"}
+                    must be resolved before the timetable
+                    can be generated.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timetable-validation-list">
+
+            ${validation.errors.map(
+                (error, index) => `
+
+                    <div class="timetable-validation-item">
+
+                        <span class="timetable-validation-number">
+                            ${index + 1}
+                        </span>
+
+                        <span>
+                            ${escapeHtml(error.message)}
+                        </span>
+
+                    </div>
+
+                `
+            ).join("")}
+
+        </div>
+
+
+        ${
+            validation.warnings.length
+                ? `
+
+                    <div class="timetable-validation-warnings">
+
+                        <strong>
+                            Additional notes
+                        </strong>
+
+                        <ul>
+
+                            ${validation.warnings.map(
+                                warning =>
+                                    `<li>${escapeHtml(warning)}</li>`
+                            ).join("")}
+
+                        </ul>
+
+                    </div>
+
+                `
+                : ""
+        }
+
+    `;
+
+}
 
 /* =========================================================
    GENERATE SUMMARY
